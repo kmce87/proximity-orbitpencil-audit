@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Fail-closed transitive axiom audit of the ten currently compiled Lean lemmas.
+# Fail-closed transitive axiom audit of the sixteen currently compiled Lean lemmas.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 tmp="$(mktemp -d)"
@@ -8,6 +8,7 @@ cat > "$tmp/targets.txt" <<'TARGETS'
 LeanPortIndexedNoncontainment.lean OrbitPencilLiftIndexedNoncontainment.no_large_support OrbitPencilLiftIndexedNoncontainment.no_large_support_on_indices OrbitPencilLiftIndexedNoncontainment.quotient_direction_not_codeword_on_indices
 LeanPortNoncontainment.lean OrbitPencilLiftNoncontainment.no_large_support
 LeanPortGeometry.lean OrbitPencilLiftGeometry.idx_injective OrbitPencilLiftGeometry.idx_row_column OrbitPencilLiftGeometry.pow_block
+LeanPortSameKeyFamily.lean OrbitPencilLiftSameKey.outer_card OrbitPencilLiftSameKey.candidates_card OrbitPencilLiftSameKey.card_keys OrbitPencilLiftSameKey.pigeonhole OrbitPencilLiftSameKey.orbit_count OrbitPencilLiftSameKey.exists_big_same_key_family
 LeanPortSeparatingAlpha.lean OrbitPencilLiftSeparatingAlpha.bad_card_le OrbitPencilLiftSeparatingAlpha.alpha_arithmetic OrbitPencilLiftSeparatingAlpha.exists_alpha_gamma_injective
 TARGETS
 while read -r file names; do
@@ -40,4 +41,4 @@ for name in sys.argv[2:]:
     print(f'AXIOM PASS: {name}: {sorted(found)}')
 PY
 done < "$tmp/targets.txt"
-echo "TRANSITIVE AXIOM AUDIT PASS: ten lemmas; only allowed axioms"
+echo "TRANSITIVE AXIOM AUDIT PASS: sixteen lemmas; only allowed axioms"
