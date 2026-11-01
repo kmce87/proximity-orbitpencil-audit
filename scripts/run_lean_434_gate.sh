@@ -12,6 +12,7 @@ if ! lean --version | grep -Fq 'Lean (version 4.34.0'; then
 fi
 lake update
 lake exe cache get
+lake env lean LeanPortSameKeyFamily.lean
 lake env lean LeanPortSeparatingAlpha.lean
 lake env lean LeanPortIndexedNoncontainment.lean
 lake env lean LeanPortNoncontainment.lean
