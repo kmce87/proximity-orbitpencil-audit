@@ -112,4 +112,25 @@ theorem pencil_agrees_on_support (alpha : Sextic)
     (node6_pow_nonzero j) (node6_pow_ne_alpha alpha havoid j)
     (support_root_or U j hj)
 
+/-- The right-hand side is exactly the evaluation of an admissible RS
+message polynomial, rather than merely a scalar product. Degree admissibility
+follows from exists_message_poly for any pair with the same key. -/
+theorem pencil_agrees_with_message_on_support (alpha : Sextic)
+    (U0 U : Finset Small) (Q : Polynomial Sextic)
+    (hfactor : pencil alpha U0 U =
+      (Polynomial.X : Polynomial Sextic) *
+        (Polynomial.X - Polynomial.C alpha) * Q)
+    (havoid : alpha ∉ projected6)
+    (j : Index) (hj : j ∈ support U) :
+    coreLocator.eval (node6 j) *
+        (V y6 U0).eval ((node6 j)^4096) /
+        ((node6 j)^4096 * ((node6 j)^4096 - alpha)) +
+      gamma alpha U0 U *
+        (-coreLocator.eval (node6 j) / ((node6 j)^4096 - alpha)) =
+      (coreLocator * Q.comp ((Polynomial.X : Polynomial Sextic)^4096)).eval
+        (node6 j) := by
+  simpa only [Polynomial.eval_mul, Polynomial.eval_comp,
+    Polynomial.eval_pow, Polynomial.eval_X] using
+      (pencil_agrees_on_support alpha U0 U Q hfactor havoid j hj)
+
 end OrbitPencilLiftPointwiseSupport4096
