@@ -1,0 +1,12 @@
+name = "orbit-pencil-lift-audit"
+
+[leanOptions]
+autoImplicit = false
+
+[[require]]
+name = "Arklib"
+git = "https://github.com/Verified-zkEVM/ArkLib"
+rev = "34a834c61c859cc04205f5f43fd237cda8fb0da4"
+
+[[lean_lib]]
+name = "OrbitPencilLiftIndexedNoncontainment"
