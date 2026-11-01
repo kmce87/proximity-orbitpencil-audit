@@ -12,6 +12,8 @@ if ! lean --version | grep -Fq 'Lean (version 4.34.0'; then
 fi
 lake update
 lake exe cache get
+# CompPoly is a source dependency, not part of Mathlib's prebuilt cache.
+lake build CompPoly.Univariate.NTT.KoalaBear
 lake env lean LeanPortSameKeyFamily.lean
 lake env lean LeanPortSeparatingAlpha.lean
 lake env lean LeanPortIndexedNoncontainment.lean
