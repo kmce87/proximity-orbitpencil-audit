@@ -14,6 +14,9 @@ line point is explained by a Reed–Solomon message.
 
 namespace OrbitPencilLiftSupport4096
 
+set_option maxRecDepth 10000
+set_option maxHeartbeats 1000000
+
 open Polynomial
 open OrbitPencilLiftGeometry
 open OrbitPencilLiftSameKey
@@ -45,12 +48,10 @@ theorem pair_disjoint {U : Finset Small} (hU : U ∈ Candidates) :
     simpa [outer] using hout
   rw [Finset.disjoint_left]
   intro ab habc habb
-  have hc := Finset.mem_product.mp
-    (show ab ∈ coreRows.product ({0} : Finset Column) by
-      simpa only [corePairs] using habc)
-  have hb := Finset.mem_product.mp
-    (show ab ∈ (Finset.univ : Finset Row).product U by
-      simpa only [blockPairs] using habb)
+  change ab ∈ coreRows.product ({0} : Finset Column) at habc
+  change ab ∈ (Finset.univ : Finset Row).product U at habb
+  have hc := Finset.mem_product.mp habc
+  have hb := Finset.mem_product.mp habb
   have hb0 : ab.2 = 0 := Finset.mem_singleton.mp hc.2
   rw [hb0] at hb
   exact hnot hb.2
