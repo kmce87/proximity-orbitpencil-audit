@@ -83,24 +83,18 @@ theorem orbit_count :
   rw [Nat.choose_eq_fast_choose]
   decide
 
-/-- Classical filter for a fixed key, with the decidability instance scoped
-inside the definition rather than leaked into the theorem statement. -/
-noncomputable def family {K : Type*} [Field K] (y : Small → K)
-    (σ : (Fin 14 → K) × Small) : Finset (Finset Small) := by
-  classical
-  exact Candidates.filter (fun U => key y U = σ)
-
 /-- A *single* key fibre contains more than 2^59 distinct 272-column
-subsets. No injectivity of y is needed for this counting step alone. -/
+subsets. The DecidableEq instance is computational bookkeeping and can
+always be supplied classically; it is not a mathematical hypothesis.
+No injectivity of y is needed for this counting step alone. -/
 theorem exists_big_same_key_family {K : Type*} [Field K] [Fintype K]
+    [DecidableEq ((Fin 14 → K) × Small)]
     (y : Small → K) (hK : Fintype.card K = 2130706433) :
     ∃ σ : (Fin 14 → K) × Small,
-      2^59 < (family y σ).card := by
+      2^59 < (Candidates.filter (fun U => key y U = σ)).card := by
   classical
-  have hcount : Fintype.card ((Fin 14 → K) × Small) * 2^59 < Candidates.card := by
-    rw [card_keys hK, candidates_card]
-    exact orbit_count
-  obtain ⟨σ, hσ⟩ := pigeonhole Candidates (key y) (2^59) hcount
-  exact ⟨σ, by simpa only [family] using hσ⟩
+  apply pigeonhole Candidates (key y) (2^59)
+  rw [card_keys hK, candidates_card]
+  exact orbit_count
 
 end OrbitPencilLiftSameKey
