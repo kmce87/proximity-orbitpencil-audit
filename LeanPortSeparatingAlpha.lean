@@ -58,10 +58,10 @@ theorem bad_card_le {F τ : Type*} [Field F]
       Nat.add_le_add (Finset.card_union_le _ _) hcoll
     _ = projected.card + 1 + Sel.offDiag.card * 257 := by simp
 
-/-- Exact arithmetic, including the pairwise root count (not merely 272). -/
 set_option maxRecDepth 10000
 set_option maxHeartbeats 1000000
 set_option exponentiation.threshold 100000
+/-- Exact arithmetic, including the pairwise root count (not merely 272). -/
 theorem alpha_arithmetic :
     513 + N * (N - 1) * 257 < (2130706433 : ℕ)^6 := by
   decide
