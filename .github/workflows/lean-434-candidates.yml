@@ -14,7 +14,18 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
-      - name: Install pinned Lean/Lake and fetch Mathlib cache
+      # lean-action requires lake-manifest.json BEFORE its configure step.
+      - name: Bootstrap pinned Lean and generate lake-manifest.json
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --proto '=https' --tlsv1.2 -fsSL https://elan.lean-lang.org/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.elan/bin:$PATH"
+          lean --version
+          lake update
+          test -s lake-manifest.json
+      - name: Restore Mathlib cache and set up Lean
         uses: leanprover/lean-action@v1
         with:
           auto-config: false
