@@ -108,7 +108,7 @@ theorem support_root_or (U : Finset Small) (j : Index)
       ((coreRows.product ({0} : Finset Column)) ∪
         ((Finset.univ : Finset Row).product U)).image
         (fun ab : Row × Column => idx ab.1 ab.2) := by
-    dsimp only [OrbitPencilLiftSupport4096.support,
+    rw [OrbitPencilLiftSupport4096.support,
       OrbitPencilLiftSupport4096.pairSet,
       OrbitPencilLiftSupport4096.corePairs,
       OrbitPencilLiftSupport4096.blockPairs] at hj
