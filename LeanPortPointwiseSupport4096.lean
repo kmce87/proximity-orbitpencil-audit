@@ -87,13 +87,19 @@ theorem support_root_or (U : Finset Small) (j : Index)
   rw [Finset.mem_image] at hj
   obtain ⟨⟨a, b⟩, hp, heq⟩ := hj
   change (a, b) ∈ corePairs ∪ blockPairs U at hp
-  rcases Finset.mem_union.mp hp with hc | hb
-  · have ha : a ∈ coreRows := (Finset.mem_product.mp hc).1
-    have hb0 : b = 0 := Finset.mem_singleton.mp (Finset.mem_product.mp hc).2
+  rw [Finset.mem_union] at hp
+  rcases hp with hc | hb
+  · change (a, b) ∈ coreRows.product ({0} : Finset Column) at hc
+    rw [Finset.mem_product] at hc
+    have ha : a ∈ coreRows := hc.1
+    have hb0 : b = 0 := by
+      simpa only [Finset.mem_singleton] using hc.2
     left
     rw [← heq, hb0]
     exact coreLocator_eval_core a ha
-  · have hU : b ∈ U := (Finset.mem_product.mp hb).2
+  · change (a, b) ∈ (Finset.univ : Finset Row).product U at hb
+    rw [Finset.mem_product] at hb
+    have hU : b ∈ U := hb.2
     right
     rw [← heq, node6_pow_column]
     exact (V_eval_zero_iff_of_injective y6 y6_injective U b).mpr hU
