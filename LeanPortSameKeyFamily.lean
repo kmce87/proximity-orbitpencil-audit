@@ -1,5 +1,6 @@
 import Mathlib
 import CompPoly.Univariate.NTT.KoalaBear
+import CompPoly.Fields.KoalaBear.Ext6
 
 /-!
 # Same-key family for the KoalaBear 4096-fibre lift
@@ -321,5 +322,91 @@ theorem mapped_V_sub_natDegree_lt_of_key {K L : Type*} [Field K] [Field L]
     rw [Polynomial.map_sub, V_map, V_map]
   rw [heq]
   exact (Polynomial.natDegree_map_le).trans_lt hn
+
+
+/-!
+## Concrete sextic instantiation: no abstract extension field/cardinality premise
+
+The CompPoly KoalaBear.Ext6 model is a genuine field of order p^6.
+This is the actual field model underlying the proposed n=2^21 lift,
+not an arbitrary field embedding or an unproved sextic-cardinality axiom.
+
+The same-key condition is imposed over the *prime* field; the
+residue/product component alone controls constant coefficients after
+mapping to Ext6.  These facts do not yet construct a received affine
+line or establish an MCA support witness.
+-/
+
+abbrev Sextic := _root_.KoalaBear.Ext6
+
+noncomputable def baseToSextic : _root_.KoalaBear.Field →+* Sextic :=
+  algebraMap _root_.KoalaBear.Field Sextic
+
+theorem concrete_prime_card :
+    Fintype.card _root_.KoalaBear.Field = 2130706433 := by
+  rw [ZMod.card]
+  norm_num [_root_.KoalaBear.fieldSize]
+
+theorem concrete_sextic_card :
+    Fintype.card Sextic = (2130706433 : ℕ) ^ 6 := by
+  rw [_root_.KoalaBear.card_ext6]
+  norm_num [_root_.KoalaBear.fieldSize]
+
+noncomputable def eta6 : Sextic := (baseToSextic omega21) ^ 4096
+
+theorem eta6_pow : eta6 ^ 512 = 1 := by
+  have hw : omega21 ^ 2097152 = 1 := by
+    simpa only [omega21] using baseNttDomain21.primitive.pow_eq_one
+  change ((baseToSextic omega21) ^ 4096) ^ 512 = 1
+  rw [← pow_mul]
+  have hmul : 4096 * 512 = 2097152 := by norm_num
+  rw [hmul, ← map_pow, hw, map_one]
+
+theorem eta6_node (b : Small) :
+    baseToSextic (projectedNode b) = eta6 ^ b.val := by
+  calc
+    baseToSextic (projectedNode b) =
+        (baseToSextic omega21) ^ (b.val * 4096) := by
+      simp only [projectedNode, map_pow, pow_mul]
+    _ = (baseToSextic omega21) ^ (4096 * b.val) := by rw [Nat.mul_comm]
+    _ = eta6 ^ b.val := by simp only [eta6, pow_mul]
+
+/-- The original *prime-field* product key forces equal constant terms
+for mapped sextic vanishing polynomials, without assuming an extension
+field top-coefficient key collision. -/
+theorem concrete_sextic_constant_eq_of_key
+    {U W : Finset Small} (hU : U ∈ Candidates) (hW : W ∈ Candidates)
+    (hkey : key projectedNode U = key projectedNode W) :
+    (V (fun b => baseToSextic (projectedNode b)) U).eval 0 =
+      (V (fun b => baseToSextic (projectedNode b)) W).eval 0 := by
+  have hfun : (fun b : Small => baseToSextic (projectedNode b)) =
+      (fun b : Small => eta6 ^ b.val) := funext eta6_node
+  rw [hfun, V_eval_zero_pow eta6 (candidate_card hU),
+      V_eval_zero_pow eta6 (candidate_card hW)]
+  apply pow_eq_pow_of_modEq (n := 512) _ eta6_pow
+  exact congrArg Fin.val (congrArg Prod.snd hkey)
+
+/-- Unconditional same-key cardinality for the actual KoalaBear base field
+and the actual 2^21 projected nodes (no abstract cardinal assumption). -/
+theorem concrete_same_key_family :
+    ∃ σ : (Fin 14 → _root_.KoalaBear.Field) × Small,
+      2^59 < (Candidates.filter (fun U => key projectedNode U = σ)).card := by
+  classical
+  exact exists_big_same_key_family projectedNode concrete_prime_card
+
+/-- The real base-field key bounds degree after mapping into the concrete
+sextic, not merely into a hypothetical field extension. -/
+theorem concrete_sextic_degree_lt_of_key
+    {U W : Finset Small} (hU : U ∈ Candidates) (hW : W ∈ Candidates)
+    (hkey : key projectedNode U = key projectedNode W) :
+    (V (fun b => baseToSextic (projectedNode b)) U -
+      V (fun b => baseToSextic (projectedNode b)) W).natDegree < 258 := by
+  exact mapped_V_sub_natDegree_lt_of_key baseToSextic projectedNode hU hW hkey
+
+theorem concrete_sextic_sub_ne_zero
+    {U W : Finset Small} (hne : U ≠ W) :
+    V (fun b => baseToSextic (projectedNode b)) U -
+      V (fun b => baseToSextic (projectedNode b)) W ≠ 0 := by
+  exact mapped_V_sub_ne_zero baseToSextic projectedNode projectedNode_injective hne
 
 end OrbitPencilLiftSameKey
