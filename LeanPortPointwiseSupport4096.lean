@@ -74,6 +74,14 @@ theorem node6_pow_ne_alpha (alpha : Sextic)
 theorem y6_injective : Function.Injective y6 := by
   exact mapped_nodes_injective baseToSextic projectedNode projectedNode_injective
 
+/-- Keep product-membership elimination abstract: elaborating the concrete
+4096-row universe inside `Finset.mem_product.mp` exhausts Lean's recursion
+budget before the theorem can be kernel-checked. -/
+private theorem product_components (A : Finset Row) (B : Finset Column)
+    (a : Row) (b : Column) (h : (a, b) ∈ A.product B) :
+    a ∈ A ∧ b ∈ B :=
+  Finset.mem_product.mp h
+
 /-- Every support index is either a core root or a complete selected-column
 root, with no assumption about the message polynomial or received line. -/
 theorem support_root_or (U : Finset Small) (j : Index)
@@ -90,7 +98,8 @@ theorem support_root_or (U : Finset Small) (j : Index)
   rw [Finset.mem_union] at hp
   rcases hp with hc | hb
   · change (a, b) ∈ coreRows.product ({0} : Finset Column) at hc
-    have hpair := Finset.mem_product.mp hc
+    have hpair : a ∈ coreRows ∧ b ∈ ({0} : Finset Column) :=
+      product_components coreRows ({0} : Finset Column) a b hc
     have ha : a ∈ coreRows := hpair.1
     have hb0 : b = 0 := by
       simpa only [Finset.mem_singleton] using hpair.2
@@ -98,7 +107,8 @@ theorem support_root_or (U : Finset Small) (j : Index)
     rw [← heq, hb0]
     exact coreLocator_eval_core a ha
   · change (a, b) ∈ (Finset.univ : Finset Row).product U at hb
-    have hU : b ∈ U := (Finset.mem_product.mp hb).2
+    have hU : b ∈ U :=
+      (product_components (Finset.univ : Finset Row) U a b hb).2
     right
     rw [← heq, node6_pow_column]
     exact (V_eval_zero_iff_of_injective y6 y6_injective U b).mpr hU
