@@ -120,12 +120,6 @@ theorem exists_quotient {alpha : Sextic} (hα : alpha ≠ 0)
         Polynomial.natDegree_X_sub_C] at hnat
       omega
 
-noncomputable def zpoly : Polynomial Sextic :=
-  (Polynomial.X : Polynomial Sextic)^4096
-
-noncomputable def messagePoly (Q : Polynomial Sextic) : Polynomial Sextic :=
-  coreLocator * Q.comp zpoly
-
 /-- The degree calculation is field-agnostic and does not unfold the
 4095-factor concrete core while elaborating the polynomial product. -/
 theorem abstract_message_degree_le (R Q : Polynomial Sextic)
@@ -145,12 +139,6 @@ theorem abstract_message_degree_le (R Q : Polynomial Sextic)
           exact Nat.add_le_add_left (Nat.mul_le_mul_right 4096 hQ) 4095
     _ = 1048575 := by norm_num
 
-/-- The exact endpoint: 4095 + 255·4096 = 1048575, strictly below 2^20. -/
-theorem message_degree_le {Q : Polynomial Sextic} (hQ : Q.natDegree ≤ 255) :
-    (messagePoly Q).natDegree ≤ 1048575 := by
-  rw [messagePoly, zpoly]
-  exact abstract_message_degree_le coreLocator Q coreLocator_natDegree hQ
-
 /-- Formal polynomial witness of sufficient degree at each same-key pair.
 This proves degree admissibility, not codeword agreement on the support. -/
 theorem exists_message_poly {alpha : Sextic} (hα : alpha ≠ 0)
@@ -161,8 +149,10 @@ theorem exists_message_poly {alpha : Sextic} (hα : alpha ≠ 0)
       pencil alpha U0 U =
           (Polynomial.X : Polynomial Sextic) *
             (Polynomial.X - Polynomial.C alpha) * Q ∧
-      (messagePoly Q).natDegree ≤ 1048575 := by
+      (coreLocator * Q.comp ((Polynomial.X : Polynomial Sextic)^4096)).natDegree
+        ≤ 1048575 := by
   obtain ⟨Q, hfactor, hQ⟩ := exists_quotient hα hU0 hU hk
-  exact ⟨Q, hfactor, message_degree_le hQ⟩
+  exact ⟨Q, hfactor,
+    abstract_message_degree_le coreLocator Q coreLocator_natDegree hQ⟩
 
 end OrbitPencilLiftPencil4096
