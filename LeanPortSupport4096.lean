@@ -120,4 +120,26 @@ theorem coreLocator_eval_core (a : Row) (ha : a ∈ coreRows) :
   refine Finset.prod_eq_zero ha ?_
   simp
 
+
+/-- A polymorphic image-of-union eliminator.  Its proof is elaborated without
+    specializing to the 4096-row KoalaBear Finset. -/
+theorem mem_image_union_cases
+    {α β : Type*} [DecidableEq α] [DecidableEq β]
+    (A B : Finset α) (f : α → β) {z : β}
+    (hz : z ∈ (A ∪ B).image f) :
+    (∃ x, x ∈ A ∧ f x = z) ∨ (∃ x, x ∈ B ∧ f x = z) := by
+  obtain ⟨x, hx, hfx⟩ := Finset.mem_image.mp hz
+  rcases Finset.mem_union.mp hx with ha | hb
+  · exact Or.inl ⟨x, ha, hfx⟩
+  · exact Or.inr ⟨x, hb, hfx⟩
+
+/-- Keep the concrete 2^21 support opaque for downstream pointwise proofs. -/
+theorem support_cases (U : Finset Small) (j : Index)
+    (hj : j ∈ support U) :
+    (∃ ab, ab ∈ corePairs ∧ idx ab.1 ab.2 = j) ∨
+      (∃ ab, ab ∈ blockPairs U ∧ idx ab.1 ab.2 = j) := by
+  rw [support, pairSet] at hj
+  exact mem_image_union_cases corePairs (blockPairs U)
+    (fun ab : Row × Column => idx ab.1 ab.2) hj
+
 end OrbitPencilLiftSupport4096
