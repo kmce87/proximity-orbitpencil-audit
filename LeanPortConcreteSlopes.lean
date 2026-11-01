@@ -71,7 +71,7 @@ theorem exists_concrete_alpha_distinct_slopes :
     calc
       projected6.card ≤ (Finset.univ : Finset OrbitPencilLiftSameKey.Small).card := by
         exact Finset.card_image_le
-      _ = 512 := by simp [Small]
+      _ = 512 := by simp
   obtain ⟨alpha, halpha, havoid, hinj⟩ :=
     exists_alpha_gamma_injective Sel (V y6) projected6
       (0 : Polynomial Sextic) hSelCard concrete_sextic_card
