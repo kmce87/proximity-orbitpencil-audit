@@ -38,6 +38,21 @@ noncomputable def pairSet (U : Finset Small) : Finset (Row × Column) :=
 noncomputable def support (U : Finset Small) : Finset Index :=
   (pairSet U).image (fun ab => idx ab.1 ab.2)
 
+/-- A product with a zero-only second coordinate is disjoint from
+a product whose second coordinate excludes zero. This general lemma avoids
+reducing the concrete 4096-element row universe during elaboration. -/
+theorem disjoint_zero_column_product
+    (T : Finset Row) (U : Finset Column)
+    (hzero : (0 : Column) ∉ U) :
+    Disjoint (T.product ({0} : Finset Column))
+      ((Finset.univ : Finset Row).product U) := by
+  rw [Finset.disjoint_left]
+  intro ab hcore hblock
+  have hc := Finset.mem_product.mp hcore
+  have hb := Finset.mem_product.mp hblock
+  have hz : ab.2 = (0 : Column) := Finset.mem_singleton.mp hc.2
+  exact hzero (hz ▸ hb.2)
+
 /-- Candidate sets lie in {1,...,511}, so the core and full blocks
 do not overlap. -/
 theorem pair_disjoint {U : Finset Small} (hU : U ∈ Candidates) :
@@ -46,23 +61,24 @@ theorem pair_disjoint {U : Finset Small} (hU : U ∈ Candidates) :
     intro h0
     have hout := (Finset.mem_powersetCard.mp hU).1 h0
     simpa [outer] using hout
-  rw [Finset.disjoint_left]
-  intro ab habc habb
-  change ab ∈ coreRows.product ({0} : Finset Column) at habc
-  change ab ∈ (Finset.univ : Finset Row).product U at habb
-  have hc := Finset.mem_product.mp habc
-  have hb := Finset.mem_product.mp habb
-  have hb0 : ab.2 = 0 := Finset.mem_singleton.mp hc.2
-  rw [hb0] at hb
-  exact hnot hb.2
+  exact disjoint_zero_column_product coreRows U hnot
 
 /-- Exactly 272 complete 4096-point fibres and 4095 additional points
 in column zero, with no multiplicity or support collisions. -/
 theorem support_card {U : Finset Small} (hU : U ∈ Candidates) :
     (support U).card = 1118207 := by
-  rw [support, Finset.card_image_of_injective _ idx_injective, pairSet,
-    Finset.card_union_of_disjoint (pair_disjoint hU)]
-  simp [corePairs, blockPairs, coreRows_card, candidate_card hU]
+  have hcore : corePairs.card = 4095 := by
+    rw [corePairs, Finset.card_product, coreRows_card]
+    simp
+  have hblock : (blockPairs U).card = 4096 * 272 := by
+    rw [blockPairs, Finset.card_product, candidate_card hU]
+    simp
+  calc
+    (support U).card = (pairSet U).card := by
+      exact Finset.card_image_of_injective _ idx_injective
+    _ = corePairs.card + (blockPairs U).card := by
+      exact Finset.card_union_of_disjoint (pair_disjoint hU)
+    _ = 1118207 := by rw [hcore, hblock]; norm_num
 
 /-- Concrete n = 2^21 KoalaBear NTT node at an index. -/
 noncomputable def node21 (j : Index) : _root_.KoalaBear.Field :=
