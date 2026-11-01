@@ -68,17 +68,15 @@ in column zero, with no multiplicity or support collisions. -/
 theorem support_card {U : Finset Small} (hU : U ∈ Candidates) :
     (support U).card = 1118207 := by
   have hcore : corePairs.card = 4095 := by
-    rw [corePairs, Finset.card_product, coreRows_card]
-    simp
+    simp [corePairs, coreRows_card]
   have hblock : (blockPairs U).card = 4096 * 272 := by
-    rw [blockPairs, Finset.card_product, candidate_card hU]
-    simp
+    simp [blockPairs, candidate_card hU]
   calc
     (support U).card = (pairSet U).card := by
       exact Finset.card_image_of_injective _ idx_injective
     _ = corePairs.card + (blockPairs U).card := by
       exact Finset.card_union_of_disjoint (pair_disjoint hU)
-    _ = 1118207 := by rw [hcore, hblock]; norm_num
+    _ = 1118207 := by norm_num [hcore, hblock]
 
 /-- Concrete n = 2^21 KoalaBear NTT node at an index. -/
 noncomputable def node21 (j : Index) : _root_.KoalaBear.Field :=
