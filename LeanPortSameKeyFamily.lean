@@ -254,4 +254,12 @@ theorem concrete_V_injective :
     Function.Injective (V projectedNode) :=
   V_injective_of_y_injective projectedNode projectedNode_injective
 
+/-- Different column subsets give a nonzero polynomial difference,
+    closing the nonvanishing premise of the alpha root-count lemma. -/
+theorem concrete_V_sub_ne_zero {U W : Finset Small} (h : U ≠ W) :
+    V projectedNode U - V projectedNode W ≠ 0 := by
+  apply sub_ne_zero.mpr
+  intro hEq
+  exact h (concrete_V_injective hEq)
+
 end OrbitPencilLiftSameKey
