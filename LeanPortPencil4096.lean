@@ -126,23 +126,30 @@ noncomputable def zpoly : Polynomial Sextic :=
 noncomputable def messagePoly (Q : Polynomial Sextic) : Polynomial Sextic :=
   coreLocator * Q.comp zpoly
 
-/-- The exact endpoint: 4095 + 255·4096 = 1048575, strictly below 2^20. -/
-theorem message_degree_le {Q : Polynomial Sextic} (hQ : Q.natDegree ≤ 255) :
-    (messagePoly Q).natDegree ≤ 1048575 := by
+/-- The degree calculation is field-agnostic and does not unfold the
+4095-factor concrete core while elaborating the polynomial product. -/
+theorem abstract_message_degree_le (R Q : Polynomial Sextic)
+    (hR : R.natDegree = 4095) (hQ : Q.natDegree ≤ 255) :
+    (R * Q.comp ((Polynomial.X : Polynomial Sextic)^4096)).natDegree ≤ 1048575 := by
   calc
-    (messagePoly Q).natDegree
-        ≤ coreLocator.natDegree + (Q.comp zpoly).natDegree := by
-            change (coreLocator * Q.comp zpoly).natDegree ≤
-              coreLocator.natDegree + (Q.comp zpoly).natDegree
-            exact Polynomial.natDegree_mul_le
-    _ ≤ 4095 + Q.natDegree * zpoly.natDegree := by
-          rw [coreLocator_natDegree]
+    (R * Q.comp ((Polynomial.X : Polynomial Sextic)^4096)).natDegree ≤
+        R.natDegree + (Q.comp ((Polynomial.X : Polynomial Sextic)^4096)).natDegree :=
+          Polynomial.natDegree_mul_le
+    _ ≤ 4095 + Q.natDegree * ((Polynomial.X : Polynomial Sextic)^4096).natDegree := by
+          rw [hR]
           exact Nat.add_le_add_left Polynomial.natDegree_comp_le 4095
     _ ≤ 4095 + 255 * 4096 := by
-          have hz : zpoly.natDegree = 4096 := by simp [zpoly]
+          have hz : ((Polynomial.X : Polynomial Sextic)^4096).natDegree = 4096 := by
+            simp
           rw [hz]
           exact Nat.add_le_add_left (Nat.mul_le_mul_right 4096 hQ) 4095
     _ = 1048575 := by norm_num
+
+/-- The exact endpoint: 4095 + 255·4096 = 1048575, strictly below 2^20. -/
+theorem message_degree_le {Q : Polynomial Sextic} (hQ : Q.natDegree ≤ 255) :
+    (messagePoly Q).natDegree ≤ 1048575 := by
+  simpa only [messagePoly, zpoly] using
+    abstract_message_degree_le coreLocator Q coreLocator_natDegree hQ
 
 /-- Formal polynomial witness of sufficient degree at each same-key pair.
 This proves degree admissibility, not codeword agreement on the support. -/
