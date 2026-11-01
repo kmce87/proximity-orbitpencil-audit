@@ -148,8 +148,8 @@ theorem abstract_message_degree_le (R Q : Polynomial Sextic)
 /-- The exact endpoint: 4095 + 255·4096 = 1048575, strictly below 2^20. -/
 theorem message_degree_le {Q : Polynomial Sextic} (hQ : Q.natDegree ≤ 255) :
     (messagePoly Q).natDegree ≤ 1048575 := by
-  simpa only [messagePoly, zpoly] using
-    abstract_message_degree_le coreLocator Q coreLocator_natDegree hQ
+  rw [messagePoly, zpoly]
+  exact abstract_message_degree_le coreLocator Q coreLocator_natDegree hQ
 
 /-- Formal polynomial witness of sufficient degree at each same-key pair.
 This proves degree admissibility, not codeword agreement on the support. -/
