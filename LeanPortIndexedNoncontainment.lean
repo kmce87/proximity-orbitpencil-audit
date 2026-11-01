@@ -1,3 +1,5 @@
+import Mathlib
+
 /-!
 Lean 4.34 / Mathlib candidate. NOT KERNEL-CHECKED.
 
@@ -8,7 +10,6 @@ This module has no sorry/axiom and no assumptions about existence of an MCA
 witness: it proves a *conditional* lemma given the indexed support and its
 polynomial evaluation identity. Its final use in RS-MCA remains unformalized.
 -/
-import Mathlib
 
 namespace OrbitPencilLiftIndexedNoncontainment
 open Polynomial

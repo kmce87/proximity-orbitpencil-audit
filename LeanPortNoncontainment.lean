@@ -1,3 +1,5 @@
+import Mathlib
+
 /-!
 Candidate lemma for the n = 2^21 KoalaBear OrbitPencil lift.
 
@@ -11,7 +13,6 @@ Assumptions are explicit: A is the degree-4096 denominator polynomial,
 R is the degree-1936 nonzero core polynomial, q is a degree-<2^20
 codeword polynomial, and P = A*q+R vanishes on a support S.
 -/
-import Mathlib
 
 namespace OrbitPencilLiftNoncontainment
 

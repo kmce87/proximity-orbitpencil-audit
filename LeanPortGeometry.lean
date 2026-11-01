@@ -1,3 +1,5 @@
+import Mathlib
+
 /-!
   Independent Lean 4 / Mathlib adaptation candidate for the KoalaBear
   n = 2^21 fibre geometry used in an OrbitPencil MCA audit.
@@ -7,7 +9,6 @@
   Credit for original 512-by-512 pattern: accepted OrbitPencil PR #38,
   proximity-prize/proximity-prize, including erdkocak.
 -/
-import Mathlib
 
 namespace OrbitPencilLiftGeometry
 
