@@ -14,6 +14,9 @@ Proximity Prize ProtocolClaim.
 
 namespace OrbitPencilLiftPointwiseSupport4096
 
+set_option maxRecDepth 10000
+set_option maxHeartbeats 1000000
+
 open Polynomial
 open OrbitPencilLiftGeometry
 open OrbitPencilLiftSameKey
