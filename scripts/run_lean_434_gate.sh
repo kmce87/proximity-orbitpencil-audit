@@ -17,7 +17,7 @@ lake build CompPoly.Univariate.NTT.KoalaBear
 mkdir -p .lake/build/lib/lean
 lake env lean -o .lake/build/lib/lean/LeanPortSameKeyFamily.olean LeanPortSameKeyFamily.lean
 lake env lean -o .lake/build/lib/lean/LeanPortSeparatingAlpha.olean LeanPortSeparatingAlpha.lean
-lake env lean LeanPortConcreteSlopes.lean
+lake env lean -o .lake/build/lib/lean/LeanPortConcreteSlopes.olean LeanPortConcreteSlopes.lean
 lake env lean LeanPortIndexedNoncontainment.lean
 lake env lean LeanPortNoncontainment.lean
 lake env lean -o .lake/build/lib/lean/LeanPortGeometry.olean LeanPortGeometry.lean
