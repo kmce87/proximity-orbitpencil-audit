@@ -53,7 +53,7 @@ noncomputable def key {K : Type*} [Field K] (y : Small → K)
 theorem card_keys {K : Type*} [Field K] [Fintype K]
     (hK : Fintype.card K = 2130706433) :
     Fintype.card ((Fin 14 → K) × Small) = 2130706433 ^ 14 * 512 := by
-  simp [Fintype.card_prod, Fintype.card_fun, Small, hK]
+  simp [Fintype.card_prod, Small, hK]
 
 /-- Copied mathematical pigeonhole principle from the accepted
 OrbitPencil/PrescribedTop proof, with no extra axioms. -/
@@ -62,7 +62,7 @@ theorem pigeonhole {α β : Type} [Fintype β] [DecidableEq β]
     (hn : Fintype.card β * n < s.card) :
     ∃ y : β, n < (s.filter (fun x => f x = y)).card := by
   by_contra hcon
-  push_neg at hcon
+  push Not at hcon
   have hsum : s.card
       = ∑ y ∈ (Finset.univ : Finset β), (s.filter (fun x => f x = y)).card :=
     Finset.card_eq_sum_card_fiberwise (fun a _ => Finset.mem_univ _)
@@ -83,15 +83,24 @@ theorem orbit_count :
   rw [Nat.choose_eq_fast_choose]
   decide
 
+/-- Classical filter for a fixed key, with the decidability instance scoped
+inside the definition rather than leaked into the theorem statement. -/
+noncomputable def family {K : Type*} [Field K] (y : Small → K)
+    (σ : (Fin 14 → K) × Small) : Finset (Finset Small) := by
+  classical
+  exact Candidates.filter (fun U => key y U = σ)
+
 /-- A *single* key fibre contains more than 2^59 distinct 272-column
 subsets. No injectivity of y is needed for this counting step alone. -/
 theorem exists_big_same_key_family {K : Type*} [Field K] [Fintype K]
     (y : Small → K) (hK : Fintype.card K = 2130706433) :
     ∃ σ : (Fin 14 → K) × Small,
-      2^59 < (Candidates.filter (fun U => key y U = σ)).card := by
+      2^59 < (family y σ).card := by
   classical
-  apply pigeonhole Candidates (key y) (2^59)
-  rw [card_keys hK, candidates_card]
-  exact orbit_count
+  have hcount : Fintype.card ((Fin 14 → K) × Small) * 2^59 < Candidates.card := by
+    rw [card_keys hK, candidates_card]
+    exact orbit_count
+  obtain ⟨σ, hσ⟩ := pigeonhole Candidates (key y) (2^59) hcount
+  exact ⟨σ, by simpa only [family] using hσ⟩
 
 end OrbitPencilLiftSameKey
