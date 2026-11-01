@@ -1,4 +1,5 @@
 import Mathlib
+import CompPoly.Univariate.NTT.KoalaBear
 
 /-!
 # Same-key family for the KoalaBear 4096-fibre lift
@@ -185,5 +186,72 @@ theorem V_eval_zero_eq_of_key {K : Type*} [Field K] (eta : K)
       V_eval_zero_pow eta (candidate_card hW)]
   apply pow_eq_pow_of_modEq (n := 512) _ heta
   exact congrArg Fin.val (congrArg Prod.snd hkey)
+
+
+/-!
+## Concrete KoalaBear n = 2^21 NTT projection
+
+Unlike the generic pigeonhole lemma, these declarations instantiate the
+*actual prime field* and its CompPoly 2^21 NTT generator. They prove that
+the 512 projected nodes are pairwise distinct, and hence distinct subsets
+give distinct vanishing polynomials. The separate extension-field and
+received-line/MCA bridges are not proved here.
+-/
+
+/-- The exact KoalaBear prime-field NTT domain at size 2^21. -/
+def baseNttDomain21 :
+    CompPoly.CPolynomial.NTT.Domain _root_.KoalaBear.Field :=
+  CompPoly.CPolynomial.NTT.KoalaBear.domainOfLogN 21
+    (by norm_num [_root_.KoalaBear.twoAdicity])
+
+noncomputable def omega21 : _root_.KoalaBear.Field :=
+  baseNttDomain21.omega
+
+/-- Projection by x ↦ x^4096 on the first row of the 4096 × 512 grid. -/
+noncomputable def projectedNode (b : Small) : _root_.KoalaBear.Field :=
+  (omega21 ^ b.val) ^ 4096
+
+/-- The 512 projected NTT nodes really are distinct in KoalaBear.Field. -/
+theorem projectedNode_injective : Function.Injective projectedNode := by
+  intro b c h
+  apply Fin.ext
+  refine Nat.eq_of_mul_eq_mul_right (by norm_num : 0 < 4096) ?_
+  apply baseNttDomain21.primitive.pow_inj
+  · change b.val * 4096 < 2097152
+    omega
+  · change c.val * 4096 < 2097152
+    omega
+  simpa only [projectedNode, omega21, pow_mul] using h
+
+/-- A vanishing polynomial of injectively labelled roots detects membership. -/
+theorem V_eval_zero_iff_of_injective {K : Type*} [Field K]
+    (y : Small → K) (hy : Function.Injective y)
+    (U : Finset Small) (b : Small) :
+    (V y U).eval (y b) = 0 ↔ b ∈ U := by
+  classical
+  constructor
+  · intro h
+    rw [V, Polynomial.eval_prod, Finset.prod_eq_zero_iff] at h
+    obtain ⟨c, hc, hzero⟩ := h
+    rw [Polynomial.eval_sub, Polynomial.eval_X, Polynomial.eval_C, sub_eq_zero] at hzero
+    rwa [hy hzero]
+  · intro h
+    rw [V, Polynomial.eval_prod]
+    refine Finset.prod_eq_zero h ?_
+    simp
+
+/-- Distinct root subsets cannot produce the same vanishing polynomial. -/
+theorem V_injective_of_y_injective {K : Type*} [Field K]
+    (y : Small → K) (hy : Function.Injective y) :
+    Function.Injective (V y) := by
+  intro U W h
+  ext b
+  rw [← V_eval_zero_iff_of_injective y hy U b,
+      ← V_eval_zero_iff_of_injective y hy W b, h]
+
+/-- Concrete consequence needed by the slope-separation root count. -/
+theorem concrete_V_injective :
+    Function.Injective (V projectedNode) :=
+  V_injective_of_y_injective projectedNode projectedNode_injective
 
 end OrbitPencilLiftSameKey
