@@ -64,10 +64,12 @@ theorem exists_concrete_alpha_distinct_slopes :
       (hSelKey U hU).trans (hSelKey W hW).symm
     have hd := concrete_sextic_degree_lt_of_key
       (hSelCand U hU) (hSelCand W hW) hkey
+    change (V (fun b => baseToSextic (projectedNode b)) U -
+      V (fun b => baseToSextic (projectedNode b)) W).natDegree ≤ 257
     omega
   have hprojected : projected6.card ≤ 512 := by
     calc
-      projected6.card ≤ (Finset.univ : Finset Small).card := by
+      projected6.card ≤ (Finset.univ : Finset OrbitPencilLiftSameKey.Small).card := by
         exact Finset.card_image_le
       _ = 512 := by simp [Small]
   obtain ⟨alpha, halpha, havoid, hinj⟩ :=
