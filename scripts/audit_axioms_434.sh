@@ -25,7 +25,7 @@ for name in sys.argv[2:]:
     # Lean prints the qualified declaration in single quotes; the axiom list
     # can wrap across multiple lines. Match the exact name (not its prefix).
     pattern = (r"(?m)^'" + re.escape(name) +
-               r"' (does not depend on any axioms|depends on axioms: \\[([\\s\\S]*?)\\])")
+               r"' (does not depend on any axioms|depends on axioms: \[([\s\S]*?)\])")
     m = re.search(pattern, log)
     if not m:
         raise SystemExit(f'FAIL: missing/unparseable #print axioms result for {name}')
