@@ -14,8 +14,10 @@ lake update
 lake exe cache get
 # CompPoly is a source dependency, not part of Mathlib's prebuilt cache.
 lake build CompPoly.Univariate.NTT.KoalaBear
-lake env lean LeanPortSameKeyFamily.lean
-lake env lean LeanPortSeparatingAlpha.lean
+mkdir -p .lake/build/lib/lean
+lake env lean -o .lake/build/lib/lean/LeanPortSameKeyFamily.olean LeanPortSameKeyFamily.lean
+lake env lean -o .lake/build/lib/lean/LeanPortSeparatingAlpha.olean LeanPortSeparatingAlpha.lean
+lake env lean LeanPortConcreteSlopes.lean
 lake env lean LeanPortIndexedNoncontainment.lean
 lake env lean LeanPortNoncontainment.lean
 lake env lean LeanPortGeometry.lean

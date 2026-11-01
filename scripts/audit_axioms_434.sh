@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Fail-closed transitive axiom audit of the forty-three currently compiled Lean lemmas.
+# Fail-closed transitive axiom audit of the forty-four currently compiled Lean lemmas.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 tmp="$(mktemp -d)"
@@ -10,6 +10,7 @@ LeanPortNoncontainment.lean OrbitPencilLiftNoncontainment.no_large_support
 LeanPortGeometry.lean OrbitPencilLiftGeometry.idx_injective OrbitPencilLiftGeometry.idx_row_column OrbitPencilLiftGeometry.pow_block
 LeanPortSameKeyFamily.lean OrbitPencilLiftSameKey.outer_card OrbitPencilLiftSameKey.candidates_card OrbitPencilLiftSameKey.card_keys OrbitPencilLiftSameKey.pigeonhole OrbitPencilLiftSameKey.orbit_count OrbitPencilLiftSameKey.exists_big_same_key_family OrbitPencilLiftSameKey.V_monic OrbitPencilLiftSameKey.V_natDegree OrbitPencilLiftSameKey.candidate_card OrbitPencilLiftSameKey.V_coeff_top OrbitPencilLiftSameKey.V_coeff_gt OrbitPencilLiftSameKey.top_coeff_eq_of_key OrbitPencilLiftSameKey.V_sub_degree_lt_of_key OrbitPencilLiftSameKey.V_eval_zero_pow OrbitPencilLiftSameKey.V_eval_zero_eq_of_key OrbitPencilLiftSameKey.projectedNode_injective OrbitPencilLiftSameKey.V_eval_zero_iff_of_injective OrbitPencilLiftSameKey.V_injective_of_y_injective OrbitPencilLiftSameKey.concrete_V_injective OrbitPencilLiftSameKey.concrete_V_sub_ne_zero OrbitPencilLiftSameKey.mapped_nodes_injective OrbitPencilLiftSameKey.V_map OrbitPencilLiftSameKey.mapped_V_injective OrbitPencilLiftSameKey.mapped_V_sub_ne_zero OrbitPencilLiftSameKey.mapped_V_sub_natDegree_lt_of_key OrbitPencilLiftSameKey.concrete_prime_card OrbitPencilLiftSameKey.concrete_sextic_card OrbitPencilLiftSameKey.eta6_pow OrbitPencilLiftSameKey.eta6_node OrbitPencilLiftSameKey.concrete_sextic_constant_eq_of_key OrbitPencilLiftSameKey.concrete_same_key_family OrbitPencilLiftSameKey.concrete_sextic_degree_lt_of_key OrbitPencilLiftSameKey.concrete_sextic_sub_ne_zero
 LeanPortSeparatingAlpha.lean OrbitPencilLiftSeparatingAlpha.bad_card_le OrbitPencilLiftSeparatingAlpha.alpha_arithmetic OrbitPencilLiftSeparatingAlpha.exists_alpha_gamma_injective
+LeanPortConcreteSlopes.lean OrbitPencilLiftConcreteSlopes.exists_concrete_alpha_distinct_slopes
 TARGETS
 while read -r file names; do
   out="$tmp/$(basename "$file").out"
@@ -41,4 +42,4 @@ for name in sys.argv[2:]:
     print(f'AXIOM PASS: {name}: {sorted(found)}')
 PY
 done < "$tmp/targets.txt"
-echo "TRANSITIVE AXIOM AUDIT PASS: forty-three lemmas; only allowed axioms"
+echo "TRANSITIVE AXIOM AUDIT PASS: forty-four lemmas; only allowed axioms"
