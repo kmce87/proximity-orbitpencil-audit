@@ -92,7 +92,6 @@ theorem exists_big_same_key_family {K : Type*} [Field K] [Fintype K]
     (y : Small → K) (hK : Fintype.card K = 2130706433) :
     ∃ σ : (Fin 14 → K) × Small,
       2^59 < (Candidates.filter (fun U => key y U = σ)).card := by
-  classical
   apply pigeonhole Candidates (key y) (2^59)
   rw [card_keys hK, candidates_card]
   exact orbit_count
