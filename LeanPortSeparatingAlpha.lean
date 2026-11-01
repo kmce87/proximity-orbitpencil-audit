@@ -1,3 +1,5 @@
+import Mathlib
+
 /-!
 # Separating alpha and distinct slopes for the 4096-fibre OrbitPencil lift
 
@@ -14,7 +16,6 @@ that its polynomial differences are nonzero and have degree <= 257,
 and that the field has the specified cardinality. It does not construct
 the actual RS-MCA received affine line or certify an MCA counterexample.
 -/
-import Mathlib
 
 namespace OrbitPencilLiftSeparatingAlpha
 open Polynomial
