@@ -356,7 +356,9 @@ noncomputable def eta6 : Sextic := (baseToSextic omega21) ^ 4096
 
 theorem eta6_pow : eta6 ^ 512 = 1 := by
   have hw : omega21 ^ 2097152 = 1 := by
-    simpa only [omega21] using baseNttDomain21.primitive.pow_eq_one
+    have hlog : baseNttDomain21.logN = 21 := rfl
+    simpa only [omega21, hlog, show (2 : ℕ) ^ 21 = 2097152 by norm_num] using
+      baseNttDomain21.primitive.pow_eq_one
   change ((baseToSextic omega21) ^ 4096) ^ 512 = 1
   rw [← pow_mul]
   have hmul : 4096 * 512 = 2097152 := by norm_num
