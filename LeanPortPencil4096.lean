@@ -37,8 +37,9 @@ theorem delta_eval_zero {U0 U : Finset Small}
     (hU0 : U0 ∈ Candidates) (hU : U ∈ Candidates)
     (hk : key projectedNode U0 = key projectedNode U) :
     (deltaV U0 U).eval 0 = 0 := by
-  rw [deltaV, Polynomial.eval_sub,
-      concrete_sextic_constant_eq_of_key hU0 hU hk, sub_self]
+  have hconst := concrete_sextic_constant_eq_of_key hU0 hU hk
+  change (V y6 U0).eval 0 = (V y6 U).eval 0 at hconst
+  rw [deltaV, Polynomial.eval_sub, hconst, sub_self]
 
 theorem pencil_eval_zero {alpha : Sextic} {U0 U : Finset Small}
     (hU0 : U0 ∈ Candidates) (hU : U ∈ Candidates)
@@ -110,7 +111,7 @@ theorem exists_quotient {alpha : Sextic} (hα : alpha ≠ 0)
         mul_ne_zero (mul_ne_zero hfac1 hfac2) hQz
       have hnat : ((Polynomial.X : Polynomial Sextic) *
           (Polynomial.X - Polynomial.C alpha) * Q).natDegree < 258 := by
-        have hd := pencil_degree_lt hU0 hU hk
+        have hd := pencil_degree_lt (alpha := alpha) hU0 hU hk
         rw [show pencil alpha U0 U = (Polynomial.X : Polynomial Sextic) *
             (Polynomial.X - Polynomial.C alpha) * Q by rw [hQ1, hQ, mul_assoc]] at hd
         exact (Polynomial.natDegree_lt_iff_degree_lt hpne).mpr hd
@@ -131,6 +132,8 @@ theorem message_degree_le {Q : Polynomial Sextic} (hQ : Q.natDegree ≤ 255) :
   calc
     (messagePoly Q).natDegree
         ≤ coreLocator.natDegree + (Q.comp zpoly).natDegree := by
+            change (coreLocator * Q.comp zpoly).natDegree ≤
+              coreLocator.natDegree + (Q.comp zpoly).natDegree
             exact Polynomial.natDegree_mul_le
     _ ≤ 4095 + Q.natDegree * zpoly.natDegree := by
           rw [coreLocator_natDegree]
