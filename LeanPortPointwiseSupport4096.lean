@@ -32,8 +32,7 @@ theorem node6_pow_column (a : Row) (b : Column) :
   have h := OrbitPencilLiftGeometry.pow_block omega21 hw a b
   change (baseToSextic (omega21 ^ (a.val * 512 + b.val))) ^ 4096 =
     baseToSextic ((omega21 ^ b.val) ^ 4096)
-  rw [map_pow]
-  exact congrArg baseToSextic h
+  simpa only [map_pow] using congrArg baseToSextic h
 
 theorem node6_pow_projected (j : Index) :
     (node6 j) ^ 4096 = y6 (column j) := by
