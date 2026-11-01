@@ -262,4 +262,64 @@ theorem concrete_V_sub_ne_zero {U W : Finset Small} (h : U ≠ W) :
   intro hEq
   exact h (concrete_V_injective hEq)
 
+
+/-!
+## Prime-field to extension-field bridge
+
+This is the next falsification gate for the large-domain OrbitPencil lift.
+The map is a genuine field homomorphism, so injectivity is automatic.
+These results do not assume that the extension is specifically sextic:
+the concrete sextic field and its cardinality are still to be instantiated.
+-/
+
+theorem mapped_nodes_injective {K L : Type*} [Field K] [Field L]
+    (φ : K →+* L) (y : Small → K) (hy : Function.Injective y) :
+    Function.Injective (fun b => φ (y b)) := by
+  intro b c h
+  exact hy (φ.injective h)
+
+/-- The vanishing polynomial over an extension is the coefficientwise
+image of the original prime-field vanishing polynomial. -/
+theorem V_map {K L : Type*} [Field K] [Field L]
+    (φ : K →+* L) (y : Small → K) (U : Finset Small) :
+    (V y U).map φ = V (fun b => φ (y b)) U := by
+  classical
+  simp [V, Polynomial.map_prod]
+
+/-- Distinct prime-field root subsets remain distinct after field extension. -/
+theorem mapped_V_injective {K L : Type*} [Field K] [Field L]
+    (φ : K →+* L) (y : Small → K) (hy : Function.Injective y) :
+    Function.Injective (V (fun b => φ (y b))) :=
+  V_injective_of_y_injective _ (mapped_nodes_injective φ y hy)
+
+/-- In particular, a distinct pair cannot collapse to the same polynomial
+after passing to the sextic extension. -/
+theorem mapped_V_sub_ne_zero {K L : Type*} [Field K] [Field L]
+    (φ : K →+* L) (y : Small → K) (hy : Function.Injective y)
+    {U W : Finset Small} (hne : U ≠ W) :
+    V (fun b => φ (y b)) U - V (fun b => φ (y b)) W ≠ 0 := by
+  apply sub_ne_zero.mpr
+  intro hEq
+  exact hne (mapped_V_injective φ y hy hEq)
+
+/-- The *base-field* same-key hypothesis suffices to retain the degree-257
+difference bound over any field extension; no extra top-key condition
+over the much larger extension field is required. -/
+theorem mapped_V_sub_natDegree_lt_of_key {K L : Type*} [Field K] [Field L]
+    (φ : K →+* L) (y : Small → K)
+    {U W : Finset Small} (hU : U ∈ Candidates) (hW : W ∈ Candidates)
+    (hkey : key y U = key y W) :
+    (V (fun b => φ (y b)) U - V (fun b => φ (y b)) W).natDegree < 258 := by
+  have hd := V_sub_degree_lt_of_key y hU hW hkey
+  have hn : (V y U - V y W).natDegree < 258 := by
+    by_cases hz : V y U - V y W = 0
+    · simp [hz]
+    · exact (Polynomial.natDegree_lt_iff_degree_lt hz).mpr hd
+  have heq :
+      V (fun b => φ (y b)) U - V (fun b => φ (y b)) W =
+        (V y U - V y W).map φ := by
+    rw [Polynomial.map_sub, V_map, V_map]
+  rw [heq]
+  exact (Polynomial.natDegree_map_le).trans_lt hn
+
 end OrbitPencilLiftSameKey
