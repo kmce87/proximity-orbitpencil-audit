@@ -84,6 +84,7 @@ theorem support_root_or (U : Finset Small) (j : Index)
   classical
   change j ∈ (pairSet U).image (fun ab : Row × Column => idx ab.1 ab.2) at hj
   obtain ⟨⟨a, b⟩, hp, heq⟩ := Finset.mem_image.mp hj
+  change (a, b) ∈ corePairs ∪ blockPairs U at hp
   have hp' : (a, b) ∈ corePairs ∨ (a, b) ∈ blockPairs U :=
     Finset.mem_union.mp hp
   rcases hp' with hc | hb
