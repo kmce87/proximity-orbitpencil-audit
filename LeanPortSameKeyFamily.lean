@@ -57,7 +57,7 @@ theorem card_keys {K : Type*} [Field K] [Fintype K]
 
 /-- Copied mathematical pigeonhole principle from the accepted
 OrbitPencil/PrescribedTop proof, with no extra axioms. -/
-theorem pigeonhole {α β : Type} [Fintype β] [DecidableEq β]
+theorem pigeonhole {α β : Type*} [Fintype β] [DecidableEq β]
     (s : Finset α) (f : α → β) (n : ℕ)
     (hn : Fintype.card β * n < s.card) :
     ∃ y : β, n < (s.filter (fun x => f x = y)).card := by
