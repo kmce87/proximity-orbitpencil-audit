@@ -14,8 +14,8 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
-      # lean-action requires lake-manifest.json BEFORE its configure step.
-      - name: Bootstrap pinned Lean and generate lake-manifest.json
+      # Direct setup avoids 3 GB GitHub Actions .lake cache round-trip.
+      - name: Bootstrap pinned Lean and Mathlib
         shell: bash
         run: |
           set -euo pipefail
@@ -23,19 +23,10 @@ jobs:
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
           export PATH="$HOME/.elan/bin:$PATH"
           lean --version
+          lake --version
           lake update
           test -s lake-manifest.json
-      - name: Restore Mathlib cache and set up Lean
-        uses: leanprover/lean-action@v1
-        with:
-          auto-config: false
-          build: false
-          test: false
-          lint: false
-      - name: Record toolchain
-        run: |
-          lean --version
-          lake --version
+          lake exe cache get
       - name: Compile all three candidates (fail-closed)
         shell: bash
         run: bash scripts/run_lean_434_gate.sh
