@@ -81,6 +81,7 @@ theorem support_root_or (U : Finset Small) (j : Index)
     coreLocator.eval (node6 j) = 0 ∨
       (V y6 U).eval ((node6 j)^4096) = 0 := by
   classical
+  change j ∈ (pairSet U).image (fun ab : Row × Column => idx ab.1 ab.2) at hj
   obtain ⟨⟨a, b⟩, hp, heq⟩ := Finset.mem_image.mp hj
   change (a, b) ∈ pairSet U at hp
   rcases Finset.mem_union.mp hp with hc | hb
@@ -110,10 +111,10 @@ theorem pencil_agrees_on_support (alpha : Sextic)
       gamma alpha U0 U *
         (-coreLocator.eval (node6 j) / ((node6 j)^4096 - alpha)) =
       coreLocator.eval (node6 j) * Q.eval ((node6 j)^4096) := by
+  have hroot := support_root_or U j hj
   exact pencil_line_agrees_on_root alpha U0 U Q hfactor
     (coreLocator.eval (node6 j)) ((node6 j)^4096)
-    (node6_pow_nonzero j) (node6_pow_ne_alpha alpha havoid j)
-    (support_root_or U j hj)
+    (node6_pow_nonzero j) (node6_pow_ne_alpha alpha havoid j) hroot
 
 /-- The right-hand side is exactly the evaluation of an admissible RS
 message polynomial, rather than merely a scalar product. Degree admissibility
@@ -132,8 +133,8 @@ theorem pencil_agrees_with_message_on_support (alpha : Sextic)
         (-coreLocator.eval (node6 j) / ((node6 j)^4096 - alpha)) =
       (coreLocator * Q.comp ((Polynomial.X : Polynomial Sextic)^4096)).eval
         (node6 j) := by
+  have h := pencil_agrees_on_support alpha U0 U Q hfactor havoid j hj
   simpa only [Polynomial.eval_mul, Polynomial.eval_comp,
-    Polynomial.eval_pow, Polynomial.eval_X] using
-      (pencil_agrees_on_support alpha U0 U Q hfactor havoid j hj)
+    Polynomial.eval_pow, Polynomial.eval_X] using h
 
 end OrbitPencilLiftPointwiseSupport4096
