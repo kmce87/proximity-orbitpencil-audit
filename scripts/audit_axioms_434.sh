@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Fail-closed transitive axiom audit of the fifty-nine targeted Lean lemmas.
+# Fail-closed transitive axiom audit of the sixty targeted Lean lemmas.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 tmp="$(mktemp -d)"
@@ -12,7 +12,7 @@ LeanPortSameKeyFamily.lean OrbitPencilLiftSameKey.outer_card OrbitPencilLiftSame
 LeanPortSeparatingAlpha.lean OrbitPencilLiftSeparatingAlpha.bad_card_le OrbitPencilLiftSeparatingAlpha.alpha_arithmetic OrbitPencilLiftSeparatingAlpha.exists_alpha_gamma_injective
 LeanPortConcreteSlopes.lean OrbitPencilLiftConcreteSlopes.exists_concrete_alpha_distinct_slopes
 LeanPortSupport4096.lean OrbitPencilLiftSupport4096.coreRows_card OrbitPencilLiftSupport4096.pair_disjoint OrbitPencilLiftSupport4096.support_card OrbitPencilLiftSupport4096.node21_injective OrbitPencilLiftSupport4096.coreLocator_monic OrbitPencilLiftSupport4096.coreLocator_natDegree OrbitPencilLiftSupport4096.coreLocator_ne_zero OrbitPencilLiftSupport4096.coreLocator_eval_core
-LeanPortPencil4096.lean OrbitPencilLiftPencil4096.delta_eval_zero OrbitPencilLiftPencil4096.pencil_eval_zero OrbitPencilLiftPencil4096.pencil_eval_alpha OrbitPencilLiftPencil4096.pencil_degree_lt OrbitPencilLiftPencil4096.exists_quotient OrbitPencilLiftPencil4096.message_degree_le OrbitPencilLiftPencil4096.exists_message_poly
+LeanPortPencil4096.lean OrbitPencilLiftPencil4096.delta_eval_zero OrbitPencilLiftPencil4096.pencil_eval_zero OrbitPencilLiftPencil4096.pencil_eval_alpha OrbitPencilLiftPencil4096.pencil_degree_lt OrbitPencilLiftPencil4096.exists_quotient OrbitPencilLiftPencil4096.abstract_message_degree_le OrbitPencilLiftPencil4096.message_degree_le OrbitPencilLiftPencil4096.exists_message_poly
 TARGETS
 while read -r file names; do
   out="$tmp/$(basename "$file").out"
@@ -44,4 +44,4 @@ for name in sys.argv[2:]:
     print(f'AXIOM PASS: {name}: {sorted(found)}')
 PY
 done < "$tmp/targets.txt"
-echo "TRANSITIVE AXIOM AUDIT PASS: fifty-nine lemmas; only allowed axioms"
+echo "TRANSITIVE AXIOM AUDIT PASS: sixty lemmas; only allowed axioms"
