@@ -96,4 +96,94 @@ theorem exists_big_same_key_family {K : Type*} [Field K] [Fintype K]
   rw [card_keys hK, candidates_card]
   exact orbit_count
 
+
+/-!
+## Source-to-claim bridge: equal keys imply the two polynomial constraints
+
+The accepted OrbitPencil.lean PR #38 proves these facts for its 512-fibre
+instance. Here the same 272-column polynomial and 14-coefficient key are
+used with a parameterized field, so the statements can be applied to the
+4096-point-fibre lift after the concrete NTT-domain injectivity is supplied.
+-/
+
+theorem V_monic {K : Type*} [Field K] (y : Small → K)
+    (U : Finset Small) : (V y U).Monic :=
+  Polynomial.monic_prod_of_monic _ _ fun b _ => Polynomial.monic_X_sub_C (y b)
+
+theorem V_natDegree {K : Type*} [Field K] (y : Small → K)
+    (U : Finset Small) : (V y U).natDegree = U.card := by
+  classical
+  rw [V, Polynomial.natDegree_prod_of_monic _ _
+    (fun b (_ : b ∈ U) => Polynomial.monic_X_sub_C (y b))]
+  simp
+
+theorem candidate_card {U : Finset Small} (hU : U ∈ Candidates) :
+    U.card = 272 := (Finset.mem_powersetCard.mp hU).2
+
+theorem V_coeff_top {K : Type*} [Field K] (y : Small → K)
+    {U : Finset Small} (hU : U ∈ Candidates) :
+    (V y U).coeff 272 = 1 := by
+  have hm := V_monic y U
+  rw [Polynomial.Monic, Polynomial.leadingCoeff, V_natDegree, candidate_card hU] at hm
+  exact hm
+
+theorem V_coeff_gt {K : Type*} [Field K] (y : Small → K)
+    {U : Finset Small} (hU : U ∈ Candidates)
+    {d : ℕ} (hd : 272 < d) : (V y U).coeff d = 0 := by
+  refine Polynomial.coeff_eq_zero_of_natDegree_lt ?_
+  rw [V_natDegree, candidate_card hU]
+  exact hd
+
+theorem top_coeff_eq_of_key {K : Type*} [Field K] (y : Small → K)
+    {U W : Finset Small} (hkey : key y U = key y W)
+    {d : ℕ} (hlo : 258 ≤ d) (hhi : d ≤ 271) :
+    (V y U).coeff d = (V y W).coeff d := by
+  have hk := congrArg Prod.fst hkey
+  have hi : 271 - d < 14 := by omega
+  have hc := congrFun hk ⟨271 - d, hi⟩
+  simpa only [key, topKey, show 271 - (271 - d) = d by omega] using hc
+
+/-- The concrete 14-coefficient key bounds the degree of the difference;
+it is NOT an extra hypothesis on the polynomial family. -/
+theorem V_sub_degree_lt_of_key {K : Type*} [Field K] (y : Small → K)
+    {U W : Finset Small} (hU : U ∈ Candidates) (hW : W ∈ Candidates)
+    (hkey : key y U = key y W) :
+    (V y U - V y W).degree < (258 : ℕ) := by
+  rw [Polynomial.degree_lt_iff_coeff_zero]
+  intro d hd
+  have hd258 : 258 ≤ d := by exact_mod_cast hd
+  rw [Polynomial.coeff_sub]
+  rcases lt_trichotomy d 272 with hlt | heq | hgt
+  · have hle : d ≤ 271 := by omega
+    rw [top_coeff_eq_of_key y hkey hd258 hle, sub_self]
+  · subst d
+    rw [V_coeff_top y hU, V_coeff_top y hW, sub_self]
+  · rw [V_coeff_gt y hU hgt, V_coeff_gt y hW hgt, sub_self]
+
+/-- The 272-element root product has positive sign at zero. -/
+theorem V_eval_zero_pow {K : Type*} [Field K] (eta : K)
+    {U : Finset Small} (hcard : U.card = 272) :
+    (V (fun b => eta ^ b.val) U).eval 0 =
+      eta ^ (∑ b ∈ U, b.val) := by
+  rw [V, Polynomial.eval_prod]
+  simp only [Polynomial.eval_sub, Polynomial.eval_X, Polynomial.eval_C, zero_sub]
+  rw [Finset.prod_neg, hcard]
+  norm_num
+  rw [Finset.prod_pow_eq_pow_sum]
+
+/-- Equality of the residue key forces equal constant coefficients for
+the actual multiplicative projected-column nodes eta^b, eta^512=1. -/
+theorem V_eval_zero_eq_of_key {K : Type*} [Field K] (eta : K)
+    (heta : eta ^ 512 = 1)
+    {U W : Finset Small}
+    (hU : U ∈ Candidates) (hW : W ∈ Candidates)
+    (hkey : key (fun b => eta ^ b.val) U =
+            key (fun b => eta ^ b.val) W) :
+    (V (fun b => eta ^ b.val) U).eval 0 =
+      (V (fun b => eta ^ b.val) W).eval 0 := by
+  rw [V_eval_zero_pow eta (candidate_card hU),
+      V_eval_zero_pow eta (candidate_card hW)]
+  apply pow_eq_pow_of_modEq (n := 512) _ heta
+  exact congrArg Fin.val (congrArg Prod.snd hkey)
+
 end OrbitPencilLiftSameKey
