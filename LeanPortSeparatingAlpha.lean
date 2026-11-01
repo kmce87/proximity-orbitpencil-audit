@@ -32,7 +32,7 @@ noncomputable def bad {F τ : Type*} [Field F]
 /-- The collision set is bounded by 257 roots per ordered unequal pair. -/
 theorem bad_card_le {F τ : Type*} [Field F]
     (Sel : Finset τ) (V : τ → Polynomial F) (projected : Finset F)
-    (hne : ∀ U ∈ Sel, ∀ W ∈ Sel, U ≠ W → V U - V W ≠ 0)
+    (_hne : ∀ U ∈ Sel, ∀ W ∈ Sel, U ≠ W → V U - V W ≠ 0)
     (hdeg : ∀ U ∈ Sel, ∀ W ∈ Sel, (V U - V W).natDegree ≤ 257) :
     (bad Sel V projected).card ≤ projected.card + 1 + Sel.offDiag.card * 257 := by
   classical
@@ -59,7 +59,9 @@ theorem bad_card_le {F τ : Type*} [Field F]
     _ = projected.card + 1 + Sel.offDiag.card * 257 := by simp
 
 /-- Exact arithmetic, including the pairwise root count (not merely 272). -/
-set_option maxRecDepth 10000 in
+set_option maxRecDepth 10000
+set_option maxHeartbeats 1000000
+set_option exponentiation.threshold 100000
 theorem alpha_arithmetic :
     513 + N * (N - 1) * 257 < (2130706433 : ℕ)^6 := by
   decide
@@ -80,7 +82,8 @@ theorem exists_alpha_gamma_injective {F τ : Type*} [Field F] [Fintype F]
       Set.InjOn (fun U => ((reference - V U).eval alpha) / alpha) (Sel : Set τ) := by
   classical
   have hoff : Sel.offDiag.card = N * (N - 1) := by
-    rw [Finset.offDiag_card, hSel]
+    rw [Finset.offDiag_card, hSel, Nat.mul_sub_left_distrib]
+    simp
   have hsmall : projected.card + 1 + Sel.offDiag.card * 257 < Fintype.card F := by
     rw [hoff, hF]
     have h := alpha_arithmetic
@@ -89,7 +92,7 @@ theorem exists_alpha_gamma_injective {F τ : Type*} [Field F] [Fintype F]
     (bad_card_le Sel V projected hne hdeg).trans_lt hsmall
   have hexists : ∃ alpha : F, alpha ∉ bad Sel V projected := by
     by_contra h
-    push_neg at h
+    push Not at h
     have hall : bad Sel V projected = Finset.univ := by
       ext alpha
       simp [h alpha]
@@ -115,7 +118,7 @@ theorem exists_alpha_gamma_injective {F τ : Type*} [Field F] [Fintype F]
   have heval : (V U).eval alpha = (V W).eval alpha := by
     have h := hdelta
     simp only [Polynomial.eval_sub] at h
-    exact sub_left_inj.mp h
+    exact sub_right_inj.mp h
   have hroot : alpha ∈ (V U - V W).roots.toFinset := by
     rw [Multiset.mem_toFinset, Polynomial.mem_roots (hne U hU W hW hdiff)]
     simpa [Polynomial.eval_sub] using sub_eq_zero.mpr heval
