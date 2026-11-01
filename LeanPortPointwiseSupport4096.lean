@@ -74,52 +74,30 @@ theorem node6_pow_ne_alpha (alpha : Sextic)
 theorem y6_injective : Function.Injective y6 := by
   exact mapped_nodes_injective baseToSextic projectedNode projectedNode_injective
 
-/-- Decompose membership in the image of two products *before* specializing
-the row universe to the concrete 4096-point type. This avoids asking the
-elaborator to reduce the large concrete Finset while projecting membership. -/
-private theorem image_product_cases
-    (A : Finset Row) (U : Finset Column) (j : Index)
-    (h : j ∈
-      ((A.product ({0} : Finset Column)) ∪
-        ((Finset.univ : Finset Row).product U)).image
-        (fun ab : Row × Column => idx ab.1 ab.2)) :
-    (∃ a : Row, a ∈ A ∧ j = idx a 0) ∨
-      (∃ a : Row, ∃ b : Column, b ∈ U ∧ j = idx a b) := by
-  classical
-  rw [Finset.mem_image] at h
-  obtain ⟨⟨a, b⟩, hp, heq⟩ := h
-  rw [Finset.mem_union] at hp
-  rcases hp with hc | hb
-  · obtain ⟨ha, hb0⟩ := Finset.mem_product.mp hc
-    have hbzero : b = (0 : Column) := Finset.mem_singleton.mp hb0
-    subst b
-    exact Or.inl ⟨a, ha, heq.symm⟩
-  · have hU : b ∈ U := (Finset.mem_product.mp hb).2
-    exact Or.inr ⟨a, b, hU, heq.symm⟩
-
 /-- Every support index is either a core root or a complete selected-column
-root, with no assumption about the message polynomial or received line. -/
+root. Keep the four large concrete Finsets opaque during membership elimination;
+the previous rewrite of their definitions exhausted Lean elaboration depth. -/
 theorem support_root_or (U : Finset Small) (j : Index)
     (hj : j ∈ support U) :
     coreLocator.eval (node6 j) = 0 ∨
       (V y6 U).eval ((node6 j)^4096) = 0 := by
   classical
-  have hs : j ∈
-      ((coreRows.product ({0} : Finset Column)) ∪
-        ((Finset.univ : Finset Row).product U)).image
-        (fun ab : Row × Column => idx ab.1 ab.2) := by
-    rw [OrbitPencilLiftSupport4096.support,
-      OrbitPencilLiftSupport4096.pairSet,
-      OrbitPencilLiftSupport4096.corePairs,
-      OrbitPencilLiftSupport4096.blockPairs] at hj
-    exact hj
-  rcases image_product_cases coreRows U j hs with
-    ⟨a, ha, heq⟩ | ⟨a, b, hU, heq⟩
-  · left
-    rw [heq]
+  change j ∈ (pairSet U).image (fun ab : Row × Column => idx ab.1 ab.2) at hj
+  obtain ⟨⟨a, b⟩, hp, heq⟩ := Finset.mem_image.mp hj
+  have hp' : (a, b) ∈ corePairs ∨ (a, b) ∈ blockPairs U :=
+    Finset.mem_union.mp hp
+  rcases hp' with hc | hb
+  · have hc' : (a, b) ∈ coreRows.product ({0} : Finset Column) := hc
+    obtain ⟨ha, hb0⟩ := Finset.mem_product.mp hc'
+    have hbzero : b = (0 : Column) := Finset.mem_singleton.mp hb0
+    subst b
+    left
+    rw [← heq]
     exact coreLocator_eval_core a ha
-  · right
-    rw [heq, node6_pow_column]
+  · have hb' : (a, b) ∈ (Finset.univ : Finset Row).product U := hb
+    have hU : b ∈ U := (Finset.mem_product.mp hb').2
+    right
+    rw [← heq, node6_pow_column]
     exact (V_eval_zero_iff_of_injective y6 y6_injective U b).mpr hU
 
 /-- Actual support-wise pointwise equality for the concrete KoalaBear
