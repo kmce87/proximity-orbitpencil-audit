@@ -10,7 +10,7 @@ The original root-counting approach is credited to the accepted OrbitPencil
 Lean proof, proximity-prize/proximity-prize PR #38 (incl. erdkocak).
 
 Assumptions are explicit: A is the degree-4096 denominator polynomial,
-R is the degree-1936 nonzero core polynomial, q is a degree-<2^20
+R is the degree-at-most-4095 nonzero core polynomial, q is a degree-<2^20
 codeword polynomial, and P = A*q+R vanishes on a support S.
 -/
 
@@ -18,14 +18,14 @@ namespace OrbitPencilLiftNoncontainment
 
 open Polynomial
 
-/-- A nonzero 1936-degree core cannot cancel a 4096-degree factor times
+/-- A nonzero at-most-4095-degree core cannot cancel a 4096-degree factor times
     a degree-<1048576 RS polynomial on 1116048 different field points.
     The support is a Finset of *field elements*: injectivity of the original
     index-domain map must be established separately before applying this. -/
 theorem no_large_support {F : Type*} [Field F]
     (A R q : Polynomial F) (S : Finset F)
     (hAne : A ≠ 0) (hAdeg : A.natDegree = 4096)
-    (hRne : R ≠ 0) (hRdeg : R.natDegree = 1936)
+    (hRne : R ≠ 0) (hRdeg : R.natDegree ≤ 4095)
     (hqdeg : q.natDegree ≤ 1048575)
     (hScard : 1116048 ≤ S.card)
     (heval : ∀ x ∈ S, (A * q + R).eval x = 0) : False := by

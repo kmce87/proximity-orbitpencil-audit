@@ -15,12 +15,12 @@ namespace OrbitPencilLiftIndexedNoncontainment
 open Polynomial
 
 /-- A degree-4096 factor times any RS message polynomial of degree ≤ 1048575
-cannot agree with a nonzero degree-1936 core on ≥ 1116048 distinct points.
+cannot agree with a nonzero degree-at-most-4095 core on ≥ 1116048 distinct points.
 This is an abstract polynomial lemma, not the claimed MCA refutation. -/
 theorem no_large_support {F : Type*} [Field F]
     (A R q : Polynomial F) (S : Finset F)
     (hAne : A ≠ 0) (hAdeg : A.natDegree = 4096)
-    (hRne : R ≠ 0) (hRdeg : R.natDegree = 1936)
+    (hRne : R ≠ 0) (hRdeg : R.natDegree ≤ 4095)
     (hqdeg : q.natDegree ≤ 1048575)
     (hScard : 1116048 ≤ S.card)
     (heval : ∀ x ∈ S, (A * q + R).eval x = 0) : False := by
@@ -35,7 +35,7 @@ theorem no_large_support {F : Type*} [Field F]
     calc
       (A * q + R).natDegree ≤ max (A * q).natDegree R.natDegree :=
         Polynomial.natDegree_add_le _ _
-      _ ≤ max 1052671 1936 := max_le_max hmul (by omega)
+      _ ≤ max 1052671 4095 := max_le_max hmul hRdeg
       _ = 1052671 := by norm_num
   have hPzero : P = 0 := by
     apply Polynomial.eq_zero_of_natDegree_lt_card_of_eval_eq_zero' P S
@@ -50,7 +50,7 @@ theorem no_large_support {F : Type*} [Field F]
     exact hRne hRzero
   · have hdegEq := congrArg Polynomial.natDegree hEq
     rw [Polynomial.natDegree_mul hAne hq0, hAdeg,
-        Polynomial.natDegree_neg, hRdeg] at hdegEq
+        Polynomial.natDegree_neg] at hdegEq
     omega
 
 /-- Same lemma on the *index support* used by a Reed–Solomon domain.
@@ -61,7 +61,7 @@ theorem no_large_support_on_indices {F ι : Type*} [Field F]
     (dom : ι → F) (hdom : Function.Injective dom)
     (A R q : Polynomial F) (S : Finset ι)
     (hAne : A ≠ 0) (hAdeg : A.natDegree = 4096)
-    (hRne : R ≠ 0) (hRdeg : R.natDegree = 1936)
+    (hRne : R ≠ 0) (hRdeg : R.natDegree ≤ 4095)
     (hqdeg : q.natDegree ≤ 1048575)
     (hScard : 1116048 ≤ S.card)
     (heval : ∀ j ∈ S, (A * q + R).eval (dom j) = 0) : False := by
@@ -81,13 +81,13 @@ then it cannot be the evaluation of any RS polynomial of degree < 2^20.
 Unlike `no_large_support_on_indices`, this accepts the exact quotient identity
 arising from the OrbitPencil rational-line construction. The caller must still
 prove the domain is injective, the denominators are nonzero, and the actual
-MCA agreement support has the required size. This does NOT construct the line
-or count slopes, and is NOT yet Lean kernel-checked. -/
+MCA agreement support has the required size. This does NOT construct the line or count slopes. The conditional lemma
+must be recompiled after changing the core-degree bound. -/
 theorem quotient_direction_not_codeword_on_indices {F ι : Type*} [Field F]
     (dom : ι → F) (hdom : Function.Injective dom)
     (A R q : Polynomial F) (S : Finset ι)
     (hAne : A ≠ 0) (hAdeg : A.natDegree = 4096)
-    (hRne : R ≠ 0) (hRdeg : R.natDegree = 1936)
+    (hRne : R ≠ 0) (hRdeg : R.natDegree ≤ 4095)
     (hqdeg : q.natDegree ≤ 1048575)
     (hScard : 1116048 ≤ S.card)
     (hdenom : ∀ j ∈ S, A.eval (dom j) ≠ 0)
