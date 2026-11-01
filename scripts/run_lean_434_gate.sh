@@ -23,6 +23,7 @@ lake env lean LeanPortNoncontainment.lean
 lake env lean -o .lake/build/lib/lean/LeanPortGeometry.olean LeanPortGeometry.lean
 lake env lean -o .lake/build/lib/lean/LeanPortSupport4096.olean LeanPortSupport4096.lean
 lake env lean -o .lake/build/lib/lean/LeanPortPencil4096.olean LeanPortPencil4096.lean
-lake env lean LeanPortLineAgreement4096.lean
+lake env lean -o .lake/build/lib/lean/LeanPortLineAgreement4096.olean LeanPortLineAgreement4096.lean
+lake env lean LeanPortPointwiseSupport4096.lean
 bash scripts/audit_axioms_434.sh
 echo 'LOCAL LEAN COMPILATION + AXIOM AUDIT PASS (NOT independent prize-verifier acceptance)'
