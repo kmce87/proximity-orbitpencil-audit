@@ -108,7 +108,11 @@ theorem support_root_or (U : Finset Small) (j : Index)
       ((coreRows.product ({0} : Finset Column)) ∪
         ((Finset.univ : Finset Row).product U)).image
         (fun ab : Row × Column => idx ab.1 ab.2) := by
-    simpa only [support, pairSet, corePairs, blockPairs] using hj
+    dsimp only [OrbitPencilLiftSupport4096.support,
+      OrbitPencilLiftSupport4096.pairSet,
+      OrbitPencilLiftSupport4096.corePairs,
+      OrbitPencilLiftSupport4096.blockPairs] at hj
+    exact hj
   rcases image_product_cases coreRows U j hs with
     ⟨a, ha, heq⟩ | ⟨a, b, hU, heq⟩
   · left
