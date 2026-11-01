@@ -22,18 +22,17 @@ from pathlib import Path
 log = Path(sys.argv[1]).read_text()
 allowed = {'propext', 'Classical.choice', 'Quot.sound'}
 for name in sys.argv[2:]:
-    matching = [line for line in log.splitlines()
-                if name in line and ('depends on axioms' in line or 'does not depend on any axioms' in line)]
-    if len(matching) != 1:
-        raise SystemExit(f'FAIL: missing/ambiguous #print axioms result for {name}: {matching}')
-    line = matching[0]
-    if 'does not depend on any axioms' in line:
+    # Lean prints the qualified declaration in single quotes; the axiom list
+    # can wrap across multiple lines. Match the exact name (not its prefix).
+    pattern = (r"(?m)^'" + re.escape(name) +
+               r"' (does not depend on any axioms|depends on axioms: \\[([\\s\\S]*?)\\])")
+    m = re.search(pattern, log)
+    if not m:
+        raise SystemExit(f'FAIL: missing/unparseable #print axioms result for {name}')
+    if m.group(1) == 'does not depend on any axioms':
         print(f'AXIOM PASS: {name}: none')
         continue
-    m = re.search(r'\[([^\]]*)\]', line)
-    if not m:
-        raise SystemExit(f'FAIL: unparseable axiom list for {name}: {line}')
-    found = {x.strip() for x in m.group(1).split(',') if x.strip()}
+    found = {x.strip() for x in m.group(2).split(',') if x.strip()}
     unexpected = found - allowed
     if unexpected:
         raise SystemExit(f'FAIL: {name} depends on non-whitelisted axioms: {sorted(unexpected)}')
