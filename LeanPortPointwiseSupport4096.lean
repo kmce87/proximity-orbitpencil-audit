@@ -82,21 +82,17 @@ theorem support_root_or (U : Finset Small) (j : Index)
     coreLocator.eval (node6 j) = 0 ∨
       (V y6 U).eval ((node6 j)^4096) = 0 := by
   classical
-  change j ∈ (pairSet U).image (fun ab : Row × Column => idx ab.1 ab.2) at hj
-  obtain ⟨⟨a, b⟩, hp, heq⟩ := Finset.mem_image.mp hj
-  change (a, b) ∈ corePairs ∪ blockPairs U at hp
-  have hp' : (a, b) ∈ corePairs ∨ (a, b) ∈ blockPairs U :=
-    Finset.mem_union.mp hp
-  rcases hp' with hc | hb
-  · have hc' : (a, b) ∈ coreRows.product ({0} : Finset Column) := hc
-    obtain ⟨ha, hb0⟩ := Finset.mem_product.mp hc'
+  rcases support_cases U j hj with ⟨⟨a, b⟩, hc, heq⟩ |
+    ⟨⟨a, b⟩, hb, heq⟩
+  · rw [corePairs] at hc
+    obtain ⟨ha, hb0⟩ := Finset.mem_product.mp hc
     have hbzero : b = (0 : Column) := Finset.mem_singleton.mp hb0
     subst b
     left
     rw [← heq]
     exact coreLocator_eval_core a ha
-  · have hb' : (a, b) ∈ (Finset.univ : Finset Row).product U := hb
-    have hU : b ∈ U := (Finset.mem_product.mp hb').2
+  · rw [blockPairs] at hb
+    have hU : b ∈ U := (Finset.mem_product.mp hb).2
     right
     rw [← heq, node6_pow_column]
     exact (V_eval_zero_iff_of_injective y6 y6_injective U b).mpr hU
