@@ -81,10 +81,15 @@ theorem support_root_or (U : Finset Small) (j : Index)
     coreLocator.eval (node6 j) = 0 ∨
       (V y6 U).eval ((node6 j)^4096) = 0 := by
   classical
-  change j ∈ (pairSet U).image (fun ab : Row × Column => idx ab.1 ab.2) at hj
-  obtain ⟨⟨a, b⟩, hp, heq⟩ := Finset.mem_image.mp hj
-  change (a, b) ∈ pairSet U at hp
-  rcases Finset.mem_union.mp hp with hc | hb
+  -- Rewrite membership syntactically instead of asking elaboration to
+  -- reduce the large concrete support Finset by definitional equality.
+  have hj' : ∃ ab : Row × Column,
+      ab ∈ pairSet U ∧ idx ab.1 ab.2 = j := by
+    simpa only [support, Finset.mem_image] using hj
+  obtain ⟨⟨a, b⟩, hp, heq⟩ := hj'
+  have hp' : (a, b) ∈ corePairs ∪ blockPairs U := by
+    simpa only [pairSet] using hp
+  rcases Finset.mem_union.mp hp' with hc | hb
   · have ha : a ∈ coreRows := (Finset.mem_product.mp hc).1
     have hb0 : b = 0 := Finset.mem_singleton.mp (Finset.mem_product.mp hc).2
     left
