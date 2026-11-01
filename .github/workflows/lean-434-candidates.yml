@@ -2,7 +2,7 @@ name: Lean 4.34 candidate kernel gate (NOT prize verification)
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "research/**"]
   workflow_dispatch:
 
 permissions:
@@ -27,6 +27,6 @@ jobs:
           lake update
           test -s lake-manifest.json
           lake exe cache get
-      - name: Compile all three candidates (fail-closed)
+      - name: Compile all four candidates (fail-closed)
         shell: bash
         run: bash scripts/run_lean_434_gate.sh
