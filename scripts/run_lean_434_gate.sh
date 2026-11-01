@@ -15,5 +15,6 @@ lake exe cache get
 lake env lean LeanPortIndexedNoncontainment.lean
 lake env lean LeanPortNoncontainment.lean
 lake env lean LeanPortGeometry.lean
+lake env lean LeanPortSeparatingAlpha.lean
 bash scripts/audit_axioms_434.sh
 echo 'LOCAL LEAN COMPILATION + AXIOM AUDIT PASS (NOT independent prize-verifier acceptance)'
