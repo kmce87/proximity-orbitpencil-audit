@@ -90,16 +90,15 @@ theorem support_root_or (U : Finset Small) (j : Index)
   rw [Finset.mem_union] at hp
   rcases hp with hc | hb
   · change (a, b) ∈ coreRows.product ({0} : Finset Column) at hc
-    rw [Finset.mem_product] at hc
-    have ha : a ∈ coreRows := hc.1
+    have hpair := Finset.mem_product.mp hc
+    have ha : a ∈ coreRows := hpair.1
     have hb0 : b = 0 := by
-      simpa only [Finset.mem_singleton] using hc.2
+      simpa only [Finset.mem_singleton] using hpair.2
     left
     rw [← heq, hb0]
     exact coreLocator_eval_core a ha
   · change (a, b) ∈ (Finset.univ : Finset Row).product U at hb
-    rw [Finset.mem_product] at hb
-    have hU : b ∈ U := hb.2
+    have hU : b ∈ U := (Finset.mem_product.mp hb).2
     right
     rw [← heq, node6_pow_column]
     exact (V_eval_zero_iff_of_injective y6 y6_injective U b).mpr hU
