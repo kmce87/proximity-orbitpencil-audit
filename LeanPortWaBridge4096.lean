@@ -75,7 +75,10 @@ theorem supportWiseBad_implies_W (alpha : Sextic)
     rw [← lineAt_eq_base_add]
     exact hmatch j hj
   · rintro ⟨cf, cg, _hcf, hcg, _hf, hg⟩
-    exact hnot ⟨cg, hcg, hg⟩
+    apply hnot
+    refine ⟨cg, hcg, ?_⟩
+    intro j hj
+    exact (hg j hj).symm
 
 /-- A SINGLE received line has more than the proposed B* distinct
 support-wise bad slopes at agreement 1116048, in the local KoalaBear
