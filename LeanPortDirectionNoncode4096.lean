@@ -30,6 +30,22 @@ open OrbitPencilLiftIndexedNoncontainment
 set_option maxRecDepth 10000
 set_option maxHeartbeats 1000000
 
+/-!
+The exponent is kept as a variable while the monicity/nonzero certificates
+are elaborated and checked. Specializing only afterwards avoids asking Lean
+to reduce the concrete 4096th polynomial power during elaboration.
+This is a compilation experiment, not a new MCA witness.
+-/
+private theorem denominator_monic_generic (a : Sextic) (n : ℕ)
+    (hn : n ≠ 0) :
+    ((Polynomial.X : Polynomial Sextic)^n - Polynomial.C a).Monic :=
+  Polynomial.monic_X_pow_sub_C a hn
+
+private theorem denominator_nonzero_generic (a : Sextic) (n : ℕ)
+    (hn : n ≠ 0) :
+    ((Polynomial.X : Polynomial Sextic)^n - Polynomial.C a) ≠ 0 :=
+  (denominator_monic_generic a n hn).ne_zero
+
 /-- The actual sextic evaluation-domain embedding has no collisions. -/
 theorem node6_injective : Function.Injective node6 := by
   intro i j hij
@@ -48,14 +64,11 @@ theorem received_direction_not_rs (alpha : Sextic)
   rintro ⟨q, hq, hmatch⟩
   let A : Polynomial Sextic :=
     (Polynomial.X : Polynomial Sextic)^4096 - Polynomial.C alpha
-  -- Avoid unfolding the 4096th-power polynomial during a nonzero proof.
-  -- The monicity theorem is a symbolic certificate of nonzeroness.
-  have hAmonic :
-      ((Polynomial.X : Polynomial Sextic)^4096 - Polynomial.C alpha).Monic :=
-    Polynomial.monic_X_pow_sub_C alpha (by decide : (4096 : ℕ) ≠ 0)
+  -- Specialize the generic, already-checked symbolic certificate; do not
+  -- elaborate the 4096th power while constructing its nonzero proof.
   have hAne0 :
       ((Polynomial.X : Polynomial Sextic)^4096 - Polynomial.C alpha) ≠ 0 :=
-    hAmonic.ne_zero
+    denominator_nonzero_generic alpha 4096 (by omega)
   have hAdeg0 :
       ((Polynomial.X : Polynomial Sextic)^4096 - Polynomial.C alpha).natDegree = 4096 :=
     Polynomial.natDegree_X_pow_sub_C
