@@ -68,8 +68,8 @@ theorem pointIndex_injective (U : Finset Small)
     | inr cd =>
         have hp : (ab.1, ab.2.val) = (cd.1, cd.2.val) :=
           idx_injective (by simpa only [pointIndex] using h)
-        have ha : ab.1 = cd.1 := congrArg Prod.fst hp
-        have hb : ab.2.val = cd.2.val := congrArg Prod.snd hp
+        have ha : ab.1 = cd.1 := congrArg (fun q : Row × Column => q.1) hp
+        have hb : ab.2.val = cd.2.val := congrArg (fun q : Row × Column => q.2) hp
         exact congrArg Sum.inr (Prod.ext ha (Subtype.ext hb))
 
 theorem selected_card (U : Finset Small) (hU : U ∈ Candidates) :
@@ -77,12 +77,12 @@ theorem selected_card (U : Finset Small) (hU : U ∈ Candidates) :
   classical
   simp only [SelectedPoint, Fintype.card_sum, Fintype.card_prod,
     Fintype.card_coe, Row, Fintype.card_fin, coreRows_card, candidate_card hU]
-  norm_num
 
 /-- A proof of >= 1,118,207 distinct logical-support indices, requiring no
 membership-elimination lemma for the giant concrete finite support. -/
-theorem logical_support_card_lower (U : Finset Small) (hU : U ∈ Candidates) :
-    1118207 ≤ (Finset.univ.filter (logicalSupport U)).card := by
+theorem logical_support_card_lower (U : Finset Small) (hU : U ∈ Candidates)
+    [DecidablePred (logicalSupport U)] :
+    1118207 ≤ Fintype.card {j : Index // logicalSupport U j} := by
   classical
   have hzero : (0 : Column) ∉ U := by
     intro h0
@@ -96,7 +96,7 @@ theorem logical_support_card_lower (U : Finset Small) (hU : U ∈ Candidates) :
     exact congrArg Subtype.val h
   have hcard := Fintype.card_le_of_injective f hinj
   rw [selected_card U hU] at hcard
-  simpa only [Fintype.card_subtype] using hcard
+  exact hcard
 
 #print axioms OrbitPencilLiftTypedSupport4096.point_logical
 #print axioms OrbitPencilLiftTypedSupport4096.pointIndex_injective
