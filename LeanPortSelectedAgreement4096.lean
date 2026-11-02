@@ -94,7 +94,11 @@ theorem exists_selected_agreement_family :
       (V y6 U0) hSelCard concrete_sextic_card
       hprojected hnonzero hdegree
   have hgamma : Set.InjOn (gamma alpha U0) (Sel : Set (Finset Small)) := by
-    simpa only [gamma, deltaV] using hinj
+    intro U hU W hW hEq
+    apply hinj hU hW
+    change ((V y6 U0 - V y6 U).eval alpha) / alpha =
+      ((V y6 U0 - V y6 W).eval alpha) / alpha at hEq
+    exact hEq
   refine ⟨Sel, alpha, U0, hSelCard, hU0, halpha, havoid, hgamma, ?_⟩
   intro U hU
   have hkey : key projectedNode U0 = key projectedNode U :=
