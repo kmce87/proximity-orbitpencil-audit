@@ -32,8 +32,10 @@ set_option maxHeartbeats 1000000
 
 /-- Explicit support-wise RS bad-slope predicate. The *same* support
 explains the received line point and does not explain its direction.
-The latter is the noncontainment condition in the support-wise MCA
-formulation; a source-to-source rs-mca equivalence audit is separate. -/
+The latter is a sufficient noncontainment condition in support-wise MCA:
+if the direction has no RS explanation on S, then no pair of RS messages
+can explain both the point and direction on S. The source-to-source rs-mca
+predicate-equivalence audit and official ArkLib claim are separate. -/
 def SupportWiseBad (alpha : Sextic) (U0 : Finset Small)
     (z : Sextic) : Prop :=
   ∃ (S : Finset Index) (c : Polynomial Sextic),
