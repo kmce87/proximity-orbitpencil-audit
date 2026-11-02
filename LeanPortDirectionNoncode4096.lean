@@ -48,12 +48,14 @@ theorem received_direction_not_rs (alpha : Sextic)
   rintro ⟨q, hq, hmatch⟩
   let A : Polynomial Sextic :=
     (Polynomial.X : Polynomial Sextic)^4096 - Polynomial.C alpha
-  have hAne : A ≠ 0 := by
-    change ((Polynomial.X : Polynomial Sextic)^4096 - Polynomial.C alpha) ≠ 0
-    exact Polynomial.X_pow_sub_C_ne_zero (by norm_num) alpha
-  have hAdeg : A.natDegree = 4096 := by
-    change (((Polynomial.X : Polynomial Sextic)^4096 - Polynomial.C alpha).natDegree) = 4096
-    exact Polynomial.natDegree_X_pow_sub_C
+  have hAne0 :
+      ((Polynomial.X : Polynomial Sextic)^4096 - Polynomial.C alpha) ≠ 0 :=
+    Polynomial.X_pow_sub_C_ne_zero (n := 4096) (by norm_num) alpha
+  have hAdeg0 :
+      ((Polynomial.X : Polynomial Sextic)^4096 - Polynomial.C alpha).natDegree = 4096 :=
+    Polynomial.natDegree_X_pow_sub_C
+  have hAne : A ≠ 0 := hAne0
+  have hAdeg : A.natDegree = 4096 := hAdeg0
   have hRdeg : coreLocator.natDegree ≤ 4095 := by
     rw [coreLocator_natDegree]
   have hScard : 1116048 ≤ (Finset.univ : Finset Index).card := by
