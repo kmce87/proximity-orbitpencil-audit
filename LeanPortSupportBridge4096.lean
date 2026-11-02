@@ -1,10 +1,12 @@
 import LeanPortSupport4096
 
 /-!
-One falsifiable bridge: every member of the actual finite 4096-fibre
-support has a row/column logical witness. No MCA conclusion follows
-from this lemma alone. Original OrbitPencil: proximity-prize PR #38,
-including erdkocak.
+Falsifiable 4096-fibre support bridge: prove that actual finite support
+membership yields a logical row/column witness. The earlier variant used
+`rw [support]` plus a large concrete iff term and failed in elaboration.
+This variant keeps the finite-image expression opaque until the membership
+eliminator runs. It does not establish the MCA counterexample.
+Original rational-pencil construction: Proximity Prize PR #38 (erdkocak).
 -/
 
 namespace OrbitPencilLiftSupportBridge4096
@@ -19,18 +21,10 @@ set_option maxHeartbeats 1000000
 theorem support_to_logical (U : Finset Small) (j : Index)
     (hj : j ∈ support U) : logicalSupport U j := by
   classical
-  rw [support] at hj
-  -- The target type fixes all image-membership parameters before elaboration.
-  -- This tests whether implicit unification was expanding the 4096-row Finset.
-  have himage :
-      j ∈ (pairSet U).image encodePair ↔
-        ∃ ab : Row × Column, ab ∈ pairSet U ∧ encodePair ab = j :=
-    Finset.mem_image
-  obtain ⟨ab, hab, heq⟩ := himage.mp hj
-  rw [pairSet] at hab
-  have hsplit : ab ∈ corePairs ∨ ab ∈ blockPairs U :=
-    Finset.mem_union.mp hab
-  rcases hsplit with hc | hb
+  change j ∈ (pairSet U).image encodePair at hj
+  obtain ⟨ab, hab, heq⟩ := Finset.mem_image.mp hj
+  change ab ∈ corePairs ∪ blockPairs U at hab
+  rcases Finset.mem_union.mp hab with hc | hb
   · have hp : ab.1 ∈ coreRows ∧ ab.2 ∈ ({0} : Finset Column) :=
       Finset.mem_product.mp (show ab ∈ coreRows.product ({0} : Finset Column) from hc)
     have hz : ab.2 = (0 : Column) := Finset.mem_singleton.mp hp.2
