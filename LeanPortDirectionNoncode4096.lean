@@ -48,9 +48,14 @@ theorem received_direction_not_rs (alpha : Sextic)
   rintro ⟨q, hq, hmatch⟩
   let A : Polynomial Sextic :=
     (Polynomial.X : Polynomial Sextic)^4096 - Polynomial.C alpha
+  -- Avoid unfolding the 4096th-power polynomial during a nonzero proof.
+  -- The monicity theorem is a symbolic certificate of nonzeroness.
+  have hAmonic :
+      ((Polynomial.X : Polynomial Sextic)^4096 - Polynomial.C alpha).Monic :=
+    Polynomial.monic_X_pow_sub_C alpha (by decide : (4096 : ℕ) ≠ 0)
   have hAne0 :
       ((Polynomial.X : Polynomial Sextic)^4096 - Polynomial.C alpha) ≠ 0 :=
-    Polynomial.X_pow_sub_C_ne_zero (n := 4096) (by norm_num) alpha
+    hAmonic.ne_zero
   have hAdeg0 :
       ((Polynomial.X : Polynomial Sextic)^4096 - Polynomial.C alpha).natDegree = 4096 :=
     Polynomial.natDegree_X_pow_sub_C
