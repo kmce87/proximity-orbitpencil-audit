@@ -19,10 +19,11 @@ set_option maxHeartbeats 1000000
 theorem support_to_logical (U : Finset Small) (j : Index)
     (hj : j ∈ support U) : logicalSupport U j := by
   classical
-  have himage : j ∈ (pairSet U).image encodePair := hj
-  obtain ⟨ab, hab, heq⟩ := Finset.mem_image.mp himage
+  rw [support] at hj
+  obtain ⟨ab, hab, heq⟩ := Finset.mem_image.mp hj
+  rw [pairSet] at hab
   have hsplit : ab ∈ corePairs ∨ ab ∈ blockPairs U :=
-    Finset.mem_union.mp (show ab ∈ corePairs ∪ blockPairs U from hab)
+    Finset.mem_union.mp hab
   rcases hsplit with hc | hb
   · have hp : ab.1 ∈ coreRows ∧ ab.2 ∈ ({0} : Finset Column) :=
       Finset.mem_product.mp (show ab ∈ coreRows.product ({0} : Finset Column) from hc)
