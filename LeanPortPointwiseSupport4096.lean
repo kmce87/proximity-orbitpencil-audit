@@ -74,46 +74,38 @@ theorem node6_pow_ne_alpha (alpha : Sextic)
 theorem y6_injective : Function.Injective y6 := by
   exact mapped_nodes_injective baseToSextic projectedNode projectedNode_injective
 
-/-- Every support index is either a core root or a complete selected-column
-root. Keep the four large concrete Finsets opaque during membership elimination;
-the previous rewrite of their definitions exhausted Lean elaboration depth. -/
-theorem support_root_or (U : Finset Small) (j : Index)
-    (hj : j ∈ support U) :
+/-- Every *logical* support witness is a core root or a selected-column root.
+This avoids elaborating a huge concrete Finset union. A separate theorem
+must still establish `j ∈ support U → logicalSupport U j`. -/
+theorem logical_support_root_or (U : Finset Small) (j : Index)
+    (hj : logicalSupport U j) :
     coreLocator.eval (node6 j) = 0 ∨
       (V y6 U).eval ((node6 j)^4096) = 0 := by
-  classical
-  rcases support_cases U j hj with ⟨⟨a, b⟩, hc, heq⟩ |
-    ⟨⟨a, b⟩, hb, heq⟩
-  · rw [corePairs] at hc
-    obtain ⟨ha, hb0⟩ := Finset.mem_product.mp hc
-    have hbzero : b = (0 : Column) := Finset.mem_singleton.mp hb0
-    subst b
-    left
+  rcases hj with ⟨a, ha, heq⟩ | ⟨a, b, hb, heq⟩
+  · left
     rw [← heq]
     exact coreLocator_eval_core a ha
-  · rw [blockPairs] at hb
-    have hU : b ∈ U := (Finset.mem_product.mp hb).2
-    right
+  · right
     rw [← heq, node6_pow_column]
-    exact (V_eval_zero_iff_of_injective y6 y6_injective U b).mpr hU
+    exact (V_eval_zero_iff_of_injective y6 y6_injective U b).mpr hb
 
-/-- Actual support-wise pointwise equality for the concrete KoalaBear
+/-- Conditional pointwise equality on the logical support predicate for KoalaBear
 received line, conditional only on the factorization of the chosen pair.
-The exact support cardinality is separately proved by support_card. -/
-theorem pencil_agrees_on_support (alpha : Sextic)
+The finite-support cardinality is proved separately; equivalence to this predicate is not yet proved. -/
+theorem pencil_agrees_on_logical_support (alpha : Sextic)
     (U0 U : Finset Small) (Q : Polynomial Sextic)
     (hfactor : pencil alpha U0 U =
       (Polynomial.X : Polynomial Sextic) *
         (Polynomial.X - Polynomial.C alpha) * Q)
     (havoid : alpha ∉ projected6)
-    (j : Index) (hj : j ∈ support U) :
+    (j : Index) (hj : logicalSupport U j) :
     coreLocator.eval (node6 j) *
         (V y6 U0).eval ((node6 j)^4096) /
         ((node6 j)^4096 * ((node6 j)^4096 - alpha)) +
       gamma alpha U0 U *
         (-coreLocator.eval (node6 j) / ((node6 j)^4096 - alpha)) =
       coreLocator.eval (node6 j) * Q.eval ((node6 j)^4096) := by
-  have hroot := support_root_or U j hj
+  have hroot := logical_support_root_or U j hj
   exact pencil_line_agrees_on_root alpha U0 U Q hfactor
     (coreLocator.eval (node6 j)) ((node6 j)^4096)
     (node6_pow_nonzero j) (node6_pow_ne_alpha alpha havoid j) hroot
@@ -121,13 +113,13 @@ theorem pencil_agrees_on_support (alpha : Sextic)
 /-- The right-hand side is exactly the evaluation of an admissible RS
 message polynomial, rather than merely a scalar product. Degree admissibility
 follows from exists_message_poly for any pair with the same key. -/
-theorem pencil_agrees_with_message_on_support (alpha : Sextic)
+theorem pencil_agrees_with_message_on_logical_support (alpha : Sextic)
     (U0 U : Finset Small) (Q : Polynomial Sextic)
     (hfactor : pencil alpha U0 U =
       (Polynomial.X : Polynomial Sextic) *
         (Polynomial.X - Polynomial.C alpha) * Q)
     (havoid : alpha ∉ projected6)
-    (j : Index) (hj : j ∈ support U) :
+    (j : Index) (hj : logicalSupport U j) :
     coreLocator.eval (node6 j) *
         (V y6 U0).eval ((node6 j)^4096) /
         ((node6 j)^4096 * ((node6 j)^4096 - alpha)) +
@@ -135,7 +127,7 @@ theorem pencil_agrees_with_message_on_support (alpha : Sextic)
         (-coreLocator.eval (node6 j) / ((node6 j)^4096 - alpha)) =
       (coreLocator * Q.comp ((Polynomial.X : Polynomial Sextic)^4096)).eval
         (node6 j) := by
-  have h := pencil_agrees_on_support alpha U0 U Q hfactor havoid j hj
+  have h := pencil_agrees_on_logical_support alpha U0 U Q hfactor havoid j hj
   simpa only [Polynomial.eval_mul, Polynomial.eval_comp,
     Polynomial.eval_pow, Polynomial.eval_X] using h
 

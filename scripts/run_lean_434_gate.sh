@@ -23,9 +23,8 @@ lake env lean LeanPortNoncontainment.lean
 lake env lean -o .lake/build/lib/lean/LeanPortGeometry.olean LeanPortGeometry.lean
 # Diagnostic gate: distinguish large Fin types from concrete support expansion.
 lake env lean LeanPortFiniteImageProbe.lean
-# Isolated predicate/finite-image comparison before the full support gate.
-lake env lean -o .lake/build/lib/lean/LeanPortPredicateSupportProbe.olean LeanPortPredicateSupportProbe.lean
-lake env lean LeanPortConcreteSupportProbe.lean
+# The earlier failing predicate/finite-image diagnostics remain in the repository
+# but are not prerequisites for this *different* logical-support hypothesis.
 lake env lean -o .lake/build/lib/lean/LeanPortSupport4096.olean LeanPortSupport4096.lean
 lake env lean -o .lake/build/lib/lean/LeanPortPencil4096.olean LeanPortPencil4096.lean
 lake env lean -o .lake/build/lib/lean/LeanPortLineAgreement4096.olean LeanPortLineAgreement4096.lean
