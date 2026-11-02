@@ -31,6 +31,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          mkdir -p .lake/build/lib/lean
           lake env lean -o .lake/build/lib/lean/LeanPortGeometry.olean LeanPortGeometry.lean
           lake env lean LeanPortFiniteImageProbe.lean
       - name: Compile all four candidates (fail-closed)
