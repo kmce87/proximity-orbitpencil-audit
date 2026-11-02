@@ -6,7 +6,10 @@ import LeanPortSupport4096
 Falsifiable hypothesis: eliminating *both* the image/union and product
 memberships at polymorphic types, before specializing to the concrete
 4096-row finite set, avoids Lean 4.34's maximum-recursion-depth failure.
-Previous PR #21 failed on concrete Finset.mem_product.mp (line 35).
+PR #21 failed on concrete Finset.mem_product.mp; this branch's first CI
+failed because a polymorphic Finset.univ required Fintype and the concrete
+change/exact still unfolded too much. This revision abstracts the full-row
+Finset as well and uses targeted simp-only rewriting.
 
 This bridge is a proof-engineering obligation only. It does not certify
 an MCA bad slope, the received line, or the official ProtocolClaim.
@@ -28,9 +31,8 @@ finite-set types so the eliminators never inspect concrete 4096-row sets. -/
 theorem mem_image_product_union_cases
     {α β γ : Type*}
     [DecidableEq α] [DecidableEq β] [DecidableEq γ]
-    (R : Finset α) (Z U : Finset β) (f : α × β → γ) {j : γ}
-    (hj : j ∈ ((R.product Z) ∪
-        ((Finset.univ : Finset α).product U)).image f) :
+    (R T : Finset α) (Z U : Finset β) (f : α × β → γ) {j : γ}
+    (hj : j ∈ ((R.product Z) ∪ (T.product U)).image f) :
     (∃ a : α, a ∈ R ∧ ∃ b : β, b ∈ Z ∧ f (a, b) = j) ∨
     (∃ a : α, ∃ b : β, b ∈ U ∧ f (a, b) = j) := by
   classical
@@ -48,12 +50,9 @@ theorem support_to_logical (U : Finset Small) (j : Index)
   classical
   have hmem : j ∈ ((coreRows.product ({0} : Finset Column)) ∪
       ((Finset.univ : Finset Row).product U)).image encodePair := by
-    change j ∈ (corePairs ∪ blockPairs U).image encodePair at hj
-    change j ∈ ((coreRows.product ({0} : Finset Column)) ∪
-      ((Finset.univ : Finset Row).product U)).image encodePair at hj
-    exact hj
-  rcases mem_image_product_union_cases coreRows ({0} : Finset Column)
-      U encodePair hmem with
+    simpa only [support, pairSet, corePairs, blockPairs] using hj
+  rcases mem_image_product_union_cases coreRows (Finset.univ : Finset Row)
+      ({0} : Finset Column) U encodePair hmem with
     ⟨a, ha, b, hb, heq⟩ | ⟨a, b, hb, heq⟩
   · have hz : b = (0 : Column) := Finset.mem_singleton.mp hb
     exact Or.inl ⟨a, ha, by simpa only [encodePair, hz] using heq⟩
