@@ -21,6 +21,8 @@ lake env lean -o .lake/build/lib/lean/LeanPortConcreteSlopes.olean LeanPortConcr
 lake env lean LeanPortIndexedNoncontainment.lean
 lake env lean LeanPortNoncontainment.lean
 lake env lean -o .lake/build/lib/lean/LeanPortGeometry.olean LeanPortGeometry.lean
+# Diagnostic gate: distinguish large Fin types from concrete support expansion.
+lake env lean LeanPortFiniteImageProbe.lean
 lake env lean -o .lake/build/lib/lean/LeanPortSupport4096.olean LeanPortSupport4096.lean
 lake env lean -o .lake/build/lib/lean/LeanPortPencil4096.olean LeanPortPencil4096.lean
 lake env lean -o .lake/build/lib/lean/LeanPortLineAgreement4096.olean LeanPortLineAgreement4096.lean
