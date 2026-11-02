@@ -99,6 +99,45 @@ theorem received_direction_not_rs (alpha : Sextic)
     node6 node6_injective A coreLocator q (Finset.univ : Finset Index)
     hAne hAdeg coreLocator_ne_zero hRdeg hq hScard hdenom hquot
 
+
+/-- Strong support-wise version: the fixed direction cannot be explained by
+any RS message on ANY set of at least 1,116,048 concrete NTT indices.
+This is the noncontainment half of the MCA support-witness definition;
+the slope agreement family and predicate translation are separate. -/
+theorem received_direction_not_rs_on_support (alpha : Sextic)
+    (havoid : alpha ∉ projected6) (S : Finset Index)
+    (hScard : 1116048 ≤ S.card) :
+    ¬ ∃ q : Polynomial Sextic,
+      q.natDegree ≤ 1048575 ∧
+      ∀ j ∈ S, q.eval (node6 j) =
+        -coreLocator.eval (node6 j) /
+          ((node6 j)^4096 - alpha) := by
+  rintro ⟨q, hq, hmatch⟩
+  let A : Polynomial Sextic :=
+    (Polynomial.X : Polynomial Sextic)^4096 - Polynomial.C alpha
+  have hAne : A ≠ 0 :=
+    denominator_nonzero_generic alpha 4096 (by omega)
+  have hAdeg : A.natDegree = 4096 :=
+    denominator_degree_generic alpha 4096
+  have hRdeg : coreLocator.natDegree ≤ 4095 := by
+    rw [coreLocator_natDegree]
+  have hdenom : ∀ j ∈ S, A.eval (node6 j) ≠ 0 := by
+    intro j hjS
+    have hj : (node6 j)^4096 - alpha ≠ 0 :=
+      sub_ne_zero.mpr (node6_pow_ne_alpha alpha havoid j)
+    simpa only [A, Polynomial.eval_sub, Polynomial.eval_pow,
+      Polynomial.eval_X, Polynomial.eval_C] using hj
+  have hquot : ∀ j ∈ S,
+      q.eval (node6 j) = -(coreLocator.eval (node6 j)) /
+        A.eval (node6 j) := by
+    intro j hjS
+    simpa only [A, Polynomial.eval_sub, Polynomial.eval_pow,
+      Polynomial.eval_X, Polynomial.eval_C] using hmatch j hjS
+  exact quotient_direction_not_codeword_on_indices
+    node6 node6_injective A coreLocator q S
+    hAne hAdeg coreLocator_ne_zero hRdeg hq hScard hdenom hquot
+
+#print axioms OrbitPencilLiftDirectionNoncode4096.received_direction_not_rs_on_support
 #print axioms OrbitPencilLiftDirectionNoncode4096.node6_injective
 #print axioms OrbitPencilLiftDirectionNoncode4096.received_direction_not_rs
 
