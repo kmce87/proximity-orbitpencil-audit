@@ -35,8 +35,16 @@ noncomputable def blockPairs (U : Finset Small) : Finset (Row × Column) :=
 noncomputable def pairSet (U : Finset Small) : Finset (Row × Column) :=
   corePairs ∪ blockPairs U
 
+/-- Keep the dependent Fin index constructor behind a named map during
+    image-membership elaboration; the raw lambda exhausted recursion depth. -/
+def encodePair (ab : Row × Column) : Index := idx ab.1 ab.2
+
+theorem encodePair_injective : Function.Injective encodePair := by
+  change Function.Injective (fun ab : Row × Column => idx ab.1 ab.2)
+  exact idx_injective
+
 noncomputable def support (U : Finset Small) : Finset Index :=
-  (pairSet U).image (fun ab => idx ab.1 ab.2)
+  (pairSet U).image encodePair
 
 /-- A product with a zero-only second coordinate is disjoint from
 a product whose second coordinate excludes zero. This general lemma avoids
@@ -73,7 +81,7 @@ theorem support_card {U : Finset Small} (hU : U ∈ Candidates) :
     simp [blockPairs, candidate_card hU]
   calc
     (support U).card = (pairSet U).card := by
-      exact Finset.card_image_of_injective _ idx_injective
+      exact Finset.card_image_of_injective _ encodePair_injective
     _ = corePairs.card + (blockPairs U).card := by
       exact Finset.card_union_of_disjoint (pair_disjoint hU)
     _ = 1118207 := by norm_num [hcore, hblock]
@@ -119,5 +127,26 @@ theorem coreLocator_eval_core (a : Row) (ha : a ∈ coreRows) :
   rw [coreLocator, Polynomial.eval_prod]
   refine Finset.prod_eq_zero ha ?_
   simp
+
+
+/-- A polymorphic image-of-union eliminator.  Its proof is elaborated without
+    specializing to the 4096-row KoalaBear Finset. -/
+theorem mem_image_union_cases
+    {α β : Type*} [DecidableEq α] [DecidableEq β]
+    (A B : Finset α) (f : α → β) {z : β}
+    (hz : z ∈ (A ∪ B).image f) :
+    (∃ x, x ∈ A ∧ f x = z) ∨ (∃ x, x ∈ B ∧ f x = z) := by
+  obtain ⟨x, hx, hfx⟩ := Finset.mem_image.mp hz
+  rcases Finset.mem_union.mp hx with ha | hb
+  · exact Or.inl ⟨x, ha, hfx⟩
+  · exact Or.inr ⟨x, hb, hfx⟩
+
+/-- A witness-level support predicate for the actual row/column indices.
+It is deliberately NOT yet proved equivalent to membership in `support U`.
+The separate finite support has cardinality 1118207 by `support_card`.
+The missing equivalence is an explicit outstanding proof obligation. -/
+def logicalSupport (U : Finset Small) (j : Index) : Prop :=
+  (∃ a : Row, a ∈ coreRows ∧ idx a 0 = j) ∨
+  (∃ a : Row, ∃ b : Column, b ∈ U ∧ idx a b = j)
 
 end OrbitPencilLiftSupport4096
