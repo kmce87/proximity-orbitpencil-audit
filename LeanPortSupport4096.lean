@@ -35,8 +35,16 @@ noncomputable def blockPairs (U : Finset Small) : Finset (Row × Column) :=
 noncomputable def pairSet (U : Finset Small) : Finset (Row × Column) :=
   corePairs ∪ blockPairs U
 
+/-- Keep the dependent Fin index constructor behind a named map during
+    image-membership elaboration; the raw lambda exhausted recursion depth. -/
+def encodePair (ab : Row × Column) : Index := idx ab.1 ab.2
+
+theorem encodePair_injective : Function.Injective encodePair := by
+  change Function.Injective (fun ab : Row × Column => idx ab.1 ab.2)
+  exact idx_injective
+
 noncomputable def support (U : Finset Small) : Finset Index :=
-  (pairSet U).image (fun ab => idx ab.1 ab.2)
+  (pairSet U).image encodePair
 
 /-- A product with a zero-only second coordinate is disjoint from
 a product whose second coordinate excludes zero. This general lemma avoids
@@ -73,7 +81,7 @@ theorem support_card {U : Finset Small} (hU : U ∈ Candidates) :
     simp [blockPairs, candidate_card hU]
   calc
     (support U).card = (pairSet U).card := by
-      exact Finset.card_image_of_injective _ idx_injective
+      exact Finset.card_image_of_injective _ encodePair_injective
     _ = corePairs.card + (blockPairs U).card := by
       exact Finset.card_union_of_disjoint (pair_disjoint hU)
     _ = 1118207 := by norm_num [hcore, hblock]
@@ -141,8 +149,9 @@ theorem support_cases (U : Finset Small) (j : Index)
   classical
   -- Test whether specialization of mem_image_union_cases is the recursion source.
   -- Eliminate image membership first, then unfold only the small union witness.
-  change j ∈ (pairSet U).image (fun ab : Row × Column => idx ab.1 ab.2) at hj
+  change j ∈ (pairSet U).image encodePair at hj
   obtain ⟨ab, hab, heq⟩ := Finset.mem_image.mp hj
+  simp only [encodePair] at heq
   change ab ∈ corePairs ∪ blockPairs U at hab
   rcases Finset.mem_union.mp hab with hc | hb
   · exact Or.inl ⟨ab, hc, heq⟩
