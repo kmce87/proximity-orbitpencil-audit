@@ -139,8 +139,13 @@ theorem support_cases (U : Finset Small) (j : Index)
     (∃ ab, ab ∈ corePairs ∧ idx ab.1 ab.2 = j) ∨
       (∃ ab, ab ∈ blockPairs U ∧ idx ab.1 ab.2 = j) := by
   classical
-  rw [support, pairSet] at hj
-  exact mem_image_union_cases corePairs (blockPairs U)
-    (fun ab : Row × Column => idx ab.1 ab.2) hj
+  -- Test whether specialization of mem_image_union_cases is the recursion source.
+  -- Eliminate image membership first, then unfold only the small union witness.
+  change j ∈ (pairSet U).image (fun ab : Row × Column => idx ab.1 ab.2) at hj
+  obtain ⟨ab, hab, heq⟩ := Finset.mem_image.mp hj
+  change ab ∈ corePairs ∪ blockPairs U at hab
+  rcases Finset.mem_union.mp hab with hc | hb
+  · exact Or.inl ⟨ab, hc, heq⟩
+  · exact Or.inr ⟨ab, hb, heq⟩
 
 end OrbitPencilLiftSupport4096
