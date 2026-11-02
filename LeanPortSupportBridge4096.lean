@@ -20,7 +20,13 @@ theorem support_to_logical (U : Finset Small) (j : Index)
     (hj : j ∈ support U) : logicalSupport U j := by
   classical
   rw [support] at hj
-  obtain ⟨ab, hab, heq⟩ := Finset.mem_image.mp hj
+  -- The target type fixes all image-membership parameters before elaboration.
+  -- This tests whether implicit unification was expanding the 4096-row Finset.
+  have himage :
+      j ∈ (pairSet U).image encodePair ↔
+        ∃ ab : Row × Column, ab ∈ pairSet U ∧ encodePair ab = j :=
+    Finset.mem_image
+  obtain ⟨ab, hab, heq⟩ := himage.mp hj
   rw [pairSet] at hab
   have hsplit : ab ∈ corePairs ∨ ab ∈ blockPairs U :=
     Finset.mem_union.mp hab
