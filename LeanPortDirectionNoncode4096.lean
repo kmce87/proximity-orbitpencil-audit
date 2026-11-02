@@ -49,10 +49,10 @@ theorem received_direction_not_rs (alpha : Sextic)
   let A : Polynomial Sextic :=
     (Polynomial.X : Polynomial Sextic)^4096 - Polynomial.C alpha
   have hAne : A ≠ 0 := by
-    dsimp [A]
+    change ((Polynomial.X : Polynomial Sextic)^4096 - Polynomial.C alpha) ≠ 0
     exact Polynomial.X_pow_sub_C_ne_zero (by norm_num) alpha
   have hAdeg : A.natDegree = 4096 := by
-    dsimp [A]
+    change (((Polynomial.X : Polynomial Sextic)^4096 - Polynomial.C alpha).natDegree) = 4096
     exact Polynomial.natDegree_X_pow_sub_C
   have hRdeg : coreLocator.natDegree ≤ 4095 := by
     rw [coreLocator_natDegree]
