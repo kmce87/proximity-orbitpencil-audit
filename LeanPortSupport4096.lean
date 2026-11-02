@@ -138,6 +138,7 @@ theorem support_cases (U : Finset Small) (j : Index)
     (hj : j ∈ support U) :
     (∃ ab, ab ∈ corePairs ∧ idx ab.1 ab.2 = j) ∨
       (∃ ab, ab ∈ blockPairs U ∧ idx ab.1 ab.2 = j) := by
+  classical
   rw [support, pairSet] at hj
   exact mem_image_union_cases corePairs (blockPairs U)
     (fun ab : Row × Column => idx ab.1 ab.2) hj
