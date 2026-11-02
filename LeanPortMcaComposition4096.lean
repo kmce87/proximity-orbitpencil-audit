@@ -36,7 +36,7 @@ formulation; a source-to-source rs-mca equivalence audit is separate. -/
 def SupportWiseBad (alpha : Sextic) (U0 : Finset Small)
     (z : Sextic) : Prop :=
   ∃ (S : Finset Index) (c : Polynomial Sextic),
-    1116048 ≤ S.card ∧
+    1118207 ≤ S.card ∧
     c.natDegree ≤ 1048575 ∧
     (∀ j ∈ S, lineAt alpha U0 z j = c.eval (node6 j)) ∧
     ¬ ∃ q : Polynomial Sextic,
@@ -79,7 +79,7 @@ theorem exists_many_supportwise_bad_slopes :
       dsimp [S]
       rw [Finset.card_image_of_injective _ Subtype.val_injective]
       simp
-    have hScard : 1116048 ≤ S.card := by
+    have hScard : 1118207 ≤ S.card := by
       rw [hS_card_eq]
       omega
     change SupportWiseBad alpha U0 (gamma alpha U0 U)
@@ -91,7 +91,7 @@ theorem exists_many_supportwise_bad_slopes :
       obtain ⟨t, _ht, htj⟩ := Finset.mem_image.mp hj'
       subst j
       exact t.property
-    · exact received_direction_not_rs_on_support alpha havoid S hScard
+    · exact received_direction_not_rs_on_support alpha havoid S (by omega)
 
 #print axioms OrbitPencilLiftMcaComposition4096.exists_many_supportwise_bad_slopes
 
