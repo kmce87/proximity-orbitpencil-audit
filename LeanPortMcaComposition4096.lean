@@ -22,6 +22,7 @@ open OrbitPencilLiftSameKey
 open OrbitPencilLiftSeparatingAlpha
 open OrbitPencilLiftConcreteSlopes
 open OrbitPencilLiftSupport4096
+open OrbitPencilLiftPencil4096
 open OrbitPencilLiftAgreementCount4096
 open OrbitPencilLiftSelectedAgreement4096
 open OrbitPencilLiftDirectionNoncode4096
