@@ -141,20 +141,12 @@ theorem mem_image_union_cases
   · exact Or.inl ⟨x, ha, hfx⟩
   · exact Or.inr ⟨x, hb, hfx⟩
 
-/-- Keep the concrete 2^21 support opaque for downstream pointwise proofs. -/
-theorem support_cases (U : Finset Small) (j : Index)
-    (hj : j ∈ support U) :
-    (∃ ab, ab ∈ corePairs ∧ idx ab.1 ab.2 = j) ∨
-      (∃ ab, ab ∈ blockPairs U ∧ idx ab.1 ab.2 = j) := by
-  classical
-  -- Test whether specialization of mem_image_union_cases is the recursion source.
-  -- Eliminate image membership first, then unfold only the small union witness.
-  change j ∈ (pairSet U).image encodePair at hj
-  obtain ⟨ab, hab, heq⟩ := Finset.mem_image.mp hj
-  simp only [encodePair] at heq
-  change ab ∈ corePairs ∪ blockPairs U at hab
-  rcases Finset.mem_union.mp hab with hc | hb
-  · exact Or.inl ⟨ab, hc, heq⟩
-  · exact Or.inr ⟨ab, hb, heq⟩
+/-- A witness-level support predicate for the actual row/column indices.
+It is deliberately NOT yet proved equivalent to membership in `support U`.
+The separate finite support has cardinality 1118207 by `support_card`.
+The missing equivalence is an explicit outstanding proof obligation. -/
+def logicalSupport (U : Finset Small) (j : Index) : Prop :=
+  (∃ a : Row, a ∈ coreRows ∧ idx a 0 = j) ∨
+  (∃ a : Row, ∃ b : Column, b ∈ U ∧ idx a b = j)
 
 end OrbitPencilLiftSupport4096
