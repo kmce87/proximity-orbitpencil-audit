@@ -46,6 +46,10 @@ private theorem denominator_nonzero_generic (a : Sextic) (n : ℕ)
     ((Polynomial.X : Polynomial Sextic)^n - Polynomial.C a) ≠ 0 :=
   (denominator_monic_generic a n hn).ne_zero
 
+private theorem denominator_degree_generic (a : Sextic) (n : ℕ) :
+    ((Polynomial.X : Polynomial Sextic)^n - Polynomial.C a).natDegree = n :=
+  Polynomial.natDegree_X_pow_sub_C
+
 /-- The actual sextic evaluation-domain embedding has no collisions. -/
 theorem node6_injective : Function.Injective node6 := by
   intro i j hij
@@ -71,7 +75,7 @@ theorem received_direction_not_rs (alpha : Sextic)
     denominator_nonzero_generic alpha 4096 (by omega)
   have hAdeg0 :
       ((Polynomial.X : Polynomial Sextic)^4096 - Polynomial.C alpha).natDegree = 4096 :=
-    Polynomial.natDegree_X_pow_sub_C
+    denominator_degree_generic alpha 4096
   have hAne : A ≠ 0 := hAne0
   have hAdeg : A.natDegree = 4096 := hAdeg0
   have hRdeg : coreLocator.natDegree ≤ 4095 := by
