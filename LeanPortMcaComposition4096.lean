@@ -62,8 +62,11 @@ theorem exists_many_supportwise_bad_slopes :
     exists_selected_agreement_family
   let Z : Finset Sextic := Sel.image (gamma alpha U0)
   have hZcard : Z.card = N := by
-    dsimp [Z]
-    exact (Finset.card_image_of_injOn hinj).trans hSelCard
+    calc
+      Z.card = Sel.card := by
+        dsimp [Z]
+        exact Finset.card_image_of_injOn hinj
+      _ = N := hSelCard
   refine ⟨alpha, U0, Z, ?_, halpha, havoid, ?_⟩
   · rw [hZcard]
     norm_num [N]
