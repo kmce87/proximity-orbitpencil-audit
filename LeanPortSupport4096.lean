@@ -40,7 +40,8 @@ noncomputable def pairSet (U : Finset Small) : Finset (Row × Column) :=
 def encodePair (ab : Row × Column) : Index := idx ab.1 ab.2
 
 theorem encodePair_injective : Function.Injective encodePair := by
-  simpa only [encodePair] using idx_injective
+  change Function.Injective (fun ab : Row × Column => idx ab.1 ab.2)
+  exact idx_injective
 
 noncomputable def support (U : Finset Small) : Finset Index :=
   (pairSet U).image encodePair
