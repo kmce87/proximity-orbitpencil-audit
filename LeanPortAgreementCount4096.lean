@@ -78,7 +78,9 @@ theorem exists_message_agreement_1118207
   have hinj : Function.Injective embed := by
     intro x y h
     apply Subtype.ext
-    exact congrArg Subtype.val h
+    have hindex : (embed x).val = (embed y).val :=
+      congrArg (fun z => z.val) h
+    exact hindex
   exact hsupport.trans (Fintype.card_le_of_injective embed hinj)
 
 #print axioms OrbitPencilLiftAgreementCount4096.exists_message_agreement_1118207
