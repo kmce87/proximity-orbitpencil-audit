@@ -3,6 +3,9 @@ name: Lean 4.34 candidate kernel gate (NOT prize verification)
 on:
   push:
     branches: ["main", "research/**"]
+  pull_request:
+    branches: ["research/**"]
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
 
 permissions:
