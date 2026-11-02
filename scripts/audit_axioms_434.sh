@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Fail-closed transitive axiom audit of the eighty-three targeted Lean lemmas.
+# Fail-closed transitive axiom audit of the eighty-five targeted Lean lemmas.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 tmp="$(mktemp -d)"
@@ -21,6 +21,7 @@ LeanPortSelectedAgreement4096.lean OrbitPencilLiftSelectedAgreement4096.exists_s
 LeanPortDirectionNoncode4096.lean OrbitPencilLiftDirectionNoncode4096.node6_injective OrbitPencilLiftDirectionNoncode4096.received_direction_not_rs OrbitPencilLiftDirectionNoncode4096.received_direction_not_rs_on_support
 LeanPortMcaComposition4096.lean OrbitPencilLiftMcaComposition4096.exists_many_supportwise_bad_slopes
 LeanPortWaBridge4096.lean OrbitPencilLiftWaBridge4096.lineAt_eq_base_add OrbitPencilLiftWaBridge4096.supportWiseBad_implies_W OrbitPencilLiftWaBridge4096.exists_many_W_bad_slopes
+LeanPortWaNormalization4096.lean OrbitPencilLiftWaNormalization4096.budget_successor_exceeds_field OrbitPencilLiftWaNormalization4096.exists_W_above_normalized_budget
 TARGETS
 while read -r file names; do
   out="$tmp/$(basename "$file").out"
@@ -52,4 +53,4 @@ for name in sys.argv[2:]:
     print(f'AXIOM PASS: {name}: {sorted(found)}')
 PY
 done < "$tmp/targets.txt"
-echo "TRANSITIVE AXIOM AUDIT PASS: eighty-three lemmas; only allowed axioms"
+echo "TRANSITIVE AXIOM AUDIT PASS: eighty-five lemmas; only allowed axioms"
