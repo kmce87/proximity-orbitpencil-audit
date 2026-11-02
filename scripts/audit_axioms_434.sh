@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Fail-closed transitive axiom audit of the seventy-four targeted Lean lemmas.
+# Fail-closed transitive axiom audit of the seventy-five targeted Lean lemmas.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 tmp="$(mktemp -d)"
@@ -16,6 +16,7 @@ LeanPortPencil4096.lean OrbitPencilLiftPencil4096.delta_eval_zero OrbitPencilLif
 LeanPortLineAgreement4096.lean OrbitPencilLiftLineAgreement4096.rational_line_identity OrbitPencilLiftLineAgreement4096.pencil_line_identity OrbitPencilLiftLineAgreement4096.pencil_line_agrees_on_root
 LeanPortPointwiseSupport4096.lean OrbitPencilLiftPointwiseSupport4096.node6_pow_column OrbitPencilLiftPointwiseSupport4096.node6_pow_projected OrbitPencilLiftPointwiseSupport4096.node6_pow_nonzero OrbitPencilLiftPointwiseSupport4096.node6_pow_ne_alpha OrbitPencilLiftPointwiseSupport4096.y6_injective OrbitPencilLiftPointwiseSupport4096.logical_support_root_or OrbitPencilLiftPointwiseSupport4096.pencil_agrees_on_logical_support OrbitPencilLiftPointwiseSupport4096.pencil_agrees_with_message_on_logical_support
 LeanPortTypedSupport4096.lean OrbitPencilLiftTypedSupport4096.point_logical OrbitPencilLiftTypedSupport4096.pointIndex_injective OrbitPencilLiftTypedSupport4096.selected_card OrbitPencilLiftTypedSupport4096.logical_support_card_lower
+LeanPortAgreementCount4096.lean OrbitPencilLiftAgreementCount4096.exists_message_agreement_1118207
 TARGETS
 while read -r file names; do
   out="$tmp/$(basename "$file").out"
@@ -47,4 +48,4 @@ for name in sys.argv[2:]:
     print(f'AXIOM PASS: {name}: {sorted(found)}')
 PY
 done < "$tmp/targets.txt"
-echo "TRANSITIVE AXIOM AUDIT PASS: seventy-four lemmas; only allowed axioms"
+echo "TRANSITIVE AXIOM AUDIT PASS: seventy-five lemmas; only allowed axioms"
