@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Fail-closed transitive axiom audit of the eighty-five targeted Lean lemmas.
+# Fail-closed transitive axiom audit of the targeted Lean lemmas and model transport.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 tmp="$(mktemp -d)"
@@ -22,12 +22,17 @@ LeanPortDirectionNoncode4096.lean OrbitPencilLiftDirectionNoncode4096.node6_inje
 LeanPortMcaComposition4096.lean OrbitPencilLiftMcaComposition4096.exists_many_supportwise_bad_slopes
 LeanPortWaBridge4096.lean OrbitPencilLiftWaBridge4096.lineAt_eq_base_add OrbitPencilLiftWaBridge4096.supportWiseBad_implies_W OrbitPencilLiftWaBridge4096.exists_many_W_bad_slopes
 LeanPortWaNormalization4096.lean OrbitPencilLiftWaNormalization4096.budget_successor_exceeds_field OrbitPencilLiftWaNormalization4096.exists_W_above_normalized_budget
+LeanPortDomainTransport4096.lean OrbitPencilLiftDomainTransport4096.node6_injective OrbitPencilLiftDomainTransport4096.indexEquiv OrbitPencilLiftDomainTransport4096.indexEquiv_val OrbitPencilLiftDomainTransport4096.W_to_domain OrbitPencilLiftDomainTransport4096.BadSlope_to_domain OrbitPencilLiftDomainTransport4096.exists_many_domain_bad_slopes OrbitPencilLiftDomainTransport4096.SupportWiseBad_to_domain_1118207 OrbitPencilLiftDomainTransport4096.exists_many_domain_bad_slopes_1118207
 TARGETS
+count=0
 while read -r file names; do
   out="$tmp/$(basename "$file").out"
   source="$tmp/$(basename "$file")"
   cat "$file" > "$source"
-  for name in $names; do printf '\n#print axioms %s\n' "$name" >> "$source"; done
+  for name in $names; do
+    printf '\n#print axioms %s\n' "$name" >> "$source"
+    count=$((count + 1))
+  done
   lake env lean "$source" > "$out" 2>&1 || { cat "$out"; exit 1; }
   cat "$out"
   python3 - "$out" $names <<'PY'
@@ -53,4 +58,4 @@ for name in sys.argv[2:]:
     print(f'AXIOM PASS: {name}: {sorted(found)}')
 PY
 done < "$tmp/targets.txt"
-echo "TRANSITIVE AXIOM AUDIT PASS: eighty-five lemmas; only allowed axioms"
+echo "TRANSITIVE AXIOM AUDIT PASS: ${count} declarations; only allowed axioms"
