@@ -6,7 +6,7 @@ import LeanPortIndexedNoncontainment
 
 One falsifiable bridge: on the actual KoalaBear n = 2^21 NTT domain,
 the fixed direction -coreLocator(x)/(x^4096-alpha) cannot be an
-evaluation of any polynomial of degree < 2^20, provided alpha avoids
+evaluation of any polynomial of degree ≤ 2^20, provided alpha avoids
 the 512 projected nodes.
 
 The argument applies the previously audited indexed polynomial root-count
@@ -61,7 +61,7 @@ codeword on the full n=2^21 domain, for every admissible alpha. -/
 theorem received_direction_not_rs (alpha : Sextic)
     (havoid : alpha ∉ projected6) :
     ¬ ∃ q : Polynomial Sextic,
-      q.natDegree ≤ 1048575 ∧
+      q.natDegree ≤ 1048576 ∧
       ∀ j : Index, q.eval (node6 j) =
         -coreLocator.eval (node6 j) /
           ((node6 j)^4096 - alpha) := by
@@ -108,7 +108,7 @@ theorem received_direction_not_rs_on_support (alpha : Sextic)
     (havoid : alpha ∉ projected6) (S : Finset Index)
     (hScard : 1116048 ≤ S.card) :
     ¬ ∃ q : Polynomial Sextic,
-      q.natDegree ≤ 1048575 ∧
+      q.natDegree ≤ 1048576 ∧
       ∀ j ∈ S, q.eval (node6 j) =
         -coreLocator.eval (node6 j) /
           ((node6 j)^4096 - alpha) := by
