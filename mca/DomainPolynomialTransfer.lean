@@ -4,7 +4,30 @@ NOT COMPILED OR KERNEL CHECKED. This explicitly requires a degree < k
 explaining polynomial; a degree <= k polynomial alone is insufficient.
 -/ 
 import Mathlib
-import McaDeployedTransfer
+namespace McaDeployedTransfer
+def Explains {D F : Type*} [Field F]
+    (C : Set (D → F)) (S : Set D) (h : D → F) : Prop :=
+  ∃ c ∈ C, ∀ x ∈ S, h x = c x
+def Bad {D F : Type*} [Field F]
+    (C : Set (D → F)) (S : Set D) (f g : D → F) (z : F) : Prop :=
+  Explains C S (fun x => f x + z * g x) ∧
+    ¬ (Explains C S f ∧ Explains C S g)
+theorem bad_of_asymmetric_witness {D F : Type*} [Field F]
+    (small large : Set (D → F)) (S : Set D) (f g : D → F) (z : F)
+    (hsub : small ⊆ large)
+    (hsmall : Explains small S (fun x => f x + z * g x))
+    (hlarge : ¬ (Explains large S f ∧ Explains large S g)) :
+    Bad small S f g z := by
+  constructor
+  · exact hsmall
+  · intro h
+    apply hlarge
+    constructor
+    · obtain ⟨c, hc, he⟩ := h.1
+      exact ⟨c, hsub hc, he⟩
+    · obtain ⟨c, hc, he⟩ := h.2
+      exact ⟨c, hsub hc, he⟩
+end McaDeployedTransfer
 
 namespace McaDomainTransfer
 
