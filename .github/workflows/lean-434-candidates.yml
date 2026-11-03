@@ -2,7 +2,7 @@ name: Lean 4.34 candidate kernel gate (NOT prize verification)
 
 on:
   push:
-    branches: ["main", "research/**"]
+    branches: ["main", "research/**", "mca-kernel-replay-20261103-1829"]
   pull_request:
     branches: ["research/**"]
     types: [opened, synchronize, reopened]
