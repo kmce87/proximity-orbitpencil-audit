@@ -60,11 +60,11 @@ def WOnDomain (f g : D → Sextic) (S : Finset D)
     (z : Sextic) : Prop :=
   1116048 ≤ S.card ∧
   (∃ c : Polynomial Sextic,
-    c.natDegree ≤ 1048575 ∧
+    c.natDegree ≤ 1048576 ∧
     ∀ x ∈ S, f x + z * g x = c.eval x.val) ∧
   ¬ ∃ cf cg : Polynomial Sextic,
-    cf.natDegree ≤ 1048575 ∧
-    cg.natDegree ≤ 1048575 ∧
+    cf.natDegree ≤ 1048576 ∧
+    cg.natDegree ≤ 1048576 ∧
     (∀ x ∈ S, f x = cf.eval x.val) ∧
     (∀ x ∈ S, g x = cg.eval x.val)
 
