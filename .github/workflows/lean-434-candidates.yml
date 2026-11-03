@@ -27,9 +27,25 @@ jobs:
           export PATH="$HOME/.elan/bin:$PATH"
           lean --version
           lake --version
-          lake update
+          # GitHub DNS/network failures during dependency clone are transient.
+          # Keep the pinned dependency graph; retry without changing proof sources.
+          for attempt in 1 2 3; do
+            if lake update; then break; fi
+            if [ "$attempt" -eq 3 ]; then
+              echo "ERROR: lake update failed after three attempts" >&2
+              exit 1
+            fi
+            sleep 20
+          done
           test -s lake-manifest.json
-          lake exe cache get
+          for attempt in 1 2 3; do
+            if lake exe cache get; then break; fi
+            if [ "$attempt" -eq 3 ]; then
+              echo "ERROR: Mathlib cache retrieval failed after three attempts" >&2
+              exit 1
+            fi
+            sleep 20
+          done
       - name: Isolated large-Fin image membership probe
         shell: bash
         run: |
