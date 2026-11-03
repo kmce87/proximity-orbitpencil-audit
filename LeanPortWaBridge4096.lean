@@ -49,11 +49,11 @@ simultaneously explains f and g on that same support. -/
 def W (f g : Index → Sextic) (S : Finset Index) (z : Sextic) : Prop :=
   1116048 ≤ S.card ∧
   (∃ c : Polynomial Sextic,
-    c.natDegree ≤ 1048575 ∧
+    c.natDegree ≤ 1048576 ∧
     ∀ j ∈ S, f j + z * g j = c.eval (node6 j)) ∧
   ¬ ∃ cf cg : Polynomial Sextic,
-    cf.natDegree ≤ 1048575 ∧
-    cg.natDegree ≤ 1048575 ∧
+    cf.natDegree ≤ 1048576 ∧
+    cg.natDegree ≤ 1048576 ∧
     (∀ j ∈ S, f j = cf.eval (node6 j)) ∧
     (∀ j ∈ S, g j = cg.eval (node6 j))
 
@@ -70,7 +70,7 @@ theorem supportWiseBad_implies_W (alpha : Sextic)
   rcases h with ⟨S, c, hScard, hcdeg, hmatch, hnot⟩
   refine ⟨S, ?_, ?_, ?_⟩
   · omega
-  · refine ⟨c, hcdeg, ?_⟩
+  · refine ⟨c, by omega, ?_⟩
     intro j hj
     rw [← lineAt_eq_base_add]
     exact hmatch j hj
