@@ -2,7 +2,7 @@ name: Lean 4.34 candidate kernel gate (NOT prize verification)
 
 on:
   push:
-    branches: ["main", "research/**", "mca-kernel-replay-20261103-1829"]
+    branches: ["main", "research/**", "mca-kernel-replay-20261103-1829", "mca-cap25-event-20261103-2208"]
   pull_request:
     branches: ["research/**"]
     types: [opened, synchronize, reopened]
@@ -55,4 +55,6 @@ jobs:
           lake env lean LeanPortFiniteImageProbe.lean
       - name: Compile all four candidates (fail-closed)
         shell: bash
-        run: bash scripts/run_lean_434_gate.sh
+        run: |
+          bash scripts/run_lean_434_gate.sh
+          lake env lean LeanPortCAP25Event4096.lean
