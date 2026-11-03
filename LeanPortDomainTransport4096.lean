@@ -107,6 +107,7 @@ theorem BadSlope_to_domain (f g : Index → Sextic) (z : Sextic)
     BadSlopeOnDomain
       (fun x => f (indexEquiv.symm x))
       (fun x => g (indexEquiv.symm x)) z := by
+  classical
   rcases h with ⟨S, hS⟩
   exact ⟨S.image indexEquiv, W_to_domain f g S z hS⟩
 
