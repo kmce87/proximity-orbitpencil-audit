@@ -152,7 +152,7 @@ theorem SupportWiseBad_to_domain_1118207
   classical
   rcases h with ⟨S, c, hcard, hdeg, hmatch, hnot⟩
   have hW : W (receivedBase alpha U0) (receivedDirection alpha) S z := by
-    refine ⟨by omega, ⟨c, hdeg, ?_⟩, ?_⟩
+    refine ⟨by omega, ⟨c, by omega, ?_⟩, ?_⟩
     · intro j hj
       rw [← lineAt_eq_base_add]
       exact hmatch j hj
