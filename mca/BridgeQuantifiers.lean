@@ -25,9 +25,11 @@ def LocalBadSlope (C : Set (F → F)) (D : Set F) (a : ℕ)
   ∃ S : Finset F, (S : Set F) ⊆ D ∧
     a ≤ S.card ∧ SupportBad C (S : Set F) f g z
 
-def LocalNumerator (C : Set (F → F)) (D : Set F) (a : ℕ)
+noncomputable def LocalNumerator (C : Set (F → F)) (D : Set F) (a : ℕ)
     (f g : F → F) : ℕ :=
-  (Finset.univ.filter (fun z => LocalBadSlope C D a f g z)).card
+  by
+    classical
+    exact (Finset.univ.filter (fun z => LocalBadSlope C D a f g z)).card
 
 /-- Explicitly turn per-slope witnesses for one fixed f,g into a lower
 bound on the cardinality of distinct support-wise bad slopes.
@@ -41,6 +43,7 @@ theorem distinct_witnesses_lower_bound
     (hsize : ∀ z ∈ Z, a ≤ (support z).card)
     (hbad : ∀ z ∈ Z, SupportBad C (support z : Set F) f g z) :
     Z.card ≤ LocalNumerator C D a f g := by
+  classical
   unfold LocalNumerator
   apply Finset.card_le_card
   intro z hz
