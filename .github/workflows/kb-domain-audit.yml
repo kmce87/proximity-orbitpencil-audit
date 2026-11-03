@@ -1,0 +1,37 @@
+name: KoalaBear domain semantic-replay audit (not prize verification)
+
+on:
+  push:
+    branches: ["research/domain-equivalence-audit-20261103-0009"]
+  pull_request:
+    branches: ["research/Wa-exact-probability-normalization-20261102-2340"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-subgroup-domain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download exact pinned CompPoly source (no dependency build)
+        shell: bash
+        run: |
+          set -euo pipefail
+          PIN=411708c17175ab5ecaf035036608c206c4ee0878
+          mkdir -p /tmp/comp-audit/CompPoly/Fields/KoalaBear
+          mkdir -p /tmp/comp-audit/CompPoly/Univariate/NTT
+          curl --fail --location --retry 3 --silent --show-error \
+            "https://raw.githubusercontent.com/zksecurity/CompPoly/${PIN}/CompPoly/Fields/KoalaBear/Basic.lean" \
+            -o /tmp/comp-audit/CompPoly/Fields/KoalaBear/Basic.lean
+          curl --fail --location --retry 3 --silent --show-error \
+            "https://raw.githubusercontent.com/zksecurity/CompPoly/${PIN}/CompPoly/Univariate/NTT/KoalaBear.lean" \
+            -o /tmp/comp-audit/CompPoly/Univariate/NTT/KoalaBear.lean
+      - name: Independently check exact root order and source pins
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/check_kb_mca_domain.py --comppoly-root /tmp/comp-audit | tee /tmp/domain-audit.json
+          grep -Fq '"status": "PASS_EXACT_KB_DOMAIN_GENERATOR"' /tmp/domain-audit.json
