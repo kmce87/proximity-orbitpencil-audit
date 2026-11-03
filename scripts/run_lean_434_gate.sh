@@ -36,6 +36,8 @@ lake env lean -o .lake/build/lib/lean/LeanPortDirectionNoncode4096.olean LeanPor
 lake env lean -o .lake/build/lib/lean/LeanPortMcaComposition4096.olean LeanPortMcaComposition4096.lean
 lake env lean -o .lake/build/lib/lean/LeanPortWaBridge4096.olean LeanPortWaBridge4096.lean
 lake env lean -o .lake/build/lib/lean/LeanPortWaNormalization4096.olean LeanPortWaNormalization4096.lean
-lake env lean LeanPortDomainTransport4096.lean
+lake env lean -o .lake/build/lib/lean/LeanPortDomainTransport4096.olean LeanPortDomainTransport4096.lean
+# Explicitly compile the deployed-degree transfer, which is not imported by earlier candidates.
+lake env lean LeanPortDeployedTransfer4096.lean
 bash scripts/audit_axioms_434.sh
 echo 'LOCAL LEAN COMPILATION + AXIOM AUDIT PASS (NOT independent prize-verifier acceptance)'
