@@ -43,7 +43,7 @@ def SupportWiseBad (alpha : Sextic) (U0 : Finset Small)
     c.natDegree ≤ 1048575 ∧
     (∀ j ∈ S, lineAt alpha U0 z j = c.eval (node6 j)) ∧
     ¬ ∃ q : Polynomial Sextic,
-      q.natDegree ≤ 1048575 ∧
+      q.natDegree ≤ 1048576 ∧
       ∀ j ∈ S, q.eval (node6 j) =
         -coreLocator.eval (node6 j) /
           ((node6 j)^4096 - alpha)
