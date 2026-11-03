@@ -20,6 +20,7 @@ namespace OrbitPencilLiftDomainTransport4096
 open Polynomial
 open OrbitPencilLiftGeometry
 open OrbitPencilLiftSameKey
+open OrbitPencilLiftConcreteSlopes
 open OrbitPencilLiftSupport4096
 open OrbitPencilLiftWaBridge4096
 
