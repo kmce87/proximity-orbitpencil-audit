@@ -130,9 +130,66 @@ theorem exists_many_domain_bad_slopes :
   exact BadSlope_to_domain
     (receivedBase alpha U0) (receivedDirection alpha) z (hbad z hz)
 
+/-- Preserve the *stronger* 1,118,207 agreement edge, not just the
+weaker 1,116,048 benchmark threshold, on the same domain support. -/
+def WOnDomain1118207 (f g : D → Sextic) (S : Finset D)
+    (z : Sextic) : Prop :=
+  1118207 ≤ S.card ∧ WOnDomain f g S z
+
+def BadSlopeOnDomain1118207 (f g : D → Sextic) (z : Sextic) : Prop :=
+  ∃ S : Finset D, WOnDomain1118207 f g S z
+
+/-- The 4096-fibre support-wise witness transports at its EXACT agreement
+edge. Its noncontainment follows from direction non-explainability on the
+same support; no new slope is counted. -/
+theorem SupportWiseBad_to_domain_1118207
+    (alpha : Sextic) (U0 : Finset Small) (z : Sextic)
+    (h : OrbitPencilLiftMcaComposition4096.SupportWiseBad alpha U0 z) :
+    BadSlopeOnDomain1118207
+      (fun x => receivedBase alpha U0 (indexEquiv.symm x))
+      (fun x => receivedDirection alpha (indexEquiv.symm x)) z := by
+  classical
+  rcases h with ⟨S, c, hcard, hdeg, hmatch, hnot⟩
+  have hW : W (receivedBase alpha U0) (receivedDirection alpha) S z := by
+    refine ⟨by omega, ⟨c, hdeg, ?_⟩, ?_⟩
+    · intro j hj
+      rw [← lineAt_eq_base_add]
+      exact hmatch j hj
+    · rintro ⟨cf, cg, _hcf, hcg, _hf, hg⟩
+      apply hnot
+      refine ⟨cg, hcg, ?_⟩
+      intro j hj
+      exact (hg j hj).symm
+  have hD := W_to_domain
+    (receivedBase alpha U0) (receivedDirection alpha) S z hW
+  refine ⟨S.image indexEquiv, ?_, hD⟩
+  rw [Finset.card_image_of_injective _ indexEquiv.injective]
+  exact hcard
+
+/-- Primary target: ONE fixed received affine line, more than B* DISTINCT
+bad slopes, and agreement >= 1,118,207 on the concrete sextic domain. -/
+theorem exists_many_domain_bad_slopes_1118207 :
+    ∃ (alpha : Sextic) (U0 : Finset Small) (Z : Finset Sextic),
+      274980728111395087 < Z.card ∧
+      alpha ≠ 0 ∧ alpha ∉ projected6 ∧
+      ∀ z ∈ Z,
+        BadSlopeOnDomain1118207
+          (fun x => receivedBase alpha U0 (indexEquiv.symm x))
+          (fun x => receivedDirection alpha (indexEquiv.symm x)) z := by
+  obtain ⟨alpha, U0, Z, hZ, hα, havoid, hbad⟩ :=
+    OrbitPencilLiftMcaComposition4096.exists_many_supportwise_bad_slopes
+  have hbudget : 274980728111395087 < Z.card := by
+    have htwo : (2 : ℕ)^59 = 576460752303423488 := by norm_num
+    omega
+  refine ⟨alpha, U0, Z, hbudget, hα, havoid, ?_⟩
+  intro z hz
+  exact SupportWiseBad_to_domain_1118207 alpha U0 z (hbad z hz)
+
 #print axioms OrbitPencilLiftDomainTransport4096.node6_injective
 #print axioms OrbitPencilLiftDomainTransport4096.indexEquiv
 #print axioms OrbitPencilLiftDomainTransport4096.W_to_domain
 #print axioms OrbitPencilLiftDomainTransport4096.exists_many_domain_bad_slopes
+#print axioms OrbitPencilLiftDomainTransport4096.SupportWiseBad_to_domain_1118207
+#print axioms OrbitPencilLiftDomainTransport4096.exists_many_domain_bad_slopes_1118207
 
 end OrbitPencilLiftDomainTransport4096
