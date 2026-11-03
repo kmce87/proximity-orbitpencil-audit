@@ -17,10 +17,25 @@ lake build CompPoly.Univariate.NTT.KoalaBear
 mkdir -p .lake/build/lib/lean
 lake env lean -o .lake/build/lib/lean/LeanPortSameKeyFamily.olean LeanPortSameKeyFamily.lean
 lake env lean -o .lake/build/lib/lean/LeanPortSeparatingAlpha.olean LeanPortSeparatingAlpha.lean
-lake env lean LeanPortConcreteSlopes.lean
-lake env lean LeanPortIndexedNoncontainment.lean
+lake env lean -o .lake/build/lib/lean/LeanPortConcreteSlopes.olean LeanPortConcreteSlopes.lean
+lake env lean -o .lake/build/lib/lean/LeanPortIndexedNoncontainment.olean LeanPortIndexedNoncontainment.lean
 lake env lean LeanPortNoncontainment.lean
 lake env lean -o .lake/build/lib/lean/LeanPortGeometry.olean LeanPortGeometry.lean
-lake env lean LeanPortSupport4096.lean
+# Diagnostic gate: distinguish large Fin types from concrete support expansion.
+lake env lean LeanPortFiniteImageProbe.lean
+# The earlier failing predicate/finite-image diagnostics remain in the repository
+# but are not prerequisites for this *different* logical-support hypothesis.
+lake env lean -o .lake/build/lib/lean/LeanPortSupport4096.olean LeanPortSupport4096.lean
+lake env lean -o .lake/build/lib/lean/LeanPortPencil4096.olean LeanPortPencil4096.lean
+lake env lean -o .lake/build/lib/lean/LeanPortLineAgreement4096.olean LeanPortLineAgreement4096.lean
+lake env lean -o .lake/build/lib/lean/LeanPortPointwiseSupport4096.olean LeanPortPointwiseSupport4096.lean
+lake env lean -o .lake/build/lib/lean/LeanPortTypedSupport4096.olean LeanPortTypedSupport4096.lean
+lake env lean -o .lake/build/lib/lean/LeanPortAgreementCount4096.olean LeanPortAgreementCount4096.lean
+lake env lean -o .lake/build/lib/lean/LeanPortSelectedAgreement4096.olean LeanPortSelectedAgreement4096.lean
+lake env lean -o .lake/build/lib/lean/LeanPortDirectionNoncode4096.olean LeanPortDirectionNoncode4096.lean
+lake env lean -o .lake/build/lib/lean/LeanPortMcaComposition4096.olean LeanPortMcaComposition4096.lean
+lake env lean -o .lake/build/lib/lean/LeanPortWaBridge4096.olean LeanPortWaBridge4096.lean
+lake env lean -o .lake/build/lib/lean/LeanPortWaNormalization4096.olean LeanPortWaNormalization4096.lean
+lake env lean LeanPortDomainTransport4096.lean
 bash scripts/audit_axioms_434.sh
 echo 'LOCAL LEAN COMPILATION + AXIOM AUDIT PASS (NOT independent prize-verifier acceptance)'

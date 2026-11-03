@@ -3,6 +3,9 @@ name: Lean 4.34 candidate kernel gate (NOT prize verification)
 on:
   push:
     branches: ["main", "research/**"]
+  pull_request:
+    branches: ["research/**"]
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
 
 permissions:
@@ -27,6 +30,13 @@ jobs:
           lake update
           test -s lake-manifest.json
           lake exe cache get
+      - name: Isolated large-Fin image membership probe
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .lake/build/lib/lean
+          lake env lean -o .lake/build/lib/lean/LeanPortGeometry.olean LeanPortGeometry.lean
+          lake env lean LeanPortFiniteImageProbe.lean
       - name: Compile all four candidates (fail-closed)
         shell: bash
         run: bash scripts/run_lean_434_gate.sh

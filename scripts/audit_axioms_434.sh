@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Fail-closed transitive axiom audit of the fifty-two targeted Lean lemmas.
+# Fail-closed transitive axiom audit of the targeted Lean lemmas and model transport.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 tmp="$(mktemp -d)"
@@ -12,12 +12,27 @@ LeanPortSameKeyFamily.lean OrbitPencilLiftSameKey.outer_card OrbitPencilLiftSame
 LeanPortSeparatingAlpha.lean OrbitPencilLiftSeparatingAlpha.bad_card_le OrbitPencilLiftSeparatingAlpha.alpha_arithmetic OrbitPencilLiftSeparatingAlpha.exists_alpha_gamma_injective
 LeanPortConcreteSlopes.lean OrbitPencilLiftConcreteSlopes.exists_concrete_alpha_distinct_slopes
 LeanPortSupport4096.lean OrbitPencilLiftSupport4096.coreRows_card OrbitPencilLiftSupport4096.pair_disjoint OrbitPencilLiftSupport4096.support_card OrbitPencilLiftSupport4096.node21_injective OrbitPencilLiftSupport4096.coreLocator_monic OrbitPencilLiftSupport4096.coreLocator_natDegree OrbitPencilLiftSupport4096.coreLocator_ne_zero OrbitPencilLiftSupport4096.coreLocator_eval_core
+LeanPortPencil4096.lean OrbitPencilLiftPencil4096.delta_eval_zero OrbitPencilLiftPencil4096.pencil_eval_zero OrbitPencilLiftPencil4096.pencil_eval_alpha OrbitPencilLiftPencil4096.pencil_degree_lt OrbitPencilLiftPencil4096.exists_quotient OrbitPencilLiftPencil4096.abstract_message_degree_le OrbitPencilLiftPencil4096.exists_message_poly
+LeanPortLineAgreement4096.lean OrbitPencilLiftLineAgreement4096.rational_line_identity OrbitPencilLiftLineAgreement4096.pencil_line_identity OrbitPencilLiftLineAgreement4096.pencil_line_agrees_on_root
+LeanPortPointwiseSupport4096.lean OrbitPencilLiftPointwiseSupport4096.node6_pow_column OrbitPencilLiftPointwiseSupport4096.node6_pow_projected OrbitPencilLiftPointwiseSupport4096.node6_pow_nonzero OrbitPencilLiftPointwiseSupport4096.node6_pow_ne_alpha OrbitPencilLiftPointwiseSupport4096.y6_injective OrbitPencilLiftPointwiseSupport4096.logical_support_root_or OrbitPencilLiftPointwiseSupport4096.pencil_agrees_on_logical_support OrbitPencilLiftPointwiseSupport4096.pencil_agrees_with_message_on_logical_support
+LeanPortTypedSupport4096.lean OrbitPencilLiftTypedSupport4096.point_logical OrbitPencilLiftTypedSupport4096.pointIndex_injective OrbitPencilLiftTypedSupport4096.selected_card OrbitPencilLiftTypedSupport4096.logical_support_card_lower
+LeanPortAgreementCount4096.lean OrbitPencilLiftAgreementCount4096.exists_message_agreement_1118207
+LeanPortSelectedAgreement4096.lean OrbitPencilLiftSelectedAgreement4096.exists_selected_agreement_family
+LeanPortDirectionNoncode4096.lean OrbitPencilLiftDirectionNoncode4096.node6_injective OrbitPencilLiftDirectionNoncode4096.received_direction_not_rs OrbitPencilLiftDirectionNoncode4096.received_direction_not_rs_on_support
+LeanPortMcaComposition4096.lean OrbitPencilLiftMcaComposition4096.exists_many_supportwise_bad_slopes
+LeanPortWaBridge4096.lean OrbitPencilLiftWaBridge4096.lineAt_eq_base_add OrbitPencilLiftWaBridge4096.supportWiseBad_implies_W OrbitPencilLiftWaBridge4096.exists_many_W_bad_slopes
+LeanPortWaNormalization4096.lean OrbitPencilLiftWaNormalization4096.budget_successor_exceeds_field OrbitPencilLiftWaNormalization4096.exists_W_above_normalized_budget
+LeanPortDomainTransport4096.lean OrbitPencilLiftDomainTransport4096.node6_injective OrbitPencilLiftDomainTransport4096.indexEquiv OrbitPencilLiftDomainTransport4096.indexEquiv_val OrbitPencilLiftDomainTransport4096.W_to_domain OrbitPencilLiftDomainTransport4096.BadSlope_to_domain OrbitPencilLiftDomainTransport4096.exists_many_domain_bad_slopes OrbitPencilLiftDomainTransport4096.SupportWiseBad_to_domain_1118207 OrbitPencilLiftDomainTransport4096.exists_many_domain_bad_slopes_1118207
 TARGETS
+count=0
 while read -r file names; do
   out="$tmp/$(basename "$file").out"
   source="$tmp/$(basename "$file")"
   cat "$file" > "$source"
-  for name in $names; do printf '\n#print axioms %s\n' "$name" >> "$source"; done
+  for name in $names; do
+    printf '\n#print axioms %s\n' "$name" >> "$source"
+    count=$((count + 1))
+  done
   lake env lean "$source" > "$out" 2>&1 || { cat "$out"; exit 1; }
   cat "$out"
   python3 - "$out" $names <<'PY'
@@ -43,4 +58,4 @@ for name in sys.argv[2:]:
     print(f'AXIOM PASS: {name}: {sorted(found)}')
 PY
 done < "$tmp/targets.txt"
-echo "TRANSITIVE AXIOM AUDIT PASS: fifty-two lemmas; only allowed axioms"
+echo "TRANSITIVE AXIOM AUDIT PASS: ${count} declarations; only allowed axioms"
