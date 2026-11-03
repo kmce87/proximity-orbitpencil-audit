@@ -57,4 +57,5 @@ jobs:
         shell: bash
         run: |
           bash scripts/run_lean_434_gate.sh
+          lake env lean -o .lake/build/lib/lean/LeanPortDeployedTransfer4096.olean LeanPortDeployedTransfer4096.lean
           lake env lean LeanPortCAP25Event4096.lean
