@@ -35,6 +35,7 @@ lake env lean -o .lake/build/lib/lean/LeanPortSelectedAgreement4096.olean LeanPo
 lake env lean -o .lake/build/lib/lean/LeanPortDirectionNoncode4096.olean LeanPortDirectionNoncode4096.lean
 lake env lean -o .lake/build/lib/lean/LeanPortMcaComposition4096.olean LeanPortMcaComposition4096.lean
 lake env lean -o .lake/build/lib/lean/LeanPortWaBridge4096.olean LeanPortWaBridge4096.lean
-lake env lean LeanPortWaNormalization4096.lean
+lake env lean -o .lake/build/lib/lean/LeanPortWaNormalization4096.olean LeanPortWaNormalization4096.lean
+lake env lean LeanPortDomainTransport4096.lean
 bash scripts/audit_axioms_434.sh
 echo 'LOCAL LEAN COMPILATION + AXIOM AUDIT PASS (NOT independent prize-verifier acceptance)'
