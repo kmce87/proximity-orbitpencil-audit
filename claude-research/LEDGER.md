@@ -54,39 +54,36 @@ real BF64 and in the toy (`n2_kappa.cpp`, `n2_toy_replay.py`):
 | H3 | 6 zero-sum W-cosets + 4 zero-sum classes of a varying 11-dim U' (5/8) | **fails** (rough): ~2^32 members |
 | H4 | add one fixed label by making the degree-2^14 coefficient of C_S constant | needs a K-valued (64-bit) coincidence against 1.7 bits of slack; superseded by N2 |
 | N2 | kappa_S takes few values on a sub-family of > 2^64 members of BitWonka's family | **fails, rigorous**: kappa_S = L_W(sum Q) + sum_t a(U_t) (direct locators match); kappa is injective in (m_0, jn_0), which has 1021*8 values with the rest fixed, so every kappa fibre has <= 2^52.709 members and any > 2^64 sub-family has > 2^11 kappa values. Measured: 3*10^6 random members give 3*10^6 distinct values; slice fibres on 8184^3 triples mean 1.0008, max 2; only invariance is (aa, e0, e1). ChatGPT's `prize-binary-coeff-injection-20261103` reaches a weaker bound (|Param|/8) independently. Pigeonhole version needs 2^128 members; the design has at most 2^(4 ny + 22) = 2^90 at f = 0 |
+| N6 | the common-top class at f = 7 (ny = 10) has > 2^64 members avoiding label 0 | **fails, exact**: the whole class has M_all(10) = 14201103363987440560, and exactly 7/16 of it avoids a given label: **6212982721744505245 = 2^62.430** (short by a factor 2.969, i.e. 1.57 bits). See Theory below; `n6_*` |
 
-Working conclusion: within subspace/flat families, gaps above 2^(n-4) force all varying parts to
-share one subspace, which caps the family far below 2^64, and fixing kappa is out of reach.
+## Theory proved in run 3 (`n6_*`, credit: the record's class is BitWonka's)
 
-**Cheapest remaining route (found in run 2): keep 9/16 but move to f = 7.** The core is 2^f - 1, so
-a = 9*2^17 + 2^f - 1. Exact integers (`n2_f7_numbers.py`): 106.23 needs a >= 1179774 (63 more points, unsafe
-index <= 917378). f = 7 gives a = 1179775, score 106.23; f = 8 gives 106.21; f = 9 gives 106.17. The only obstacle
-is the member count at ny = 17 - f: BitWonka's rows give 2^61.696 at f = 7 (need > 2^64, **short by 2.31 bits**).
-Known enlargements of the same common-top class (top = L_W^3 X^(3*2^(n-3)) mod degree <= D):
-* 35 more rows (P a linear plane, v_3 = 0, all three constants free): 2^61.918 (exact).
-* Shape AAB: two flats over one half-space H plus one flat over a plane in H^c. Toy-verified common top and
-  end-to-end pencil replay. Each set has 3 decompositions, so estimated count is about 2^(4 ny + 19.9), total about 2^62.2
-  (estimate only). Still short by about 1.8 bits; lower-rank shapes (BBB, 5 cosets + 2 flats) add only a few percent.
-Conjecture (unverified) that makes the class finite to classify: S, S' share the top down to gap 2^(n-4) iff every
-Walsh coefficient of 1_S - 1_S' is divisible by 2^(n-3). Then 1_S - 1_S' = (1/8) sum c_L chi_L with sum c_L^2 <= 64,
-and M(ny) = sum_rho [ny, rho]_2 N_rho, where N_rho counts members of y-rank exactly rho at ny = rho. Per-z
-fibres S_z may then be rank-2k quadrics, not only flats (non-affine candidates). For the row pattern with all
-characters on half-spaces, AAA is forced; other patterns are open.
+Notation: labels V = F_2^n, ell: V -> K injective and F_2-linear, P(g) = prod (X - ell(v))^g(v) for g in Z[V], I = augmentation ideal.
+* **T1 (any ell).** g in I with 2^k dividing all Walsh coefficients <=> g in I^k (induction on n), and then P(g) = 1 + O(X^-(2^(k-1))). Generators are translates of 2^t x_w1...x_w(k-t); a cube gives L_H / (L_H + L_H(u)). So S, S' share the top to gap 2^(k-1) as soon as 2^k divides Walsh(1_S - 1_S'). The old conjecture's "if" direction is a theorem.
+* **T2 (generic ell).** The leading coefficient c_j: I^j/I^(j+1) -> K, c(2^t x_T) = (prod over odd U in T of ell(sum U))^(2^t), has distinct leading monomials, so it is injective. Gaps are exactly powers of 2 and the "only if" holds. Checked exhaustively at n = 4 (partitions identical), on random cubes, and symbolically for n <= 6 (`n6_walsh_check.py`). A special ell could only add members through K-valued coincidences; none is structural (no two W share a top, for any ell, and the real labels have dim(V cap zV) = 0 for every subfield generator z, `n6_subfield_check.py`).
+* **T3 (which classes).** Write A = 16 * (Fourier of 1_S). T1 on the dual gives A in I(V*)^4, so R = {chi: coefficient odd/16} is a word of RM(n-4, n): |R| >= 16 with equality iff R is a 4-flat. Since 9/16 forces 0 in R, the forced mass is >= 15/256 of 63/256, leaving at most 12 characters at +-1/8. Dimensions 2 and 3 are impossible (signed counts over z would be non-integers). R = W^perp is exactly the top L_W^3 X^(3*2^(n-3)). Every other R has |R| >= 24 (Kasami-Tokura weights) and budget <= 10, below the 12 that rank 4 costs in T4, so rank <= 3 is expected; rough counts stay near 2^56. Finer residues (odd/32) add forced mass. This paragraph's last two statements are estimates, not proofs.
+* **T4 (the class for R = W^perp).** w_eta(z) = 8 E_y[1_{S_z} chi_eta] lies in Lambda (integer combinations of z-characters), and 8*phi lies in 8 delta_q + Lambda. There are 37 z-profile orbits (`n6_profiles.py`). Odd profiles die by parity (sum b^2 = #odd etas mod 2, while their budgets are even); the bent profile {2:6, 6:10} has all w even since 2 eps' w lies in Lambda. So all w are even, each S_z is empty, full, a hyperplane, a codim-2 flat or complement, or a two-flat selector (no rank-4 quadric fibres), at most 6 etas occur, and **y-rank <= 4**. Rank 4 occurs only for AAA (etas m_i, m_i + r) and AAB, both on the profile {0:1, 4:12, 8:3}; all other rows of the class have rank <= 3.
+* **Exact counts.** M_all(ny) = sum_rho [ny, rho]_2 N_rho with N_0..N_4 = 11440, 14721280, 11988756480, 279283630080, 231211008000. N_4 = 560*2520*2^17 (AAA) + 560*3*840*2^15 (AAB). The class is closed under all translations, so exactly 7/16 avoids a fixed label. AAA alone gives 2^61.918 (= BitWonka's 420 rows + the 35 extra rows, exact match), AAA + AAB 2^62.240, everything 2^62.430. f = 6 (ny = 11): 2^66.347 (the record uses 2^65.705).
+  Verification: per-profile exhaustive DFS at ny = 2, 3, 4 for all 34 even profiles (`n6_count.cpp`, input `n6_reps.txt`, logs `n6_ny*.log`, totals `n6_total.py`): the formula holds at every rank, rank 4 occurs only on the record's profile with 412876800 = N_4/560 members, and direct locators on 73 members of 22 profile/rank types in GF(2^16) show deg(V_S - top) <= D with a failing negative control (`n6_verify.py`). `n6_shapes.py` enumerates the 6-eta rank-4 shapes.
+* **Next level up.** By T2, density above 9/16 needs gap 2^(n-3). At 5/8 the forced mass 7/64 of 15/64 leaves 2 characters at +-1/4, so one free functional; between 9/16 and 5/8 the same count leaves at most 3 characters, so at most two free functionals. That is about 2^(2n + c) members at most (rough), far below 2^64 for every f. This supersedes H1-H3 and N1.
+
+**Consequence.** For generic labels and words of degree exactly |S| (no cofactor): 9/16 is the top density with > 2^64 members, f = 6 is the largest fibre level that keeps > 2^64, so a_max = 9*2^17 + 63 = 1179711. **BitWonka's 106.24 is exactly optimal inside this framework.** The label 0 restriction cannot be softened: the core needs 126 of its 127 points outside fib(S), so one label must host them.
+
+Other relaxations checked on paper this run (not machine-checked). None helps; the first two cost at least one K-valued coincidence (64 bits) against 2.35 bits of slack at f = 6:
+* a degree-2 denominator W = (Y - alpha)(Y - beta), which would allow a 127-point core at f = 6, needs C_S(alpha) = C_S(beta) (structurally: e-invariant S, which is the f = 7 class; alpha in K would force gamma in K, at most 2^64 slopes);
+* one more label c by changing the word at c needs V_S(c) fixed; on AAA rows V_S(c) is injective in (m_0, jn_0) (from y^2 + c_U y = L_W_t(c')), so at f = 6 fibres have at most about 2^53 members, the same argument as N2;
+* virtual cosets outside V (cofactors with additive structure) force a coarser level and lose mass.
+* for a quadric, G - P = a*q has top X^(2^(n-1)) * p(B_q) with p: V* -> K injective, so for fixed a only one bilinear form shares a word (translates of one quadric).
 
 ## Queue (take the top item each run)
 
-1. **N6** Enlarge the common-top class at f = 7. Falsifiable claim: the class has > 2^64 distinct members at ny = 10.
-   Steps: (a) test the Walsh-divisibility conjecture by direct locators at n = 6, 7; (b) enumerate the allowed
-   z-patterns of each character (w = 8*G_mu integer-valued, all z-Walsh sums = 0 mod 16, zero on full/empty z) and
-   the delta patterns (all z-Walsh sums of delta odd); (c) count distinct sets exactly at small ny, fit M(ny), and
-   evaluate M(10). Any member of y-rank >= 5 would likely settle it.
-2. **N3** Literature pass: Dao-Kominers-Thaler-Zheng (ePrint 2026/2424, ECCC TR26-237) binary
-   and additive-domain constructions; anything with a larger gap/family trade-off.
-3. **N1** Exact count for H2 (two varying codim-2 flats + fixed codim-3 coset), all f. Low priority.
-4. **N4** Non-affine label sets beyond the N6 class (trace or quadratic conditions at other gaps). Toy first.
-5. **N5** If nothing beats 106.24 on paper by 2026-11-17: write the FINAL section and stop.
+1. **N3** Literature pass: Dao-Kominers-Thaler-Zheng (ePrint 2026/2424, ECCC TR26-237) binary and additive-domain constructions; anything outside this framework (non-fibre agreement sets, non-monic words).
+2. **N7** Cofactor words, the only open generalisation. The label-level problem is list decoding of a word G on V by polynomials of degree <= D at agreement 9/16; T - P_S = V_S H_S with H_S nontrivial has not been excluded. Toy: n = 5 (gap 2, one check: a linear functional Lambda on monic degree-14 locators of the complement; count distinct P, since evaluation-type Lambda all collapse to P = 0) then n = 6. Falsifiable: a word with more distinct polynomials than the same-top class (1/32 of all S at n = 5).
+3. **N8** Non-generic Z. Search fibre subspaces Z for labels with real K'-linear structure or structural c_j kernels. Expected to fail: about 98 bits of Z freedom against 50 bits per coincidence. Low priority.
+4. **N5** If nothing beats 106.24 on paper by 2026-11-17: write the FINAL section and stop.
 
 ## Run log
 
 * 2026-11-03 (interactive): H0-H4, framework, queue. Script: `binary_upper_scan.py`.
 * 2026-11-03 (scheduled, run 2): N2 failed rigorously (`n2_kappa.cpp`, `n2_toy_replay.py`, `n2_f7_numbers.py`, `qrows.txt` from LabelTable.lean). Found the f = 7 route; new queue top N6.
+* 2026-11-04 (scheduled, run 3): N6 failed exactly (2^62.430 < 2^64 at f = 7). Walsh conjecture proved (T1, T2); class classified (T3, T4); framework optimality of 106.24. Scripts `n6_*`; removed the f = 7 route from the queue. New top N3.

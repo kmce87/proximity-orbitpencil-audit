@@ -1,0 +1,35 @@
+ny=3 candidates=128 per d: 0:1 2:28 4:70 6:28 8:1 orbits=6
+profile#0 orbit 6720 | members=20901888 nodes=25948742 ranks: 2:4042752 3:16859136
+profile#1 orbit 560 | members=30055424 nodes=108338060 ranks: 1:14336 2:3634176 3:26406912
+profile#2 orbit 448 | members=67092480 nodes=110617741 ranks: 2:5160960 3:61931520
+profile#3 orbit 6720 | members=20901888 nodes=64309222 ranks: 2:4042752 3:16859136
+profile#4 orbit 1680 | members=573440 nodes=1011150 ranks: 2:172032 3:401408
+profile#5 orbit 40320 | members=172032 nodes=2385734 ranks: 2:172032
+profile#6 orbit 6720 | members=164864 nodes=14563900 ranks: 1:3584 2:161280
+profile#7 orbit 53760 | members=172032 nodes=4696854 ranks: 2:172032
+profile#8 orbit 20160 | members=573440 nodes=561238 ranks: 2:172032 3:401408
+profile#9 orbit 3360 | members=573440 nodes=91960166 ranks: 2:172032 3:401408
+profile#10 orbit 6720 | members=172032 nodes=385066 ranks: 2:172032
+profile#11 orbit 26880 | members=10752 nodes=543763 ranks: 2:10752
+profile#12 orbit 26880 | members=8960 nodes=417786 ranks: 1:896 2:8064
+profile#13 orbit 40320 | members=10752 nodes=32664 ranks: 2:10752
+profile#14 orbit 1680 | members=48384 nodes=177598 ranks: 1:896 2:18816 3:28672
+profile#15 orbit 20160 | members=8960 nodes=526174 ranks: 1:896 2:8064
+profile#16 orbit 80640 | members=10752 nodes=67080 ranks: 2:10752
+profile#17 orbit 20160 | members=10752 nodes=1878214 ranks: 2:10752
+profile#18 orbit 20160 | members=10752 nodes=121046 ranks: 2:10752
+profile#19 orbit 1680 | members=1792 nodes=1457677 ranks: 2:1792
+profile#20 orbit 6720 | members=224 nodes=1768 ranks: 1:224
+profile#21 orbit 6720 | members=224 nodes=13081 ranks: 1:224
+profile#22 orbit 80640 | members=224 nodes=1423 ranks: 1:224
+profile#23 orbit 3360 | members=1792 nodes=7069 ranks: 2:1792
+profile#24 orbit 20160 | members=1792 nodes=7069 ranks: 2:1792
+profile#25 orbit 240 | members=1792 nodes=955 ranks: 2:1792
+profile#26 orbit 20160 | members=56 nodes=110 ranks: 1:56
+profile#27 orbit 3360 | members=56 nodes=163054 ranks: 1:56
+profile#28 orbit 20160 | members=56 nodes=20252 ranks: 1:56
+profile#29 orbit 26880 | members=56 nodes=141 ranks: 1:56
+profile#30 orbit 40320 | members=56 nodes=107 ranks: 1:56
+profile#31 orbit 240 | members=1 nodes=16 ranks: 0:1
+profile#32 orbit 6720 | members=1 nodes=16 ranks: 0:1
+profile#33 orbit 4480 | members=1 nodes=16 ranks: 0:1

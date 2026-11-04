@@ -1,0 +1,35 @@
+ny=2 candidates=16 per d: 0:1 2:4 4:6 6:4 8:1 orbits=5
+profile#0 orbit 6720 | members=577536 nodes=1601237 ranks: 2:577536
+profile#1 orbit 560 | members=525312 nodes=1771652 ranks: 1:6144 2:519168
+profile#2 orbit 448 | members=737280 nodes=4810069 ranks: 2:737280
+profile#3 orbit 6720 | members=577536 nodes=2291323 ranks: 2:577536
+profile#4 orbit 1680 | members=24576 nodes=66595 ranks: 2:24576
+profile#5 orbit 40320 | members=24576 nodes=168447 ranks: 2:24576
+profile#6 orbit 6720 | members=24576 nodes=226751 ranks: 1:1536 2:23040
+profile#7 orbit 53760 | members=24576 nodes=222181 ranks: 2:24576
+profile#8 orbit 20160 | members=24576 nodes=139045 ranks: 2:24576
+profile#9 orbit 3360 | members=24576 nodes=681205 ranks: 2:24576
+profile#10 orbit 6720 | members=24576 nodes=65810 ranks: 2:24576
+profile#11 orbit 26880 | members=1536 nodes=42392 ranks: 2:1536
+profile#12 orbit 26880 | members=1536 nodes=32527 ranks: 1:384 2:1152
+profile#13 orbit 40320 | members=1536 nodes=4235 ranks: 2:1536
+profile#14 orbit 1680 | members=3072 nodes=4947 ranks: 1:384 2:2688
+profile#15 orbit 20160 | members=1536 nodes=19379 ranks: 1:384 2:1152
+profile#16 orbit 80640 | members=1536 nodes=5014 ranks: 2:1536
+profile#17 orbit 20160 | members=1536 nodes=22399 ranks: 2:1536
+profile#18 orbit 20160 | members=1536 nodes=12197 ranks: 2:1536
+profile#19 orbit 1680 | members=256 nodes=24277 ranks: 2:256
+profile#20 orbit 6720 | members=96 nodes=419 ranks: 1:96
+profile#21 orbit 6720 | members=96 nodes=1622 ranks: 1:96
+profile#22 orbit 80640 | members=96 nodes=500 ranks: 1:96
+profile#23 orbit 3360 | members=256 nodes=613 ranks: 2:256
+profile#24 orbit 20160 | members=256 nodes=613 ranks: 2:256
+profile#25 orbit 240 | members=256 nodes=955 ranks: 2:256
+profile#26 orbit 20160 | members=24 nodes=59 ranks: 1:24
+profile#27 orbit 3360 | members=24 nodes=1283 ranks: 1:24
+profile#28 orbit 20160 | members=24 nodes=799 ranks: 1:24
+profile#29 orbit 26880 | members=24 nodes=82 ranks: 1:24
+profile#30 orbit 40320 | members=24 nodes=64 ranks: 1:24
+profile#31 orbit 240 | members=1 nodes=16 ranks: 0:1
+profile#32 orbit 6720 | members=1 nodes=16 ranks: 0:1
+profile#33 orbit 4480 | members=1 nodes=16 ranks: 0:1
