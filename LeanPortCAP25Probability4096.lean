@@ -21,8 +21,9 @@ open OrbitPencilLiftDomainTransport4096
 open OrbitPencilCAP25Budget4096
 
 /-- The exact finite set of bad slopes for a fixed received pair. -/
-noncomputable def badSlopes (f g : D → Sextic) : Finset Sextic :=
-  Finset.univ.filter (CAP25BadAtA0 f g)
+noncomputable def badSlopes (f g : D → Sextic) : Finset Sextic := by
+  classical
+  exact Finset.univ.filter (CAP25BadAtA0 f g)
 
 /-- No loss of distinct slopes when passing from a witness set to the
 full-field bad-slope numerator. -/
