@@ -48,17 +48,12 @@ theorem exists_fixed_pair_probability_cross_product :
   obtain ⟨f, g, Z, hZ, hbad⟩ :=
     exists_many_CAP25_a0_above_budget
   have hsubset := witness_le_badSlopes f g Z hbad
-  have hlarge : (2 : ℕ)^59 < (badSlopes f g).card := by
-    have hbase : (2 : ℕ)^59 < Z.card := by
-      have hbudget : (2 : ℕ)^59 < 274980728111395087 := by
-        norm_num
-      omega
-    omega
   have hpositive :
-      (2130706433 : ℕ)^6 < (2 : ℕ)^128 * ((2 : ℕ)^59 + 1) := by
+      (2130706433 : ℕ)^6 <
+        (2 : ℕ)^128 * (274980728111395087 + 1) := by
     norm_num
   have hmult :
-      (2 : ℕ)^128 * ((2 : ℕ)^59 + 1) ≤
+      (2 : ℕ)^128 * (274980728111395087 + 1) ≤
         (2 : ℕ)^128 * (badSlopes f g).card := by
     exact Nat.mul_le_mul_left _ (by omega)
   refine ⟨f, g, ?_⟩
