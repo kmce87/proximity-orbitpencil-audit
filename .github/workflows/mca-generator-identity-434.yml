@@ -1,7 +1,7 @@
 name: MCA generator identity Lean 4.34 gate (local model only)
 on:
   push:
-    branches: ["mca-generator-kernel-gate-20261104-0925"]
+    branches: ["mca-generator-gate-falsification-20261104-1048"]
   workflow_dispatch:
 permissions:
   contents: read
