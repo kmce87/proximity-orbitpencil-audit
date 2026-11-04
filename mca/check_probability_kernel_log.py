@@ -21,6 +21,9 @@ ALLOWED = {"propext", "Classical.choice", "Quot.sound"}
 if len(sys.argv) != 2:
     raise SystemExit("usage: check_probability_kernel_log.py <downloaded-actions-job-log>")
 log = Path(sys.argv[1]).read_text(errors="replace")
+# GitHub timestamps prefix every physical line, including wrapped axiom lists.
+log = re.sub(r"(?m)^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d+Z\\s*", "", log)
+log = log.replace("\\n ", " ")
 for name in EXPECTED:
     pattern = r"'" + re.escape(name) + r"' depends on axioms: \[([^\]]+)\]"
     hits = re.findall(pattern, log)
