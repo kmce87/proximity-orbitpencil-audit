@@ -1,0 +1,17 @@
+# controls (one flat)
+one flat, any direction, codim 2 (expect 1)      n=7 D=  16 members=  44 rank= 109 dimG=  19 unused=   0 extras=1
+one flat, any direction, codim 2 (expect 1)      n=8 D=  32 members=  44 rank= 221 dimG=  35 unused=   0 extras=1
+one flat, any direction, codim 3 (expect 2)      n=8 D=  16 members=  66 rank= 236 dimG=  20 unused=   0 extras=2
+one flat, any direction, codim 3 (expect 2)      n=9 D=  32 members=  85 rank= 476 dimG=  36 unused=   0 extras=2
+one flat, hyperplanes of a fixed subspace, codim 3 n=8 D=  16 members=  30 rank=  46 dimG= 210 unused= 192 extras=0
+one flat, hyperplanes of a fixed subspace, codim 3 n=9 D=  32 members=  32 rank=  94 dimG= 418 unused= 384 extras=0
+# tests (several disjoint flats, no common structure imposed)
+2 disjoint flats of codim 3, gap M/2             n=7 D=  24 members=  45 rank= 102 dimG=  26 unused=   0 extras=0
+2 disjoint flats of codim 3, gap M/2             n=8 D=  48 members=  47 rank= 206 dimG=  50 unused=   0 extras=0
+3 disjoint flats of codim 3, gap M/2             n=8 D=  80 members=  37 rank= 174 dimG=  82 unused=   0 extras=0
+2 disjoint flats of codim 3, gap M/2             n=9 D=  96 members=  48 rank= 414 dimG=  98 unused=   0 extras=0
+3 disjoint flats of codim 3, gap M/2             n=9 D= 160 members=  41 rank= 350 dimG= 162 unused=   0 extras=0
+2 disjoint flats of codim 4, gap M/2             n=9 D=  48 members=  95 rank= 462 dimG=  50 unused=   0 extras=0
+3 disjoint flats of codim 4, gap M/2             n=9 D=  80 members=  57 rank= 430 dimG=  82 unused=   0 extras=0
+4 disjoint flats of codim 4, gap M/2             n=9 D= 112 members=  52 rank= 398 dimG= 114 unused=   0 extras=0
+controls PASS
