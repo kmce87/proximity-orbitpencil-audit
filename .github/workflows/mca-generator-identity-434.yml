@@ -36,5 +36,4 @@ jobs:
           bash scripts/run_lean_434_gate.sh
           lake env lean LeanPortGeneratorPowerIdentity4096.lean 2>&1 | tee /tmp/mca-generator.log
           ! grep -E 'sorryAx|error:|unsolved goals' /tmp/mca-generator.log
-          grep -F 'node6_eq_embedded_omega_pow' /tmp/mca-generator.log
-          grep -F 'D_eq_embedded_omega_powers' /tmp/mca-generator.log
+          python3 mca/check_generator_axioms.py /tmp/mca-generator.log
