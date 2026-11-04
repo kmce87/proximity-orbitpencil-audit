@@ -2,7 +2,7 @@ name: Lean 4.34 candidate kernel gate (NOT prize verification)
 
 on:
   push:
-    branches: ["main", "research/**", "mca-kernel-replay-20261103-1829", "mca-cap25-event-20261103-2208", "mca-cap25-budget-cardinality-20261103-2326", "mca-cap25-probability-normalization-20261104-0010"]
+    branches: ["main", "research/**", "mca-kernel-replay-20261103-1829", "mca-cap25-event-20261103-2208", "mca-cap25-budget-cardinality-20261103-2326", "mca-cap25-probability-normalization-20261104-0010", "mca-probability-decidability-20261104-0147"]
   pull_request:
     branches: ["research/**"]
     types: [opened, synchronize, reopened]
