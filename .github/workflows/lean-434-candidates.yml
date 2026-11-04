@@ -2,7 +2,7 @@ name: Lean 4.34 candidate kernel gate (NOT prize verification)
 
 on:
   push:
-    branches: ["main", "research/**", "mca-kernel-replay-20261103-1829", "mca-cap25-event-20261103-2208", "mca-cap25-budget-cardinality-20261103-2326"]
+    branches: ["main", "research/**", "mca-kernel-replay-20261103-1829", "mca-cap25-event-20261103-2208", "mca-cap25-budget-cardinality-20261103-2326", "mca-cap25-probability-normalization-20261104-0010"]
   pull_request:
     branches: ["research/**"]
     types: [opened, synchronize, reopened]
@@ -59,4 +59,5 @@ jobs:
           bash scripts/run_lean_434_gate.sh
           lake env lean -o .lake/build/lib/lean/LeanPortDeployedTransfer4096.olean LeanPortDeployedTransfer4096.lean
           lake env lean -o .lake/build/lib/lean/LeanPortCAP25Event4096.olean LeanPortCAP25Event4096.lean
-          lake env lean LeanPortCAP25Budget4096.lean
+          lake env lean -o .lake/build/lib/lean/LeanPortCAP25Budget4096.olean LeanPortCAP25Budget4096.lean
+          lake env lean LeanPortCAP25Probability4096.lean
