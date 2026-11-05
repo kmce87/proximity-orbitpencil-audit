@@ -6,6 +6,7 @@ on:
       - 'mca-axiom-output-validation-*'
       - 'mca-axiom-import-fix-*'
       - 'mca-axiom-stage-diagnostics-*'
+      - 'mca-axiom-gate-full-capture-*'
   workflow_dispatch:
 permissions:
   contents: read
@@ -37,9 +38,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          bash scripts/run_lean_434_gate.sh
-          # The audit imports the deployed bridge; compile its .olean first.
-          echo 'STAGE: bridge olean compilation' | tee mca-axioms.log
+          echo 'STAGE: baseline Lean 4.34 gate' | tee mca-axioms.log
+          bash scripts/run_lean_434_gate.sh 2>&1 | tee -a mca-axioms.log
+          # Capture baseline failures too, before attempting bridge compilation.
+          echo 'STAGE: bridge olean compilation' | tee -a mca-axioms.log
           lake env lean -o .lake/build/lib/lean/LeanPortDeployedDomainBridge4096.olean LeanPortDeployedDomainBridge4096.lean 2>&1 | tee -a mca-axioms.log
           echo 'STAGE: transitive axiom output' | tee -a mca-axioms.log
           lake env lean McaTransitiveAxiomAudit4096.lean 2>&1 | tee -a mca-axioms.log
