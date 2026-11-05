@@ -12,6 +12,8 @@ open Polynomial
 open OrbitPencilLiftSameKey
 open OrbitPencilLiftSupport4096
 open OrbitPencilLiftGeometry
+open OrbitPencilLiftWaBridge4096
+open OrbitPencilLiftConcreteSlopes
 open OrbitPencilLiftDomainTransport4096
 
 def DeployedBadOnDomain (f g : D → Sextic) (S : Finset D)
@@ -42,8 +44,8 @@ theorem supportwise_to_deployed_domain
     exact hcard
   · intro x hx
     obtain ⟨j, hj, rfl⟩ := Finset.mem_image.mp hx
-    simpa only [Equiv.symm_apply_apply, indexEquiv_val] using
-      (lineAt_eq_base_add alpha U0 z j ▸ hmatch j hj)
+    rw [← lineAt_eq_base_add]
+    simpa only [Equiv.symm_apply_apply, indexEquiv_val] using hmatch j hj
   · rintro ⟨cf, cg, _hcf, hcg, _hf, hg⟩
     apply hnot
     refine ⟨cg, hcg, ?_⟩
