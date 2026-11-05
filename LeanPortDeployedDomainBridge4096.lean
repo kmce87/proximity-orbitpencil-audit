@@ -12,6 +12,10 @@ open Polynomial
 open OrbitPencilLiftGeometry
 open OrbitPencilLiftSameKey
 open OrbitPencilLiftSupport4096
+open OrbitPencilLiftSeparatingAlpha
+open OrbitPencilLiftConcreteSlopes
+open OrbitPencilLiftPencil4096
+open OrbitPencilLiftWaBridge4096
 open OrbitPencilLiftDomainTransport4096
 
 /-- The explaining code is deployed RS[D,k], degree < k.
