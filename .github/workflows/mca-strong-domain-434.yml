@@ -1,0 +1,46 @@
+name: MCA strong deployed-domain theorem Lean 4.34 gate
+on:
+  push:
+    branches:
+      - 'mca-strong-domain-compile-*'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bootstrap pinned Lean and Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --proto '=https' --tlsv1.2 -fsSL https://elan.lean-lang.org/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.elan/bin:$PATH"
+          lean --version
+          for attempt in 1 2 3; do
+            if lake update; then break; fi
+            if [ "$attempt" -eq 3 ]; then exit 1; fi
+            sleep 20
+          done
+          for attempt in 1 2 3; do
+            if lake exe cache get; then break; fi
+            if [ "$attempt" -eq 3 ]; then exit 1; fi
+            sleep 20
+          done
+      - name: Compile strong deployed-degree domain theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash scripts/run_lean_434_gate.sh 2>&1 | tee /tmp/mca-strong-domain.log
+          lake env lean LeanPortDeployedStrongDomain4096.lean 2>&1 | tee -a /tmp/mca-strong-domain.log
+          ! grep -E 'sorryAx|error:|unsolved goals' /tmp/mca-strong-domain.log
+      - name: Upload diagnostic log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mca-strong-domain-log
+          path: /tmp/mca-strong-domain.log
+          if-no-files-found: warn
