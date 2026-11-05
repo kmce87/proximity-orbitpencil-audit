@@ -21,7 +21,7 @@ if re.search(r"\bsorryAx\b|\berror:|unsolved goals", log, re.I):
     sys.exit("FAIL: Lean error or sorryAx in log")
 # Lean prints: '<name> depends on axioms: [a, b, c]' (possibly line wrapped).
 for name in EXPECTED:
-    pattern = re.escape(name) + r"\s+depends on axioms:\s*\[([^\]]*)\]"
+    pattern = r"[\u0027\u0022]?" + re.escape(name) + r"[\u0027\u0022]?\s+depends on axioms:\s*\[([^\]]*)\]"
     matches = re.findall(pattern, log, flags=re.S)
     if len(matches) != 1:
         sys.exit(f"FAIL: expected exactly one axiom report for {name}, found {len(matches)}")
