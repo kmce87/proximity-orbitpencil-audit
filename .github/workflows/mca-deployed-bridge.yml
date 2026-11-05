@@ -1,0 +1,20 @@
+name: MCA deployed domain bridge Lean gate
+on:
+  push:
+    branches:
+      - 'mca-deployed-bridge-ci-*'
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          build: false
+          test: false
+          lint: false
+      - name: Compile deployed RS degree bridge (Lean 4.34)
+        run: |
+          lake env lean LeanPortDeployedDomainBridge4096.lean
