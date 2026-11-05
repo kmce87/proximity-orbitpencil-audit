@@ -1,0 +1,45 @@
+name: MCA transitive axiom audit
+on:
+  push:
+    branches:
+      - 'mca-axiom-gate-*'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bootstrap pinned Lean and Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --proto '=https' --tlsv1.2 -fsSL https://elan.lean-lang.org/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.elan/bin:$PATH"
+          lean --version
+          for attempt in 1 2 3; do
+            if lake update; then break; fi
+            if [ "$attempt" -eq 3 ]; then exit 1; fi
+            sleep 20
+          done
+          for attempt in 1 2 3; do
+            if lake exe cache get; then break; fi
+            if [ "$attempt" -eq 3 ]; then exit 1; fi
+            sleep 20
+          done
+      - name: Print transitive axioms and reject sorry
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash scripts/run_lean_434_gate.sh
+          lake env lean McaTransitiveAxiomAudit4096.lean 2>&1 | tee mca-axioms.log
+          ! grep -E 'sorryAx|error:|unsolved goals' mca-axioms.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mca-transitive-axioms
+          path: mca-axioms.log
+          if-no-files-found: ignore
