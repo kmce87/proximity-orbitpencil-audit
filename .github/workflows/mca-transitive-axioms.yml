@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - 'mca-axiom-gate-*'
+      - 'mca-axiom-output-validation-*'
   workflow_dispatch:
 permissions:
   contents: read
@@ -36,7 +37,7 @@ jobs:
           set -euo pipefail
           bash scripts/run_lean_434_gate.sh
           lake env lean McaTransitiveAxiomAudit4096.lean 2>&1 | tee mca-axioms.log
-          ! grep -E 'sorryAx|error:|unsolved goals' mca-axioms.log
+          python3 scripts/check_mca_axioms.py mca-axioms.log
       - uses: actions/upload-artifact@v4
         if: always()
         with:
