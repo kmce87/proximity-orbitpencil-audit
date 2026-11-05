@@ -1,0 +1,10 @@
+# n = 6, B = {0,1,2,4,8,16,33,47}
+m=4 gt=27920 eq=22280
+m=6 gt=26700 eq=108285
+m=8 gt=120 eq=7110
+shape(2) gt=48 eq=30 ; shape(2,1^4) gt=0 eq=0
+# n = 6, random seed 1
+m=4 gt=27667 eq=22786
+m=6 gt=32125 eq=106332
+m=8 gt=892 eq=18296
+shape(2) gt=44 eq=38 ; shape(2,1^4) gt=0 eq=16

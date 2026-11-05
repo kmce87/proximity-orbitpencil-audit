@@ -1,0 +1,21 @@
+# n7_extremal5 with Krylov labels 1,x,...,x^4
+boolean done, classes=1038438
+doubles done, classes=1048110
+largest real-root list at agreement>=19: 15736 (of which boolean 20-sets 1400, doubles 14336); largest purely boolean li
+key 00000000 00000049 00000048
+ size 15736 : 155 classes
+ size 11223 : 34720 classes
+ size 11200 : 5208 classes
+ size 9056 : 166656 classes
+ size 6952 : 416640 classes
+ size 6912 : 13888 classes
+ size 6848 : 4340 classes
+ size 6811 : 14880 classes
+ size 4992 : 277760 classes
+ size 3160 : 104160 classes
+ size 3072 : 8680 classes
+ size 448 : 31 classes
+# n9_census search, n = 7, total objective
+n=7 search obj=0 evals=1949 best=508536 | T4:65268/530880 T2:7/240 6a:250880/564480 6b:3360/5040 8a:0/0 8b:188160/0 8c:840/0 8d:21/0
+B: 4 5 28 29 32 33 56 57 70 71 94 95 98 99 122 123
+stabiliser size 16
