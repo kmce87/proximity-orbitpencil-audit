@@ -1,0 +1,47 @@
+name: MCA bounded-powers domain Lean 4.34 gate
+on:
+  push:
+    branches:
+      - 'mca-domain-powers-ci-*'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bootstrap pinned Lean and Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --proto '=https' --tlsv1.2 -fsSL https://elan.lean-lang.org/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.elan/bin:$PATH"
+          lean --version
+          for attempt in 1 2 3; do
+            if lake update; then break; fi
+            if [ "$attempt" -eq 3 ]; then exit 1; fi
+            sleep 20
+          done
+          for attempt in 1 2 3; do
+            if lake exe cache get; then break; fi
+            if [ "$attempt" -eq 3 ]; then exit 1; fi
+            sleep 20
+          done
+      - name: Compile bounded-powers domain theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash scripts/run_lean_434_gate.sh 2>&1 | tee /tmp/mca-domain-powers.log
+          lake env lean LeanPortDeployedStrongDomain4096.lean 2>&1 | tee -a /tmp/mca-domain-powers.log
+          lake env lean LeanPortDomainPowers4096.lean 2>&1 | tee -a /tmp/mca-domain-powers.log
+          ! grep -E 'sorryAx|error:|unsolved goals' /tmp/mca-domain-powers.log
+      - name: Upload diagnostic log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mca-domain-powers-log
+          path: /tmp/mca-domain-powers.log
+          if-no-files-found: warn
