@@ -35,7 +35,7 @@ jobs:
         run: |
           set -euo pipefail
           bash scripts/run_lean_434_gate.sh 2>&1 | tee /tmp/mca-domain-powers.log
-          lake env lean LeanPortDeployedStrongDomain4096.lean 2>&1 | tee -a /tmp/mca-domain-powers.log
+          lake env lean -o .lake/build/lib/lean/LeanPortDeployedStrongDomain4096.olean LeanPortDeployedStrongDomain4096.lean 2>&1 | tee -a /tmp/mca-domain-powers.log
           lake env lean LeanPortDomainPowers4096.lean 2>&1 | tee -a /tmp/mca-domain-powers.log
           ! grep -E 'sorryAx|error:|unsolved goals' /tmp/mca-domain-powers.log
       - name: Upload diagnostic log
