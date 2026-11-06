@@ -53,7 +53,7 @@ theorem supportwise_to_deployed_domain
     have hj' : indexEquiv j ∈ S.image indexEquiv :=
       Finset.mem_image.mpr ⟨j, hj, rfl⟩
     have hd := hg (indexEquiv j) hj'
-    simpa only [Equiv.symm_apply_apply, indexEquiv_val] using hd.symm
+    simpa only [Equiv.symm_apply_apply, indexEquiv_val, receivedDirection] using hd.symm
 
 theorem exists_many_deployed_bad_slopes :
     ∃ (alpha : Sextic) (U0 : Finset Small) (Z : Finset Sextic),
