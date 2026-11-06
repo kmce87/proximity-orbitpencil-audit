@@ -13,12 +13,12 @@ open OrbitPencilLiftSameKey
 open OrbitPencilLiftSupport4096
 open OrbitPencilLiftDomainTransport4096
 
-theorem node6_as_power (j : Index) :
+theorem node6_as_power (j : OrbitPencilLiftGeometry.Index) :
     node6 j = (baseToSextic omega21) ^ j.val := by
   simp only [node6, node21, map_pow]
 
 theorem domain_eq_bounded_powers :
-    D = {x : Sextic | ∃ j : Index,
+    D = {x : Sextic | ∃ j : OrbitPencilLiftGeometry.Index,
       (baseToSextic omega21) ^ j.val = x} := by
   ext x
   simp only [D, Set.mem_range, Set.mem_setOf_eq]
