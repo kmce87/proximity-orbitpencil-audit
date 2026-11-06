@@ -1,0 +1,47 @@
+m=64 r=0x1b d=10 f=2 n=8 frob=0 subspaces=174251 used=174251
+  t=1: 171916
+  t=2: 2281
+  t=3: 54
+  max t=3 Z=[1 4 ] lam=10 frob=0
+  max t=3 Z=[1 12 ] lam=104 frob=0
+  max t=3 Z=[1 16 ] lam=114 frob=0
+  max t=3 Z=[7 1a ] lam=235b8d6e35b8d6e0 frob=0
+  max t=3 Z=[7 1b ] lam=10 frob=0
+  max t=3 Z=[4 80 ] lam=400 frob=0
+  max t=3 Z=[5 fa ] lam=504 frob=0
+  max t=3 Z=[3a 81 ] lam=6e35b8d6e35b8d6a frob=0
+  max t=3 Z=[2e d0 ] lam=5555555555555546 frob=0
+  max t=3 Z=[12 120 ] lam=100 frob=0
+  max t=3 Z=[13 16f ] lam=110 frob=0
+  max t=3 Z=[39 183 ] lam=44 frob=0
+m=64 r=0x1b d=9 f=3 n=6 frob=0 subspaces=788035 used=788035
+  t=1: 788025
+  t=2: 10
+  max t=2 Z=[1 12 6a ] lam=110 frob=0
+  max t=2 Z=[12 24 4f ] lam=3ccf2067799e40cc frob=0
+  max t=2 Z=[36 5a 8b ] lam=3ccf2067799e40cc frob=0
+  max t=2 Z=[24 48 9e ] lam=3ccf2067799e40cc frob=0
+  max t=2 Z=[3c 90 100 ] lam=24436f0c70ae2462 frob=0
+  max t=2 Z=[28 c6 101 ] lam=2005c8adcda6c9f4 frob=0
+  max t=2 Z=[7e 82 111 ] lam=3ccf2067799e40cc frob=0
+  max t=2 Z=[6c b4 116 ] lam=3ccf2067799e40cc frob=0
+  max t=2 Z=[5a b4 129 ] lam=3ccf2067799e40cc frob=0
+  max t=2 Z=[48 90 13c ] lam=3ccf2067799e40cc frob=0
+m=30 r=0x53 d=10 f=2 n=8 frob=0 subspaces=174251 used=174251
+  t=1: 162878
+  t=2: 11319
+  t=3: 54
+  max t=3 Z=[1 4 ] lam=10 frob=0
+  max t=3 Z=[1 12 ] lam=104 frob=0
+  max t=3 Z=[1 16 ] lam=114 frob=0
+  max t=3 Z=[7 1a ] lam=161f986c frob=0
+  max t=3 Z=[7 1b ] lam=10 frob=0
+  max t=3 Z=[4 80 ] lam=400 frob=0
+  max t=3 Z=[5 fa ] lam=504 frob=0
+  max t=3 Z=[3a 81 ] lam=17d7d7c4 frob=0
+  max t=3 Z=[2e d0 ] lam=de937aa frob=0
+  max t=3 Z=[12 120 ] lam=100 frob=0
+  max t=3 Z=[13 16f ] lam=110 frob=0
+  max t=3 Z=[39 183 ] lam=44 frob=0
+# control runs, Krylov domain in BF64
+m=64 d=10 f=0 n=10: t=9 (lam=x); m=64 d=11 f=1 n=10: t=1:267 t=2:684 t=3:873 t=4:215 t=5:8 (lam=x^2); m=64 d=8 f=2 n=6: t=1:10669 t=2:126; m=64 d=9 f=2 n=7: t=1:42833 t=2:599 t=3:3

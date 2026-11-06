@@ -1,0 +1,10 @@
+# n8_class6 exact totals at n = 6 (all 36-subsets of the 64 labels with the top of T_W), BF64 arithmetic, every run covers all s = 0..31.
+# labels; W as indices in F_2^6; total; weight of R_W + k where relevant
+random labels 0c5f6505a6119290 223281bb169d8977 01f475823c2e374f d98560759e16a3f4 67e552de5337cafc 474e9d49ff8115e9, W=1 2: s=0 count=12032931760, others 0, TOTAL 12032931760 = M_all(2)
+Krylov 1 x .. x^5, W=1 2 (weight 28): s=0 12032931760, s=1 9279334912, TOTAL 21312266672
+Krylov, W=1 6 (weight 28): s=0 12032931760, s=1 9279334912, TOTAL 21312266672
+Krylov, W=2 16 (weight 24): s=0 12032931760, s=1 10165506560, TOTAL 22198438320
+Krylov, W=1 32 (weight 32): s=0 8424668928, s=1 12032931760, TOTAL 20457600688
+Krylov, W=1 4 (weight 36): s=0 12032931760, s=1 7601402880, TOTAL 19634334640
+f=2 Z=[1 4], labels n8_labels.py 8 1 4, W=1 2: s=0 12032931760, others 0, TOTAL 12032931760
+f=3 Z=[1 12 6a], labels n8_labels.py 9 1 12 6a, W=1 2: s=0 12032931760, others 0, TOTAL 12032931760

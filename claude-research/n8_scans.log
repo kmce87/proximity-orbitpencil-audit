@@ -1,0 +1,21 @@
+m=32 r=0x8d d=10 codim 6: subspaces=53743987 used=53743987 hist: ker0=53743987
+m=64 r=0x1b d=11 codim 6: subspaces=3548836819 used=55450575 hist: ker0=55450575
+m=64 r=0x1b d=10 codim=7 j=3 gens=63: subspaces=6347715 used=6347715 hist: ker0=6347715
+m=64 r=0x1b d=11 codim=8 j=4 gens=162: subspaces=50955971 used=796187 hist: ker0=796187
+m=64 d=7, 8, 9, 10 codim 6: subspaces 127, 10795, 788035, 53743987: all ker0
+m=64 d=8, 9 codim 7: 255, 43435: all ker0
+m=64 d=9 codim 8: 510 ker0, 1 ker1 (Y=[6c]); d=10 codim 8: 174250 ker0, 1 ker1 (Y=[6c b4])
+same d=9 codim 8 hit Y=[6c] for m = 47, 48, 56, 58, 60, 61, 63, 64
+real D=P_21: r=6: q*P_f ker0=127, progressions ker0=7, random 20000 ker0, containing P_7 20000 ker0
+r=7: q*P_f ker0=255, progressions ker0=8, random 3000 ker0, containing P_7 3000 ker0
+r=8: q*P_f ker0=510 ker1=1 (q=6c), progressions ker0=9, random 300 ker0, containing P_7 300 ker0
+r=9 f'=12 j=5 gens=381 forced=61
+ family q*P_f: ker61=1023
+ family progressions: ker61=10
+ family random: ker61=100
+ family random containing P_7: ker61=100
+r=10 f'=11 j=6 gens=847 forced=463
+ family q*P_f: ker463=2047
+ family progressions: ker463=12
+ family random: ker463=30
+ family random containing P_7: ker463=30
