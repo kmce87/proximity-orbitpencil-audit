@@ -51,9 +51,11 @@ cofactors (run 6) or signed classes with phi <= 2 (run 8) has more than 2^64 mem
 **Official record, rechecked (runs 9, 10).** proximity-prize/proximity-prize main is still eb82d3b
 (2026-10-29): SubmissionBinaryUpper score.txt 10624, unsafe-index.txt 917441 (BitWonka). 9 of the 584
 submission branches touch that folder, the latest on 2026-10-23 (also 10624); in run 10 none of the 600
-branch heads has a commit after 2026-10-29. Submissions moved to autoresearch.zksecurity.xyz (#610), and the
-live leaderboard is not reachable from unattended runs (fetch permission unanswered; web search finds no
-leaderboard page): check it before quoting 106.24 as current.
+branch heads has a commit after 2026-10-29. Submissions moved off the repo (#610). Live board: with the
+user's approval (run 10) proximityprize.org was read; it shows no standings and names better.codes as the
+live scored companion, which the fetch tool blocks outright (site blocked, so approval does not help; do not
+retry or work around it). Web search finds nothing newer than PR #592 (titled "claimed score: 106.25";
+validated score.txt 10624). The user checks better.codes before quoting 106.24 as current.
 
 **ChatGPT lane B (read only).** Its binary branches up to 2026-11-07 07:01 UTC are all negative gates and
 consistent with this ledger. Read in run 9: coefficient injection, fixed Q, 420-row XOR, core extension,
@@ -215,6 +217,7 @@ Exhausted: N5 (write FINAL) done in run 9, see FINAL above; every later run take
 * 2026-11-07 (scheduled, run 9): N5: queue exhausted, FINAL written. Official record rechecked (main eb82d3b, binary upper 10624, no binary upper submission after 2026-10-23, live leaderboard not reachable). Headline numbers re-verified exactly (`final_check.py`). ChatGPT's lane B binary branches read: all negative. Disabling the scheduled task was refused; left to the user.
 * 2026-11-07 (scheduled, runs 10+: post-FINAL rechecks, this line is updated in place). Latest: run 10,
   2026-11-07 12:40 UTC. Queue exhausted, so step 2 only. Official main still eb82d3b, binary upper 10624 /
-  917441, no official branch newer than 2026-10-29, live leaderboard unreachable. Six new lane B binary
+  917441, no official branch newer than 2026-10-29; proximityprize.org read with the user's approval (no
+  standings), better.codes blocked for the fetch tool, search finds nothing newer than #592. Six new lane B binary
   branches (2026-11-07 01:06..07:01 UTC), all negative, numbers rechecked. `final_check.py` passes.
   Disabling the task refused again. No notification (nothing changed).
