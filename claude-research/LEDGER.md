@@ -48,14 +48,19 @@ cofactors (run 6) or signed classes with phi <= 2 (run 8) has more than 2^64 mem
 4. the K-line route needs kappa_S to hit BF64 up to a few thousand values, and a proof of it; kappa is a
    sum of three reciprocals over 17-dim subspaces, and Weil-type bounds need dimension about 49.
 
-**Official record, rechecked.** proximity-prize/proximity-prize main is still eb82d3b (2026-10-29):
-SubmissionBinaryUpper score 10624, unsafe index 917441 (BitWonka). 9 of the 584 submission branches touch
-that folder, the latest on 2026-10-23 (also 10624). No validated submission of any track has reached the
-repo since 2026-10-29 (#610 moved submissions to autoresearch.zksecurity.xyz), and the live leaderboard
-was not reachable from the unattended run: check it before quoting 106.24 as current.
+**Official record, rechecked (runs 9, 10).** proximity-prize/proximity-prize main is still eb82d3b
+(2026-10-29): SubmissionBinaryUpper score.txt 10624, unsafe-index.txt 917441 (BitWonka). 9 of the 584
+submission branches touch that folder, the latest on 2026-10-23 (also 10624); in run 10 none of the 600
+branch heads has a commit after 2026-10-29. Submissions moved to autoresearch.zksecurity.xyz (#610), and the
+live leaderboard is not reachable from unattended runs (fetch permission unanswered; web search finds no
+leaderboard page): check it before quoting 106.24 as current.
 
-**ChatGPT lane B (read only).** Its binary branches of 2026-11-03..07 (coefficient injection, fixed Q,
-420-row XOR, core extension, leading coefficient, affine offsets) are all negative and consistent with this ledger.
+**ChatGPT lane B (read only).** Its binary branches up to 2026-11-07 07:01 UTC are all negative gates and
+consistent with this ledger. Read in run 9: coefficient injection, fixed Q, 420-row XOR, core extension,
+leading coefficient, affine offsets. Read in run 10 (numbers rechecked exactly): uniform 2^15-class
+coefficient pigeonhole (too weak), 106.23 degree necessity, conditional fibre trade (1179710, 64 short),
+fixed H-triple capacity (105 triples x 4 rows), score boundary (largest 106.23 index 917378, i.e.
+agreement 1179774 = record + 63), 64-point core (one degree over the code).
 
 **Recommendation.** Stop this track and do not build a Lean candidate from these ideas. Follow up only if
 something changes: (a) with the DKTZ PDF, compare its first construction (49.4% at rate 1/4 on a 2^27
@@ -63,9 +68,12 @@ domain) with run 4; (b) under a budget near 2^60 the shortened quadric family be
 character-sum bound for reciprocals over small subspaces would reopen the K-line route (score 96.27; it
 needs about 2^64 distinct kappa values plus one winner outside BF64).
 
-**Scheduler.** Run 9 sent the one finishing notification. Disabling the scheduled task from inside the
-run was refused (permission), so the user has to switch off "Binary-upper benchmark research". Later
-runs: recheck the official record; if it is unchanged, change nothing and send no notification.
+**Scheduler.** Run 9 sent the one finishing notification. Disabling the task from inside a run is refused
+by the permission classifier (runs 9 and 10), so the user has to switch off "Binary-upper benchmark
+research" (cron 34 */12 UTC; it does not stop by itself after 2026-11-17). Later runs: recheck the official
+record and any new lane B binary branches, update the "runs 10+" line of the run log in place (no new
+line per run), and notify only if the record changes or, once, on the first run after 2026-11-17 if the
+task is still enabled.
 
 ## Mechanism of the record (exact)
 
@@ -192,7 +200,7 @@ Setting: class = coset of L = {d: V -> Z, mean 0, Fourier in (1/4)Z}, generic la
 
 ## Queue
 
-Exhausted: N5 (write FINAL) done in run 9, see FINAL above. Not blocking: if the user attaches the DKTZ PDF, compare the second construction with the reconstruction and read the first construction's mechanism (49.4% at rate 1/4 on a 2^27 domain, probability above 2^-30).
+Exhausted: N5 (write FINAL) done in run 9, see FINAL above; every later run takes step 2 (see Scheduler). Not blocking: if the user attaches the DKTZ PDF, compare the second construction with the reconstruction and read the first construction's mechanism (49.4% at rate 1/4 on a 2^27 domain, probability above 2^-30).
 
 ## Run log
 
@@ -205,3 +213,8 @@ Exhausted: N5 (write FINAL) done in run 9, see FINAL above. Not blocking: if the
 * 2026-11-06 (scheduled, run 7): N8 failed. Merge map Phi and additive tops; exact n = 6 class counts over all 2^60 subsets confirm T2-T4 and measure the Krylov merge; exhaustive relation and kernel scans; one real exception at r = 8 (weight 58, useless). Official repo checked: binary upper still 10624 at HEAD eb82d3b. Scripts `n8_*`. New top N10.
 * 2026-11-06 (scheduled, run 8): N10 failed and the signed gap closed for phi <= 2. Class types, budget, local means, Lemma R, bound 2^63.595 for every class at n = 21; unbiased class evaluator, census at n = 7, 8, 9, hill climbing, exact checks. Official repo still at eb82d3b, binary upper 10624. Scripts `n10_*`. New top N5.
 * 2026-11-07 (scheduled, run 9): N5: queue exhausted, FINAL written. Official record rechecked (main eb82d3b, binary upper 10624, no binary upper submission after 2026-10-23, live leaderboard not reachable). Headline numbers re-verified exactly (`final_check.py`). ChatGPT's lane B binary branches read: all negative. Disabling the scheduled task was refused; left to the user.
+* 2026-11-07 (scheduled, runs 10+: post-FINAL rechecks, this line is updated in place). Latest: run 10,
+  2026-11-07 12:40 UTC. Queue exhausted, so step 2 only. Official main still eb82d3b, binary upper 10624 /
+  917441, no official branch newer than 2026-10-29, live leaderboard unreachable. Six new lane B binary
+  branches (2026-11-07 01:06..07:01 UTC), all negative, numbers rechecked. `final_check.py` passes.
+  Disabling the task refused again. No notification (nothing changed).
