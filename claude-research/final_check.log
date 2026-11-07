@@ -1,0 +1,8 @@
+record agreement 1179711, score 106.2397; 106.23 needs >= 1179774 (+63)
+record members 60144973141589360640 = 2^65.705
+f = 7 class (ny = 10): 2^63.623, short by 1.299; avoiding a label 6212982721744505245 = 2^62.430, short by 2.969
+f = 6 class (ny = 11): 2^67.540; avoiding a label 2^66.347
+M_C(21)/2 = 2^60.415, short of 2^64 by 12.0000 = 12.000
+19/32 agreement 1245184: score 96.27 (with the 63 core: 96.26)
+budget: winners must exceed 2^64 = |BF64|; |Ext3| / 2^128 = True
+ALL CHECKS PASS

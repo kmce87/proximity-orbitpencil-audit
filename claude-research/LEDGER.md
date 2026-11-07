@@ -2,6 +2,7 @@
 
 Owner: Claude (scheduled job, self-managed). ChatGPT owns the OrbitPencil / rs-mca MCA line;
 do not duplicate it. Time box: until **2026-11-17**. One falsifiable hypothesis per run.
+**Finished 2026-11-07 (run 9): see FINAL below.**
 Maths first (exact integers, toy fields); Lean only if a candidate beats the record on paper.
 Never submit to better.codes (the user does that). Credit BitWonka (binary upper record) and
 erdkocak (OrbitPencil) in anything that builds on their constructions.
@@ -15,6 +16,56 @@ ArkLib 34a834c, CompPoly 411708c). Record: **106.24 bits** (BitWonka, PR #592, 2
 Profile: K = BF64, challenge field Ext3 (|F| = 2^192), domain = first 2^21 polynomial-basis
 words (an F_2-subspace), k = 2^20, budget B* = 2^192 / 2^128 = **2^64** bad slopes (strict: 2^64 + 1 winners needed).
 Exact score of the record: 106.2397. A score of 106.23 needs agreement >= 1179774, i.e. 63 more positions.
+
+## FINAL (run 9, 2026-11-07): finished, nothing beats 106.24
+
+**Result.** No construction beats BitWonka's record on paper, so no Lean candidate and no research/ branch
+were made. The record (agreement 1179711 = 9N/16 + 63, 2^65.705 members, score 106.2397) is optimal in
+every framework this job analysed; 106.23 needs agreement 1179774 with more than 2^64 winners. Headline
+numbers rechecked with exact integers in run 9 (`final_check.py`, `final_check.log`).
+
+**What was tried** (details in Results and Theory):
+* Higher density (H1-H3, N9, N10): every class of mass 5N/8 stays below 2^64 members above 9N/16 at
+  n = 21: at most 2^63.125 (run 6), 2^63.595 for every class with phi <= 2 and 2^61.58 unless flat-like
+  (run 8). The true size is about M_C/2 = 2^60.415.
+* One more label on the record family (H4, N2): kappa is injective in (m_0, jn_0), so every kappa fibre
+  has at most 2^52.709 members.
+* Coarser fibres (N6): the f = 7 class has exactly 2^63.623 members, 2^62.430 avoiding a label (short by 2.969).
+* DKTZ constructions (N3): the K-line (slope word) route lifts to 19/32 (score 96.27), but its winners lie
+  in BF64: at most 2^64, and the target is strictly more. A second word exists only for one varying flat.
+* Cofactors (N7): the shortened quadric family beats 9N/16 but has M_C(21)/2 = 2^60.415 members, short by exactly 12.
+* Special labels (N8): tops are additive in the residue word (map Phi); merges are real at n = 6
+  (Krylov labels), none useful in any domain scanned at the real size.
+
+**Proof-level statement.** For generic labels (T2), no family of common-top words (T1-T4), real-root
+cofactors (run 6) or signed classes with phi <= 2 (run 8) has more than 2^64 members above agreement
+1179711. So 106.24 is optimal in that framework.
+
+**Open gaps** (none is expected to give a record):
+1. classes with a point of multiplicity >= 3 (run 8; 2% of the largest signed family in the n = 9 census);
+2. the real labels at d = 21: r <= 8 sampled, r >= 9 by information set decoding only (run 7);
+3. non-split cofactors of degree >= g: beyond the Johnson bound, open for RS codes in general;
+4. the K-line route needs kappa_S to hit BF64 up to a few thousand values, and a proof of it; kappa is a
+   sum of three reciprocals over 17-dim subspaces, and Weil-type bounds need dimension about 49.
+
+**Official record, rechecked.** proximity-prize/proximity-prize main is still eb82d3b (2026-10-29):
+SubmissionBinaryUpper score 10624, unsafe index 917441 (BitWonka). 9 of the 584 submission branches touch
+that folder, the latest on 2026-10-23 (also 10624). No validated submission of any track has reached the
+repo since 2026-10-29 (#610 moved submissions to autoresearch.zksecurity.xyz), and the live leaderboard
+was not reachable from the unattended run: check it before quoting 106.24 as current.
+
+**ChatGPT lane B (read only).** Its binary branches of 2026-11-03..07 (coefficient injection, fixed Q,
+420-row XOR, core extension, leading coefficient, affine offsets) are all negative and consistent with this ledger.
+
+**Recommendation.** Stop this track and do not build a Lean candidate from these ideas. Follow up only if
+something changes: (a) with the DKTZ PDF, compare its first construction (49.4% at rate 1/4 on a 2^27
+domain) with run 4; (b) under a budget near 2^60 the shortened quadric family beats 9/16; (c) a
+character-sum bound for reciprocals over small subspaces would reopen the K-line route (score 96.27; it
+needs about 2^64 distinct kappa values plus one winner outside BF64).
+
+**Scheduler.** Run 9 sent the one finishing notification. Disabling the scheduled task from inside the
+run was refused (permission), so the user has to switch off "Binary-upper benchmark research". Later
+runs: recheck the official record; if it is unchanged, change nothing and send no notification.
 
 ## Mechanism of the record (exact)
 
@@ -139,11 +190,9 @@ Setting: class = coset of L = {d: V -> Z, mean 0, Fourier in (1/4)Z}, generic la
 * **Census (`n10_census.log`), members above 9N/16 / (M_C/2).** n = 9 without Boolean rep: |P| = 1, 2, 4, 8 random 0.405, 0.180, 0.035, 0.0009; F + E - Q with |E| = N/64, N/32, N/16 random 0.008, 0.0003, 0; two signed points in two alternative cosets 0.412 (n = 8: 0.434; the quadric part tends to 1/4); T in a hyperplane 0.0001. Hill climbing over classes without Boolean rep: n = 8 best 0.659 (217 evaluations), n = 7 best 0.836, n = 6 best 1.34 (small n). Many structured signed reps turn out Boolean: rho = 1_F + 1_E - 1_Q with Q in one alternative coset is Boolean through that coset.
 * **Not covered: phi >= 3.** The local means and M_C/2 per rep hold for any phi, and reps with a few points rho = 2 inside C stay in the main term. But j <= 4 and the budget for A+ use phi <= 2: the budget grows with E[C(rho,2)], and the exponential moment is then too weak (N+(3) about 2^26). Census at n = 9: phi = 3 is 2% of the largest signed family and at most 40% of families below 0.04 of M_C/2. Expected harmless, not proved.
 
-## Queue (take the top item each run)
+## Queue
 
-1. **N5** Nothing beats 106.24 on paper and no further item has a real chance: write the FINAL section and stop. Mention in FINAL: the shortened quadric family beats 9/16 at list sizes up to 2^60, which matters if a smaller budget ever applies; the K-line route (run 4) would give 19/32 and score 96.27 if kappa were onto K, and no proof route is visible (a sum of three reciprocals of 17-dim subspaces is out of reach of Weil-type bounds, which need dimension about 49); f = 7 misses by a factor 1.3 before the label avoidance and 2.97 after it; remaining gaps: triple roots (run 8), real labels at d = 21 beyond sampling (run 7), non-split cofactors of degree >= g (Johnson regime, open for RS codes). Also recheck the official record before writing.
-
-Not blocking: if the user attaches the DKTZ PDF, compare the second construction with the reconstruction and read the first construction's mechanism (49.4% at rate 1/4 on a 2^27 domain, probability above 2^-30).
+Exhausted: N5 (write FINAL) done in run 9, see FINAL above. Not blocking: if the user attaches the DKTZ PDF, compare the second construction with the reconstruction and read the first construction's mechanism (49.4% at rate 1/4 on a 2^27 domain, probability above 2^-30).
 
 ## Run log
 
@@ -155,3 +204,4 @@ Not blocking: if the user attaches the DKTZ PDF, compare the second construction
 * 2026-11-05 (scheduled, run 6): N9 failed: no class of mass 5N/8 reaches 2^64 above 9N/16 (bound 2^63.125 for every B, true size about 2^60.415). Pattern classification, tuple bound, exact census to n = 10, brute force at n = 5, 6, polynomial replay. Real-root framework closed apart from signed representatives. Read the Lean instance definition: nothing new from the constraint or the rows. Scripts `n9_*`. New top N8.
 * 2026-11-06 (scheduled, run 7): N8 failed. Merge map Phi and additive tops; exact n = 6 class counts over all 2^60 subsets confirm T2-T4 and measure the Krylov merge; exhaustive relation and kernel scans; one real exception at r = 8 (weight 58, useless). Official repo checked: binary upper still 10624 at HEAD eb82d3b. Scripts `n8_*`. New top N10.
 * 2026-11-06 (scheduled, run 8): N10 failed and the signed gap closed for phi <= 2. Class types, budget, local means, Lemma R, bound 2^63.595 for every class at n = 21; unbiased class evaluator, census at n = 7, 8, 9, hill climbing, exact checks. Official repo still at eb82d3b, binary upper 10624. Scripts `n10_*`. New top N5.
+* 2026-11-07 (scheduled, run 9): N5: queue exhausted, FINAL written. Official record rechecked (main eb82d3b, binary upper 10624, no binary upper submission after 2026-10-23, live leaderboard not reachable). Headline numbers re-verified exactly (`final_check.py`). ChatGPT's lane B binary branches read: all negative. Disabling the scheduled task was refused; left to the user.
