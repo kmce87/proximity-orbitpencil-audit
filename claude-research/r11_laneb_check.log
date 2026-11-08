@@ -1,0 +1,6 @@
+rhs L_W(sum Q) = 0x17c6dbd8e3893ddc (lane B: 0x17c6dbd8e3893ddc) match=True
+slice tuples = 546540352512 = 2^38.992; with (aa,e0,e1): 4372322820096
+expected kappa = 0 hits per slice if kappa were uniform: 2.963e-08
+members = 2^65.705; any kappa fibre <= members/(1021*8) = 2^52.709 < 2^64: True
+xcp arithmetic ok: 62 + 64*16383 = 1048574 <= 1048575 < 1048638 = 62 + 64*16384
+PASS

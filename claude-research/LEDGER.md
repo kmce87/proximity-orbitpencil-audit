@@ -48,10 +48,11 @@ cofactors (run 6) or signed classes with phi <= 2 (run 8) has more than 2^64 mem
 4. the K-line route needs kappa_S to hit BF64 up to a few thousand values, and a proof of it; kappa is a
    sum of three reciprocals over 17-dim subspaces, and Weil-type bounds need dimension about 49.
 
-**Official record, rechecked (runs 9, 10).** proximity-prize/proximity-prize main is still eb82d3b
+**Official record, rechecked (runs 9-11).** proximity-prize/proximity-prize main is still eb82d3b
 (2026-10-29): SubmissionBinaryUpper score.txt 10624, unsafe-index.txt 917441 (BitWonka). 9 of the 584
-submission branches touch that folder, the latest on 2026-10-23 (also 10624); in run 10 none of the 600
-branch heads has a commit after 2026-10-29. Submissions moved off the repo (#610). Live board: with the
+submission branches touch that folder, the latest on 2026-10-23 (also 10624); in run 11 (2026-11-08) none of
+the 600 branch heads has a commit after 2026-10-29, no head has a binary upper score below 10624, and the
+newest PR is still #611 (validation bot, 2026-10-29). Submissions moved off the repo (#610). Live board: with the
 user's approval (run 10) proximityprize.org was read; it shows no standings and names better.codes as the
 live scored companion, which the fetch tool blocks outright (site blocked, so approval does not help; do not
 retry or work around it). Web search finds nothing newer than PR #592 (titled "claimed score: 106.25";
@@ -62,7 +63,12 @@ consistent with this ledger. Read in run 9: coefficient injection, fixed Q, 420-
 leading coefficient, affine offsets. Read in run 10 (numbers rechecked exactly): uniform 2^15-class
 coefficient pigeonhole (too weak), 106.23 degree necessity, conditional fibre trade (1179710, 64 short),
 fixed H-triple capacity (105 triples x 4 rows), score boundary (largest 106.23 index 917378, i.e.
-agreement 1179774 = record + 63), 64-point core (one degree over the code).
+agreement 1179774 = record + 63), 64-point core (one degree over the code). Read in run 11 (2026-11-07
+13:04..19:07 UTC; after that lane B is on the Koala track, not read): X*Cp degree gate, BF64 exact slice,
+jr/ee sweep, rr sweep, rr image invariance. All are numerical searches for kappa_S = 0 (this ledger's H4) on
+slices of 1023*1022*1021*8^3 = 2^38.99 tuples, with 0 hits; N2 already caps every kappa fibre at 2^52.709
+members, so no slice can matter. `r11_laneb_check.py` rebuilds their labels and rhs 0x17c6dbd8e3893ddc
+from scratch; their slice program reproduces 0 hits.
 
 **Recommendation.** Stop this track and do not build a Lean candidate from these ideas. Follow up only if
 something changes: (a) with the DKTZ PDF, compare its first construction (49.4% at rate 1/4 on a 2^27
@@ -71,7 +77,7 @@ character-sum bound for reciprocals over small subspaces would reopen the K-line
 needs about 2^64 distinct kappa values plus one winner outside BF64).
 
 **Scheduler.** Run 9 sent the one finishing notification. Disabling the task from inside a run is refused
-by the permission classifier (runs 9 and 10), so the user has to switch off "Binary-upper benchmark
+by the permission classifier (runs 9, 10, 11), so the user has to switch off "Binary-upper benchmark
 research" (cron 34 */12 UTC; it does not stop by itself after 2026-11-17). Later runs: recheck the official
 record and any new lane B binary branches, update the "runs 10+" line of the run log in place (no new
 line per run), and notify only if the record changes or, once, on the first run after 2026-11-17 if the
@@ -215,9 +221,11 @@ Exhausted: N5 (write FINAL) done in run 9, see FINAL above; every later run take
 * 2026-11-06 (scheduled, run 7): N8 failed. Merge map Phi and additive tops; exact n = 6 class counts over all 2^60 subsets confirm T2-T4 and measure the Krylov merge; exhaustive relation and kernel scans; one real exception at r = 8 (weight 58, useless). Official repo checked: binary upper still 10624 at HEAD eb82d3b. Scripts `n8_*`. New top N10.
 * 2026-11-06 (scheduled, run 8): N10 failed and the signed gap closed for phi <= 2. Class types, budget, local means, Lemma R, bound 2^63.595 for every class at n = 21; unbiased class evaluator, census at n = 7, 8, 9, hill climbing, exact checks. Official repo still at eb82d3b, binary upper 10624. Scripts `n10_*`. New top N5.
 * 2026-11-07 (scheduled, run 9): N5: queue exhausted, FINAL written. Official record rechecked (main eb82d3b, binary upper 10624, no binary upper submission after 2026-10-23, live leaderboard not reachable). Headline numbers re-verified exactly (`final_check.py`). ChatGPT's lane B binary branches read: all negative. Disabling the scheduled task was refused; left to the user.
-* 2026-11-07 (scheduled, runs 10+: post-FINAL rechecks, this line is updated in place). Latest: run 10,
-  2026-11-07 12:40 UTC. Queue exhausted, so step 2 only. Official main still eb82d3b, binary upper 10624 /
-  917441, no official branch newer than 2026-10-29; proximityprize.org read with the user's approval (no
-  standings), better.codes blocked for the fetch tool, search finds nothing newer than #592. Six new lane B binary
-  branches (2026-11-07 01:06..07:01 UTC), all negative, numbers rechecked. `final_check.py` passes.
-  Disabling the task refused again. No notification (nothing changed).
+* 2026-11-07 (scheduled, runs 10+: post-FINAL rechecks, this line is updated in place). Run 10
+  (2026-11-07 12:40 UTC): proximityprize.org read with the user's approval (no standings), better.codes
+  blocked for the fetch tool; six lane B binary branches (01:06..07:01 UTC) read, all negative. Latest: run 11,
+  2026-11-08 00:39 UTC. Queue exhausted, so step 2 only. Official main still eb82d3b, binary upper 10624 /
+  917441, no official branch or PR newer than 2026-10-29 (newest PR #611); search finds nothing newer than
+  #592. Five more lane B binary branches (13:04..19:07 UTC), all kappa_S = 0 slice searches with 0 hits,
+  covered by N2; checked by `r11_laneb_check.py`. `final_check.py` passes. Disabling the task refused again.
+  No notification (nothing changed).
