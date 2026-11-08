@@ -48,15 +48,18 @@ cofactors (run 6) or signed classes with phi <= 2 (run 8) has more than 2^64 mem
 4. the K-line route needs kappa_S to hit BF64 up to a few thousand values, and a proof of it; kappa is a
    sum of three reciprocals over 17-dim subspaces, and Weil-type bounds need dimension about 49.
 
-**Official record, rechecked (runs 9-11).** proximity-prize/proximity-prize main is still eb82d3b
+**Official record, rechecked (runs 9-12).** proximity-prize/proximity-prize main is still eb82d3b
 (2026-10-29): SubmissionBinaryUpper score.txt 10624, unsafe-index.txt 917441 (BitWonka). 9 of the 584
 submission branches touch that folder, the latest on 2026-10-23 (also 10624); in run 11 (2026-11-08) none of
-the 600 branch heads has a commit after 2026-10-29, no head has a binary upper score below 10624, and the
-newest PR is still #611 (validation bot, 2026-10-29). Submissions moved off the repo (#610). Live board: with the
-user's approval (run 10) proximityprize.org was read; it shows no standings and names better.codes as the
-live scored companion, which the fetch tool blocks outright (site blocked, so approval does not help; do not
-retry or work around it). Web search finds nothing newer than PR #592 (titled "claimed score: 106.25";
-validated score.txt 10624). The user checks better.codes before quoting 106.24 as current.
+the 600 branch heads has a commit after 2026-10-29 and no head has a binary upper score below 10624. Run 12
+(2026-11-08 12:39 UTC) used the GitHub search API only (add_repo was not offered, so the official repo was not
+attached or cloned): newest PR still #611 (validation bot, 2026-10-29), newest validation commit still eb82d3b,
+code search on main still shows score.txt 10624 and unsafe-index.txt 917441. Submissions moved off the repo:
+#610 points the verifier client at autoresearch.zksecurity.xyz (an authenticated service, not read). Live
+board: with the user's approval (run 10) proximityprize.org was read; it shows no standings and names
+better.codes as the live scored companion, which the fetch tool blocks outright (site blocked, so approval
+does not help; do not retry or work around it). Web search finds nothing newer than PR #592 (titled
+"claimed score: 106.25"; validated score.txt 10624). The user checks better.codes before quoting 106.24.
 
 **ChatGPT lane B (read only).** Its binary branches up to 2026-11-07 07:01 UTC are all negative gates and
 consistent with this ledger. Read in run 9: coefficient injection, fixed Q, 420-row XOR, core extension,
@@ -68,16 +71,24 @@ agreement 1179774 = record + 63), 64-point core (one degree over the code). Read
 jr/ee sweep, rr sweep, rr image invariance. All are numerical searches for kappa_S = 0 (this ledger's H4) on
 slices of 1023*1022*1021*8^3 = 2^38.99 tuples, with 0 hits; N2 already caps every kappa fibre at 2^52.709
 members, so no slice can matter. `r11_laneb_check.py` rebuilds their labels and rhs 0x17c6dbd8e3893ddc
-from scratch; their slice program reproduces 0 hits.
+from scratch; their slice program reproduces 0 hits. Run 12: no lane B binary branch after 2026-11-07
+19:07 UTC; its Koala branches of 2026-11-08 have no binary content. Its pivot note
+(`prize-research-pivot-20261108`, 12:05 UTC) makes binary upper its priority 3 (Gold-moment /
+quadratic-rank counts on the sparse 21-dim domain) and cites DKTZ as ECCC TR26-237 (Nov 3 revision):
+decision-tree height 3 gives 9/16, height 4 is worse, and the Gold theorem assumes a dense domain (here a
+2^-43 fraction). That agrees with N3 and this FINAL. If lane B takes it up, the overlap with this ledger is
+N7, N9, N10 (quadric and mean-1/2 classes) and N8 (special labels, open gap 2). The note also says binary
+acceptance by the scoring service is unconfirmed (not checked here).
 
 **Recommendation.** Stop this track and do not build a Lean candidate from these ideas. Follow up only if
 something changes: (a) with the DKTZ PDF, compare its first construction (49.4% at rate 1/4 on a 2^27
-domain) with run 4; (b) under a budget near 2^60 the shortened quadric family beats 9/16; (c) a
-character-sum bound for reciprocals over small subspaces would reopen the K-line route (score 96.27; it
+domain) with run 4 (lane B cites a copy as ECCC TR26-237; not fetched here, because the ePrint PDF was
+blocked for this job and other copies are not tried, so the user would attach it); (b) under a budget near
+2^60 the shortened quadric family beats 9/16; (c) a character-sum bound for reciprocals over small subspaces would reopen the K-line route (score 96.27; it
 needs about 2^64 distinct kappa values plus one winner outside BF64).
 
 **Scheduler.** Run 9 sent the one finishing notification. Disabling the task from inside a run is refused
-by the permission classifier (runs 9, 10, 11), so the user has to switch off "Binary-upper benchmark
+by the permission classifier (runs 9-12), so the user has to switch off "Binary-upper benchmark
 research" (cron 34 */12 UTC; it does not stop by itself after 2026-11-17). Later runs: recheck the official
 record and any new lane B binary branches, update the "runs 10+" line of the run log in place (no new
 line per run), and notify only if the record changes or, once, on the first run after 2026-11-17 if the
@@ -223,9 +234,11 @@ Exhausted: N5 (write FINAL) done in run 9, see FINAL above; every later run take
 * 2026-11-07 (scheduled, run 9): N5: queue exhausted, FINAL written. Official record rechecked (main eb82d3b, binary upper 10624, no binary upper submission after 2026-10-23, live leaderboard not reachable). Headline numbers re-verified exactly (`final_check.py`). ChatGPT's lane B binary branches read: all negative. Disabling the scheduled task was refused; left to the user.
 * 2026-11-07 (scheduled, runs 10+: post-FINAL rechecks, this line is updated in place). Run 10
   (2026-11-07 12:40 UTC): proximityprize.org read with the user's approval (no standings), better.codes
-  blocked for the fetch tool; six lane B binary branches (01:06..07:01 UTC) read, all negative. Latest: run 11,
-  2026-11-08 00:39 UTC. Queue exhausted, so step 2 only. Official main still eb82d3b, binary upper 10624 /
-  917441, no official branch or PR newer than 2026-10-29 (newest PR #611); search finds nothing newer than
-  #592. Five more lane B binary branches (13:04..19:07 UTC), all kappa_S = 0 slice searches with 0 hits,
-  covered by N2; checked by `r11_laneb_check.py`. `final_check.py` passes. Disabling the task refused again.
-  No notification (nothing changed).
+  blocked for the fetch tool; six lane B binary branches (01:06..07:01 UTC) read, all negative. Run 11
+  (2026-11-08 00:39 UTC): no official branch or PR newer than 2026-10-29; five more lane B binary branches
+  (13:04..19:07 UTC), all kappa_S = 0 slice searches with 0 hits, covered by N2 (`r11_laneb_check.py`).
+  Latest: run 12, 2026-11-08 12:39 UTC. Queue exhausted, so step 2 only. Official main still eb82d3b, binary
+  upper 10624 / 917441, newest PR #611 (search API); web search finds nothing newer than #592. No new lane B
+  binary branch; its pivot note (binary upper as priority 3, DKTZ via ECCC TR26-237) agrees with the FINAL.
+  `final_check.py` and `r11_laneb_check.py` reproduce their committed logs exactly. Disabling the task
+  refused again. No notification (nothing changed).
