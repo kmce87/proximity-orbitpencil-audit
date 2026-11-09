@@ -1,0 +1,6 @@
+polar map rank 57 kernel dimension 7 (lane B: 57 and 7)
+linear restriction rank 3 nullity 4 (lane B: 3 and 4)
+Gold forms identically zero on V: 16 (lane B: 16)
+polar rank histogram over 2080 coefficients: {0: 3, 2: 26, 4: 58, 6: 84, 8: 111, 10: 138, 12: 188, 14: 452, 16: 551, 18: 337, 20: 132}
+affine (a, bit) zero counts: {0: 16, 1048576: 224, 2097152: 16} (lane B: same)
+PASS: lane B Gold gates reproduced independently; all negative, consistent with N3/N7 and the K-limit
