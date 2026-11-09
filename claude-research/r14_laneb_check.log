@@ -1,0 +1,4 @@
+106.22 needs agreement >= 1179838 (unsafe index <= 917314); lane B: 1179838 / 917314
+Q_4 = v19*v20 on V (231 basis values + 2000 random points); zeros 1572864 = 3*2^19 > 2^20 - 1: direct RS-row embedding impossible (lane B: same)
+affine pairs reaching 1179838 zeros: at most 2^64 = |BF64|, density exactly 2^-128, fails strict (K-limit, run 4)
+PASS: both new lane B upper gates reproduced; negative, nothing changes the FINAL
