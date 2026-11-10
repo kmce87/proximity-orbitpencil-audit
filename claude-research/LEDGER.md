@@ -48,20 +48,21 @@ cofactors (run 6) or signed classes with phi <= 2 (run 8) has more than 2^64 mem
 4. the K-line route needs kappa_S to hit BF64 up to a few thousand values, and a proof of it; kappa is a
    sum of three reciprocals over 17-dim subspaces, and Weil-type bounds need dimension about 49.
 
-**Official record, rechecked (runs 9-15).** proximity-prize/proximity-prize main is still eb82d3b
+**Official record, rechecked (runs 9-16).** proximity-prize/proximity-prize main is still eb82d3b
 (2026-10-29): SubmissionBinaryUpper score.txt 10624, unsafe-index.txt 917441 (BitWonka). 9 of the 584
 submission branches touch that folder, the latest on 2026-10-23 (also 10624); in run 11 (2026-11-08) none of
 the 600 branch heads had a commit after 2026-10-29 or a binary upper score below 10624. Since run 12 only the
-GitHub search API is used (add_repo is not offered, so the official repo is not attached or cloned). Run 15
-(2026-11-10 00:34 UTC): newest PR still #611 (validation bot, 2026-10-29; no PR updated later), newest commit
-still eb82d3b (commit search on six terms), and code search gives blob ids 5c74e1d865 (score.txt) and
+GitHub search API is used (add_repo is not offered, so the official repo is not attached or cloned). Run 16
+(2026-11-10 12:35 UTC): newest PR still #611 (validation bot, 2026-10-29; 603 PRs, none updated later), newest
+commit still eb82d3b (commit search on six terms), and code search gives blob ids 5c74e1d865 (score.txt) and
 6be1d72bcc (unsafe-index.txt), exactly `git hash-object` of "10624\n" and "917441\n". Submissions moved off the
 repo: #610 points the verifier client at autoresearch.zksecurity.xyz (an authenticated service, not read). Live
 board: with the user's approval (run 10) proximityprize.org was read; it shows no standings and names
 better.codes as the live scored companion, which the fetch tool blocks outright (site blocked, so approval
 does not help; do not retry or work around it). Web search finds nothing newer than PR #592 (titled
-"claimed score: 106.25"; validated score.txt 10624); run 15's only news hit with bit counts is a 2026-08-22
-item on koalaIRS12 (63.99 / 116.13), another profile. The user checks better.codes before quoting 106.24.
+"claimed score: 106.25"; validated score.txt 10624); the only news hit with bit counts (runs 15, 16) is a
+2026-08-22 item on koalaIRS12 (63.99 / 116.13, gap 52.14), another profile, with no binary numbers. The user
+checks better.codes before quoting 106.24.
 
 **ChatGPT lane B (read only).** All its binary upper branches up to 2026-11-09 17:03 UTC are negative gates
 consistent with this ledger. Runs 9-11 (branches of 2026-11-03..07): coefficient injection, fixed Q, 420-row
@@ -84,7 +85,8 @@ most 2^64 pairs, density exactly 2^-128, the K-limit (`r14_laneb_check.py`). Run
 so deg Q would have to drop to 16382). `r15_laneb_check.py` reproduces all three (the score also with 60-digit
 logarithms) and extends the last to every core size: in the record's shape 64 core points cost one fibre, so
 the best agreement over all core sizes is exactly 1179711.
-Other-track commits (binary lower b694ebc, 7b165e0, add80e9, 70b7ad4; Koala aef2e79) are not replayed. Zero
+Other-track commits (binary lower b694ebc, 7b165e0, add80e9, 70b7ad4; Koala aef2e79, e292e70, 705aa4f) are
+not replayed; no binary branch was pushed between 2026-11-09 17:03 UTC and run 16 (2026-11-10 12:35 UTC). Zero
 counts of Gold forms are not IRS agreements (lane B says so too). Remaining overlap with this ledger: N7, N9,
 N10 (quadric and mean-1/2 classes) and N8 (special labels, open gap 2). The note also says binary acceptance
 by the scoring service is unconfirmed (not checked here).
@@ -98,9 +100,9 @@ would reopen the K-line route (score 96.27; it needs about 2^64 distinct kappa v
 BF64).
 
 **Scheduler.** Run 9 sent the one finishing notification. Disabling the task from inside a run is refused
-by the permission classifier (runs 9-15; reason "Cowork Scheduled Task Delete"), so the user has to
+by the permission classifier (runs 9-16; reason "Cowork Scheduled Task Delete"), so the user has to
 switch off "Binary-upper benchmark research" (trig_01JA8ECs6Hg1pJfYLhYBdfr5, cron 34 */12 UTC, still
-enabled at run 15, next 2026-11-10 12:34 UTC; it does not stop by itself after 2026-11-17). Later runs:
+enabled at run 16, next 2026-11-11 00:34 UTC; it does not stop by itself after 2026-11-17). Later runs:
 recheck the official record and any new lane B binary branches, update the "runs 10+" line of the run log
 in place (no new line per run), and notify only if the record changes or, once, on the first run after
 2026-11-17 if the task is still enabled.
@@ -250,10 +252,10 @@ Exhausted: N5 (write FINAL) done in run 9, see FINAL above; every later run take
   (`r11_laneb_check.py`). Run 12 (2026-11-08 12:39 UTC): search API only; lane B pivot note read. Run 13
   (2026-11-09 00:34 UTC): lane B Gold-form gates replayed (`r13_laneb_gold_check.py`). Run 14 (2026-11-09
   12:39 UTC): two lane B upper gates (Gold row root bound, affine complement at 106.22) replayed
-  (`r14_laneb_check.py`).
-  Latest: run 15, 2026-11-10 00:34 UTC. Queue exhausted, so step 2 only. Official main still eb82d3b, binary
-  upper 10624 / 917441 (blob ids match exactly), newest PR #611; web search gives nothing relevant. Three new
-  lane B upper gates (106.24 source audit, 106.23 obligation, core degree budget) replayed, the last extended
-  to every core size (`r15_laneb_check.py`, log); two other-track commits not replayed. `final_check.py` and
-  the r11, r13, r14 replays reproduce their committed logs exactly. Disabling the task refused again. No
-  notification (nothing changed).
+  (`r14_laneb_check.py`). Run 15 (2026-11-10 00:34 UTC): three lane B upper gates (106.24 source audit,
+  106.23 obligation, core degree budget) replayed, the last extended to every core size (`r15_laneb_check.py`).
+  Latest: run 16, 2026-11-10 12:35 UTC. Queue exhausted, so step 2 only. Official main still eb82d3b, binary
+  upper 10624 / 917441 (blob ids match exactly), newest PR #611; web search gives nothing relevant. No new lane
+  B binary branch (two new Koala branches, other track, not replayed). `final_check.py` and the r11, r13, r14,
+  r15 replays reproduce their committed logs exactly. Disabling the task refused again. No notification
+  (nothing changed).
