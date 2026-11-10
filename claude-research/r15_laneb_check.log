@@ -1,0 +1,4 @@
+index 917441: agreement 1179711, score 106.239738; passes 106.24, fails 106.23 (lane B: same)
+largest 106.23 index 917378 (agreement 1179774), 63 positions beyond the record (lane B: 917378, 63)
+degree budget: 63 + 64*16383 = 2^20 - 1; 126 core points force deg Q <= 16382, agreement 1179710 (64 short of 106.23); best over all core sizes 1179711 = the record
+PASS: all three new lane B upper gates reproduced; negative, nothing changes the FINAL
