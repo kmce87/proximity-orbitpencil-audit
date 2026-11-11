@@ -48,12 +48,12 @@ cofactors (run 6) or signed classes with phi <= 2 (run 8) has more than 2^64 mem
 4. the K-line route needs kappa_S to hit BF64 up to a few thousand values, and a proof of it; kappa is a
    sum of three reciprocals over 17-dim subspaces, and Weil-type bounds need dimension about 49.
 
-**Official record, rechecked (runs 9-17).** proximity-prize/proximity-prize main is still eb82d3b
+**Official record, rechecked (runs 9-18).** proximity-prize/proximity-prize main is still eb82d3b
 (2026-10-29): SubmissionBinaryUpper score.txt 10624, unsafe-index.txt 917441 (BitWonka). 9 of the 584
 submission branches touch that folder, the latest on 2026-10-23 (also 10624); in run 11 (2026-11-08) none of
 the 600 branch heads had a commit after 2026-10-29 or a binary upper score below 10624. Since run 12 only the
-GitHub search API is used (add_repo is not offered, so the official repo is not attached or cloned). Run 17
-(2026-11-11 00:35 UTC): newest PR still #611 (validation bot, 2026-10-29; 603 PRs, none updated later; the 2
+GitHub search API is used (add_repo is not offered, so the official repo is not attached or cloned). Run 18
+(2026-11-11 12:35 UTC): newest PR still #611 (validation bot, 2026-10-29; 603 PRs, none updated later; the 2
 issues were last updated 2026-10-11), newest commit still eb82d3b (commit search on six terms), and code search
 gives blob ids 5c74e1d865 (score.txt) and 6be1d72bcc (unsafe-index.txt), exactly `git hash-object` of
 "10624\n" and "917441\n". Submissions moved off the
@@ -61,8 +61,9 @@ repo: #610 points the verifier client at autoresearch.zksecurity.xyz (an authent
 board: with the user's approval (run 10) proximityprize.org was read; it shows no standings and names
 better.codes as the live scored companion, which the fetch tool blocks outright (site blocked, so approval
 does not help; do not retry or work around it). Web search finds nothing newer than PR #592 (titled
-"claimed score: 106.25"; validated score.txt 10624); the only news hit with bit counts (runs 15-17) is a
-2026-08-22 item on koalaIRS12 (63.99 / 116.13, gap 52.14), another profile, with no binary numbers. The user
+"claimed score: 106.25"; validated score.txt 10624); the only news hit with bit counts (runs 15-18) is a
+2026-08-22 item on koalaIRS12 (63.99 / 116.13, gap 52.14), another profile, with no binary numbers (run 18 also
+read a HackMD survey of RS proximity gaps from November 2025: no track, record or binary numbers). The user
 checks better.codes before quoting 106.24.
 
 **ChatGPT lane B (read only).** All its binary upper branches up to 2026-11-10 19:02 UTC are negative or
@@ -87,7 +88,8 @@ coefficient: they move only the constants of the flat locators, so every coeffic
 14336 = 7*2^11 (kappa included) is invariant; direct locators at the real size (4 x 8 members) differ first at
 exactly 14336. That is N2's factor-8 invariance; kappa fibres stay at most 2^52.709 (`r17_laneb_check.py`,
 `r17_laneb_real.cpp`, logs). Other-track commits (binary lower, Koala) are not replayed; no binary branch was
-pushed between 2026-11-10 19:02 UTC and run 17 (2026-11-11 00:35 UTC). Zero counts of Gold forms are not IRS
+pushed between 2026-11-10 19:02 UTC and run 18 (2026-11-11 12:35 UTC), whose only new heads are two Koala
+scripts (2026-11-11 05:06 and 06:06 UTC). Zero counts of Gold forms are not IRS
 agreements (lane B says so too). Remaining overlap: N7, N9, N10 (quadric and mean-1/2 classes) and N8 (special
 labels, open gap 2). The note also says binary acceptance by the scoring service is unconfirmed (not checked
 here).
@@ -101,9 +103,9 @@ would reopen the K-line route (score 96.27; it needs about 2^64 distinct kappa v
 BF64).
 
 **Scheduler.** Run 9 sent the one finishing notification. Disabling the task from inside a run is refused
-by the permission classifier (runs 9-17; reason "Cowork Scheduled Task Delete"), so the user has to
+by the permission classifier (runs 9-18; reason "Cowork Scheduled Task Delete"), so the user has to
 switch off "Binary-upper benchmark research" (trig_01JA8ECs6Hg1pJfYLhYBdfr5, cron 34 */12 UTC, still
-enabled at run 17, next 2026-11-11 12:34 UTC; it does not stop by itself after 2026-11-17). Later runs:
+enabled at run 18, next 2026-11-12 00:34 UTC; it does not stop by itself after 2026-11-17). Later runs:
 recheck the official record and any new lane B binary branches, update the "runs 10+" line of the run log
 in place (no new line per run), and notify only if the record changes or, once, on the first run after
 2026-11-17 if the task is still enabled.
@@ -253,9 +255,10 @@ Exhausted: N5 (write FINAL) done in run 9, see FINAL above; every later run take
   (`r11_laneb_check.py`). Run 12 (2026-11-08 12:39 UTC): search API only; lane B pivot note read. Runs 13-15
   (2026-11-09 00:34 to 2026-11-10 00:34 UTC): lane B Gold-form, affine-complement, 106.24/106.23 score and
   core-degree gates replayed (`r13_*`, `r14_*`, `r15_*`). Run 16 (2026-11-10 12:35 UTC): official blob ids
-  matched exactly; no new lane B binary branch. Latest: run 17, 2026-11-11 00:35 UTC. Queue exhausted, so step
-  2 only. Official main still eb82d3b, binary upper 10624 / 917441 (blob ids match exactly), newest PR #611;
-  web search gives nothing relevant. Two new lane B binary gates (reserved-coset XOR, affine constants)
+  matched exactly. Run 17 (2026-11-11 00:35 UTC): lane B reserved-coset XOR and affine-constant gates
   replayed, in BF64 at the real size as well (`r17_laneb_check.py`, `r17_laneb_real.cpp`): neutral, N2
-  unchanged. `final_check.py` and the r11, r13, r14, r15 replays reproduce their committed logs exactly.
-  Disabling the task refused again. No notification (nothing changed).
+  unchanged. Latest: run 18, 2026-11-11 12:35 UTC. Queue exhausted, so step 2 only. Official main still
+  eb82d3b, binary upper 10624 / 917441 (blob ids match exactly), newest PR #611; web search gives nothing
+  relevant. No new lane B binary branch (two Koala scripts only). `final_check.py` and the r11, r13, r14, r15,
+  r17 replays reproduce their committed logs exactly. Disabling the task refused again. No notification
+  (nothing changed).
