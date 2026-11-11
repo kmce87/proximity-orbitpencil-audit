@@ -48,48 +48,49 @@ cofactors (run 6) or signed classes with phi <= 2 (run 8) has more than 2^64 mem
 4. the K-line route needs kappa_S to hit BF64 up to a few thousand values, and a proof of it; kappa is a
    sum of three reciprocals over 17-dim subspaces, and Weil-type bounds need dimension about 49.
 
-**Official record, rechecked (runs 9-16).** proximity-prize/proximity-prize main is still eb82d3b
+**Official record, rechecked (runs 9-17).** proximity-prize/proximity-prize main is still eb82d3b
 (2026-10-29): SubmissionBinaryUpper score.txt 10624, unsafe-index.txt 917441 (BitWonka). 9 of the 584
 submission branches touch that folder, the latest on 2026-10-23 (also 10624); in run 11 (2026-11-08) none of
 the 600 branch heads had a commit after 2026-10-29 or a binary upper score below 10624. Since run 12 only the
-GitHub search API is used (add_repo is not offered, so the official repo is not attached or cloned). Run 16
-(2026-11-10 12:35 UTC): newest PR still #611 (validation bot, 2026-10-29; 603 PRs, none updated later), newest
-commit still eb82d3b (commit search on six terms), and code search gives blob ids 5c74e1d865 (score.txt) and
-6be1d72bcc (unsafe-index.txt), exactly `git hash-object` of "10624\n" and "917441\n". Submissions moved off the
+GitHub search API is used (add_repo is not offered, so the official repo is not attached or cloned). Run 17
+(2026-11-11 00:35 UTC): newest PR still #611 (validation bot, 2026-10-29; 603 PRs, none updated later; the 2
+issues were last updated 2026-10-11), newest commit still eb82d3b (commit search on six terms), and code search
+gives blob ids 5c74e1d865 (score.txt) and 6be1d72bcc (unsafe-index.txt), exactly `git hash-object` of
+"10624\n" and "917441\n". Submissions moved off the
 repo: #610 points the verifier client at autoresearch.zksecurity.xyz (an authenticated service, not read). Live
 board: with the user's approval (run 10) proximityprize.org was read; it shows no standings and names
 better.codes as the live scored companion, which the fetch tool blocks outright (site blocked, so approval
 does not help; do not retry or work around it). Web search finds nothing newer than PR #592 (titled
-"claimed score: 106.25"; validated score.txt 10624); the only news hit with bit counts (runs 15, 16) is a
+"claimed score: 106.25"; validated score.txt 10624); the only news hit with bit counts (runs 15-17) is a
 2026-08-22 item on koalaIRS12 (63.99 / 116.13, gap 52.14), another profile, with no binary numbers. The user
 checks better.codes before quoting 106.24.
 
-**ChatGPT lane B (read only).** All its binary upper branches up to 2026-11-09 17:03 UTC are negative gates
-consistent with this ledger. Runs 9-11 (branches of 2026-11-03..07): coefficient injection, fixed Q, 420-row
-XOR, core extension, leading coefficient, affine offsets, 2^15-class coefficient pigeonhole (too weak), 106.23
-degree necessity, fibre trade (1179710, 64 short), fixed H-triple capacity (105 triples x 4 rows), score
-boundary (largest 106.23 index 917378 = agreement 1179774), 64-point core (one degree over the code), and
-five searches for kappa_S = 0 on slices of 2^38.99 tuples with 0 hits (N2 caps every kappa fibre at 2^52.709,
-so no slice can matter; `r11_laneb_check.py` rebuilds their labels and rhs 0x17c6dbd8e3893ddc, 0 hits). Pivot
-note (`prize-research-pivot-20261108`): binary upper is its priority 3 (Gold-moment / quadratic-rank counts on
-the sparse domain); it cites DKTZ as ECCC TR26-237: decision-tree height 3 gives 9/16, height 4 is worse, and
-the Gold theorem assumes a dense domain (here a 2^-43 fraction), as in N3. Run 13
-(`prize-binary-gold-rank-20261108`): Q_a(v) = Tr(a v^3) on V has polar rank 57 (kernel 7), 16 forms vanish on
-V, a coefficient-only family has at most 2^64 slopes, affine kernel forms have 0, N/2 or N zeros
-(`r13_laneb_gold_check.py`, independent trace Tr(a) = a_61 + a_63). Run 14
-(`prize-binary-affine-complement-20261109`): Q_4 = Tr(t^2 v^3) is exactly v_19 v_20 on V, 3*2^19 zeros, too
-many for a nonzero RS row; at 106.22 (index 917314, agreement 1179838) Z(q) and Z(q+1) partition V, so at
-most 2^64 pairs, density exactly 2^-128, the K-limit (`r14_laneb_check.py`). Run 15 (three gates,
-2026-11-09 15:04-17:03 UTC): 5c5d33d, index 917441 passes 106.24 and fails 106.23; 6d7f96a, the largest
-106.23 index is 917378 (+63); c117e0b, 63 more core points overflow the row degree (63 + 64*16383 = 2^20 - 1,
-so deg Q would have to drop to 16382). `r15_laneb_check.py` reproduces all three (the score also with 60-digit
-logarithms) and extends the last to every core size: in the record's shape 64 core points cost one fibre, so
-the best agreement over all core sizes is exactly 1179711.
-Other-track commits (binary lower b694ebc, 7b165e0, add80e9, 70b7ad4; Koala aef2e79, e292e70, 705aa4f) are
-not replayed; no binary branch was pushed between 2026-11-09 17:03 UTC and run 16 (2026-11-10 12:35 UTC). Zero
-counts of Gold forms are not IRS agreements (lane B says so too). Remaining overlap with this ledger: N7, N9,
-N10 (quadric and mean-1/2 classes) and N8 (special labels, open gap 2). The note also says binary acceptance
-by the scoring service is unconfirmed (not checked here).
+**ChatGPT lane B (read only).** All its binary upper branches up to 2026-11-10 19:02 UTC are negative or
+neutral gates consistent with this ledger. Runs 9-11 (branches of 2026-11-03..07): coefficient injection,
+fixed Q, 420-row XOR, core extension, leading coefficient, affine offsets, 2^15-class coefficient pigeonhole
+(too weak), 106.23 degree necessity, fibre trade (1179710, 64 short), fixed H-triple capacity (105 triples x 4
+rows), score boundary, 64-point core (one degree over the code), and five searches for kappa_S = 0 on slices of
+2^38.99 tuples with 0 hits (N2 caps every kappa fibre at 2^52.709; `r11_laneb_check.py`, rhs
+0x17c6dbd8e3893ddc). Pivot note (`prize-research-pivot-20261108`): binary upper is its priority 3 (Gold-moment
+/ quadratic-rank counts); it cites DKTZ as ECCC TR26-237 (height 3 gives 9/16, height 4 is worse, the Gold
+theorem assumes a dense domain, here a 2^-43 fraction, as in N3). Run 13: Tr(a v^3) on V has polar rank 57 and
+a coefficient-only family has at most 2^64 slopes (`r13_laneb_gold_check.py`). Run 14: Q_4 = v_19 v_20 on V;
+at 106.22 (agreement 1179838) Z(q), Z(q+1) partition V, at most 2^64 pairs, the K-limit (`r14_laneb_check.py`).
+Run 15: index 917441 passes 106.24 and fails 106.23; the largest 106.23 index is 917378 (agreement 1179774,
++63); 63 more core points overflow the row degree (63 + 64*16383 = 2^20 - 1), and over every core size the
+best agreement is exactly 1179711 (`r15_laneb_check.py`). Run 17 (gates of 2026-11-10, new forms of the 420-row
+XOR and affine-offset gates): 61bdc80, the XOR of the three reserved z-labels is the omitted label, never 0. Its 420
+configurations are exactly the record's Q rows (the 3-subsets of F_2^4 \ 0 with nonzero XOR); in BF64 the
+reserved term of kappa_S is c_(xor Q) = L_W(ell(xor Q)), 15 distinct nonzero values, 28 rows each, so the
+reserved block's gap is exactly 2^11 (direct locators). 4b399f5, the affine constants (aa, e0, e1) fix a toy
+coefficient: they move only the constants of the flat locators, so every coefficient of V_S above
+14336 = 7*2^11 (kappa included) is invariant; direct locators at the real size (4 x 8 members) differ first at
+exactly 14336. That is N2's factor-8 invariance; kappa fibres stay at most 2^52.709 (`r17_laneb_check.py`,
+`r17_laneb_real.cpp`, logs). Other-track commits (binary lower, Koala) are not replayed; no binary branch was
+pushed between 2026-11-10 19:02 UTC and run 17 (2026-11-11 00:35 UTC). Zero counts of Gold forms are not IRS
+agreements (lane B says so too). Remaining overlap: N7, N9, N10 (quadric and mean-1/2 classes) and N8 (special
+labels, open gap 2). The note also says binary acceptance by the scoring service is unconfirmed (not checked
+here).
 
 **Recommendation.** Stop this track and do not build a Lean candidate from these ideas. Follow up only if
 something changes: (a) with the DKTZ PDF, compare its first construction (49.4% at rate 1/4 on a 2^27
@@ -100,9 +101,9 @@ would reopen the K-line route (score 96.27; it needs about 2^64 distinct kappa v
 BF64).
 
 **Scheduler.** Run 9 sent the one finishing notification. Disabling the task from inside a run is refused
-by the permission classifier (runs 9-16; reason "Cowork Scheduled Task Delete"), so the user has to
+by the permission classifier (runs 9-17; reason "Cowork Scheduled Task Delete"), so the user has to
 switch off "Binary-upper benchmark research" (trig_01JA8ECs6Hg1pJfYLhYBdfr5, cron 34 */12 UTC, still
-enabled at run 16, next 2026-11-11 00:34 UTC; it does not stop by itself after 2026-11-17). Later runs:
+enabled at run 17, next 2026-11-11 12:34 UTC; it does not stop by itself after 2026-11-17). Later runs:
 recheck the official record and any new lane B binary branches, update the "runs 10+" line of the run log
 in place (no new line per run), and notify only if the record changes or, once, on the first run after
 2026-11-17 if the task is still enabled.
@@ -249,13 +250,12 @@ Exhausted: N5 (write FINAL) done in run 9, see FINAL above; every later run take
   (2026-11-07 12:40 UTC): proximityprize.org read with the user's approval (no standings), better.codes
   blocked for the fetch tool; six lane B binary branches read, all negative. Run 11 (2026-11-08 00:39 UTC):
   no official branch or PR newer than 2026-10-29; five lane B slice searches, covered by N2
-  (`r11_laneb_check.py`). Run 12 (2026-11-08 12:39 UTC): search API only; lane B pivot note read. Run 13
-  (2026-11-09 00:34 UTC): lane B Gold-form gates replayed (`r13_laneb_gold_check.py`). Run 14 (2026-11-09
-  12:39 UTC): two lane B upper gates (Gold row root bound, affine complement at 106.22) replayed
-  (`r14_laneb_check.py`). Run 15 (2026-11-10 00:34 UTC): three lane B upper gates (106.24 source audit,
-  106.23 obligation, core degree budget) replayed, the last extended to every core size (`r15_laneb_check.py`).
-  Latest: run 16, 2026-11-10 12:35 UTC. Queue exhausted, so step 2 only. Official main still eb82d3b, binary
-  upper 10624 / 917441 (blob ids match exactly), newest PR #611; web search gives nothing relevant. No new lane
-  B binary branch (two new Koala branches, other track, not replayed). `final_check.py` and the r11, r13, r14,
-  r15 replays reproduce their committed logs exactly. Disabling the task refused again. No notification
-  (nothing changed).
+  (`r11_laneb_check.py`). Run 12 (2026-11-08 12:39 UTC): search API only; lane B pivot note read. Runs 13-15
+  (2026-11-09 00:34 to 2026-11-10 00:34 UTC): lane B Gold-form, affine-complement, 106.24/106.23 score and
+  core-degree gates replayed (`r13_*`, `r14_*`, `r15_*`). Run 16 (2026-11-10 12:35 UTC): official blob ids
+  matched exactly; no new lane B binary branch. Latest: run 17, 2026-11-11 00:35 UTC. Queue exhausted, so step
+  2 only. Official main still eb82d3b, binary upper 10624 / 917441 (blob ids match exactly), newest PR #611;
+  web search gives nothing relevant. Two new lane B binary gates (reserved-coset XOR, affine constants)
+  replayed, in BF64 at the real size as well (`r17_laneb_check.py`, `r17_laneb_real.cpp`): neutral, N2
+  unchanged. `final_check.py` and the r11, r13, r14, r15 replays reproduce their committed logs exactly.
+  Disabling the task refused again. No notification (nothing changed).

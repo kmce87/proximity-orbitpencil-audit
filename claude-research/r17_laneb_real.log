@@ -1,0 +1,8 @@
+A: c_z additive 1, injective 1; reserved coefficient = c_{xor Q} != 0 on all 420 rows 1; 15 distinct values, 28 rows each 1
+A: direct reserved locators (rows 0, 211, 419) = product formula; V - L_W^3 has degree exactly 4096 = 6144 - 2^11 with top c_{xor Q}: 1
+B: params 0 (row 271): 8 distinct members 1, highest differing degree 14336, kappa = formula 1
+B: params 1 (row 206): 8 distinct members 1, highest differing degree 14336, kappa = formula 1
+B: params 2 (row 81): 8 distinct members 1, highest differing degree 14336, kappa = formula 1
+B: params 3 (row 144): 8 distinct members 1, highest differing degree 14336, kappa = formula 1
+B: over 4 parameter sets, coefficients above 14336 invariant 1 (highest differing degree 14336..14336), kappa equal and = formula 1
+PASS: both lane B gates hold in BF64 at the real size; neutral for the record (N2's factor-8 invariance, reserved gap 2^11)

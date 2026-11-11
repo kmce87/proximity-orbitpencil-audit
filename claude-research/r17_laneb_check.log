@@ -1,0 +1,4 @@
+A: the record's 420 Q rows = all 3-subsets of F_2^4 \ 0 with nonzero XOR = lane B's 420 configurations; XOR = omitted label, never 0, each of 15 labels 28 times
+B: lane B's toy reproduced, coefficient of x^16 = 0 for all 8 constants
+B: exhaustive over 2048 (L, quartic) choices: every coefficient of degree >= 15 is invariant under the 8 constants; degree 14 moves in 2048 of them (control fails as it must)
+PASS: both lane B gates reproduced; neutral for the record (see r17_laneb_real.cpp for BF64)
