@@ -48,30 +48,25 @@ cofactors (run 6) or signed classes with phi <= 2 (run 8) has more than 2^64 mem
 4. the K-line route needs kappa_S to hit BF64 up to a few thousand values, and a proof of it; kappa is a
    sum of three reciprocals over 17-dim subspaces, and Weil-type bounds need dimension about 49.
 
-**Official record, rechecked (runs 9-21).** proximity-prize/proximity-prize main is still eb82d3b
-(2026-10-29): SubmissionBinaryUpper score.txt 10624, unsafe-index.txt 917441 (BitWonka). 9 of the 584
-submission branches touch that folder, the latest on 2026-10-23 (also 10624); in run 11 (2026-11-08) none of
-the 600 branch heads had a commit after 2026-10-29 or a binary upper score below 10624. Since run 12 only the
-GitHub search API is used (add_repo is not offered, so the official repo is not attached or cloned). Run 21
-(2026-11-13 00:35 UTC): commit search with committer or author date after 2026-10-29 gives 0 (newest still
-eb82d3b); code search still gives blob ids 5c74e1d865 (score.txt) and 6be1d72bcc (unsafe-index.txt), exactly
-`git hash-object` of "10624\n" and "917441\n"; 0 issues updated after 2026-10-29. The first PRs after #611
-(2026-10-29) are #612 and #613 (605 PRs): validation-bot runs of one @mpjunior92 submission claiming 68.16 for
-`SubmissionLower` (the main lower track, where the bot gives the current best as 68.15; #613 retries #612,
-which stopped at the independent-verifier step), both closed unmerged on 2026-11-12. That is another track,
-so the binary upper record is unchanged. Submissions moved off the repo: #610 points the verifier client at
-autoresearch.zksecurity.xyz (an authenticated service, not read). Live board: with the user's approval
-(run 10) proximityprize.org was read; it shows no standings and names better.codes as the live scored
-companion, which the fetch tool blocks outright (do not retry or work around it). Web search (last run 21)
-finds nothing on the binary upper track newer than PR #592 (titled "claimed score: 106.25"; validated
-score.txt 10624). Earlier related hits: the 2026-08-20 better codes post (older than the binary tracks, added
-on 2026-10-19 in 1d1b179), a koalaIRS12 item (another profile) and a HackMD survey (read in run 18), with no
-binary numbers. Run 21's new ePrint hits are proximity tests or protocols, not counterexamples: 2026/2481
-(Polygero, Frigo and shelat, abstract read: a new proximity gap for polynomial challenges), 2026/2133 (folding
-codes with optimal proximity gaps) and 2026/2141 (BitZ, proofs through binary fields), these two by title
-only. 2026/2175 came up for a track query, but its PDF is robots-blocked and its page needs the user's
-approval, so it was not read; its number is earlier than DKTZ (2026/2424), which PR #592 builds on. The user
-checks better.codes before quoting 106.24.
+**Official record, rechecked (runs 9-22).** proximity-prize/proximity-prize main is still eb82d3b
+(2026-10-29): SubmissionBinaryUpper score.txt 10624, unsafe-index.txt 917441 (BitWonka). Run 11 read all
+branch heads: 9 of 584 submission branches touch that folder, the latest on 2026-10-23 (also 10624), none newer
+than 2026-10-29. Since run 12 only the GitHub search API is used (add_repo is not offered, so the official repo
+is not cloned). Run 22 (2026-11-13 12:35 UTC): commit search after 2026-10-29 (committer or author date) gives
+0, newest still eb82d3b; code search gives blob ids 5c74e1d865 (score.txt) and 6be1d72bcc (unsafe-index.txt),
+exactly `git hash-object` of "10624\n" and "917441\n"; 0 issues updated after 2026-10-29; 605 PRs, none updated
+after 2026-11-12. The only PRs after #611 are #612 and #613, bot validations of one @mpjunior92 claim of 68.16
+on `SubmissionLower` (another track; the bot gives its best as 68.15), both closed unmerged on 2026-11-12. #610
+moved submissions to autoresearch.zksecurity.xyz (authenticated, not read). proximityprize.org (read with the
+user's approval in run 10) shows no standings and names better.codes, which the fetch tool blocks (do not
+retry or work around it). Web search (last run 22) finds nothing on binary upper newer than PR #592 (titled
+"claimed score: 106.25", validated 10624). Hits set aside: koalaIRS12 news of 2026-08-20/22 (another profile,
+older than the binary tracks, which came in 1d1b179 on 2026-10-19), a HackMD survey (run 18), ePrint 2026/2481
+(abstract: a proximity gap for polynomial challenges), 2026/2133 and 2026/2141 (titles: folding codes, BitZ)
+and arXiv 2607.10572 (Gao, Yang, Xu and Kan, 2026-07-12, abstract only: MCA error lower bounds from
+list-decoding counterexamples, built on a modified code; the MCA lane, not this fixed code). 2026/2175 was not
+readable (robots-blocked PDF, page needs approval) and predates DKTZ (2026/2424). The user checks better.codes
+before quoting 106.24.
 
 **ChatGPT lane B (read only).** All its binary upper branches up to 2026-11-10 19:02 UTC are negative or
 neutral gates consistent with this ledger. Runs 9-11 (branches of 2026-11-03..07): coefficient injection,
@@ -96,7 +91,7 @@ coefficient: they move only the constants of the flat locators, so every coeffic
 exactly 14336. That is N2's factor-8 invariance; kappa fibres stay at most 2^52.709 (`r17_laneb_check.py`,
 `r17_laneb_real.cpp`, logs). Other-track commits (binary lower, Koala) are not replayed. No binary branch was
 pushed after 2026-11-10 19:02 UTC, and no branch at all after two Koala scripts (2026-11-11 05:06 and 06:06
-UTC), up to run 21 (2026-11-13 00:35 UTC, 215 branch heads). Zero counts of Gold forms are not IRS
+UTC), up to run 22 (2026-11-13 12:35 UTC, 215 branch heads). Zero counts of Gold forms are not IRS
 agreements (lane B says so too). Remaining overlap: N7, N9, N10 (quadric and mean-1/2 classes) and N8 (special
 labels, open gap 2). The note also says binary acceptance by the scoring service is unconfirmed (not checked
 here).
@@ -113,9 +108,9 @@ would reopen the K-line route (score 96.27; it needs about 2^64 distinct kappa v
 BF64).
 
 **Scheduler.** Run 9 sent the one finishing notification. Disabling the task from inside a run is refused
-by the permission classifier (runs 9-21; reason "Cowork Scheduled Task Delete"), so the user has to
+by the permission classifier (runs 9-22; reason "Cowork Scheduled Task Delete"), so the user has to
 switch off "Binary-upper benchmark research" (trig_01JA8ECs6Hg1pJfYLhYBdfr5, cron 34 */12 UTC, still
-enabled at run 21, next 2026-11-13 12:34 UTC; it does not stop by itself after 2026-11-17). Later runs:
+enabled at run 22, next 2026-11-14 00:34 UTC; it does not stop by itself after 2026-11-17). Later runs:
 recheck the official record and any new lane B binary branches, update the "runs 10+" line of the run log
 in place (no new line per run), and notify only if the record changes or, once, on the first run after
 2026-11-17 if the task is still enabled.
@@ -258,21 +253,16 @@ Exhausted: N5 (write FINAL) done in run 9, see FINAL above; every later run take
 * 2026-11-06 (scheduled, run 7): N8 failed. Merge map Phi and additive tops; exact n = 6 class counts over all 2^60 subsets confirm T2-T4 and measure the Krylov merge; exhaustive relation and kernel scans; one real exception at r = 8 (weight 58, useless). Official repo checked: binary upper still 10624 at HEAD eb82d3b. Scripts `n8_*`. New top N10.
 * 2026-11-06 (scheduled, run 8): N10 failed and the signed gap closed for phi <= 2. Class types, budget, local means, Lemma R, bound 2^63.595 for every class at n = 21; unbiased class evaluator, census at n = 7, 8, 9, hill climbing, exact checks. Official repo still at eb82d3b, binary upper 10624. Scripts `n10_*`. New top N5.
 * 2026-11-07 (scheduled, run 9): N5: queue exhausted, FINAL written. Official record rechecked (main eb82d3b, binary upper 10624, no binary upper submission after 2026-10-23, live leaderboard not reachable). Headline numbers re-verified exactly (`final_check.py`). ChatGPT's lane B binary branches read: all negative. Disabling the scheduled task was refused; left to the user.
-* 2026-11-07 (scheduled, runs 10+: post-FINAL rechecks, this line is updated in place). Run 10
-  (2026-11-07 12:40 UTC): proximityprize.org read with the user's approval (no standings), better.codes
-  blocked for the fetch tool; six lane B binary branches read, all negative. Run 11 (2026-11-08 00:39 UTC):
-  no official branch or PR newer than 2026-10-29; five lane B slice searches, covered by N2
-  (`r11_laneb_check.py`). Run 12 (2026-11-08 12:39 UTC): search API only; lane B pivot note read. Runs 13-15
-  (2026-11-09 00:34 to 2026-11-10 00:34 UTC): lane B Gold-form, affine-complement, 106.24/106.23 score and
-  core-degree gates replayed (`r13_*`, `r14_*`, `r15_*`). Run 16 (2026-11-10 12:35 UTC): official blob ids
-  matched exactly. Run 17 (2026-11-11 00:35 UTC): lane B reserved-coset XOR and affine-constant gates
-  replayed, in BF64 at the real size as well (`r17_laneb_check.py`, `r17_laneb_real.cpp`): neutral, N2
-  unchanged. Run 18 (2026-11-11 12:35 UTC): HackMD survey read. Runs 19-20 (2026-11-12): unchanged; run 20
-  searched the claude.ai project read only for DKTZ notes (height 4 only, 116.81, worse). Latest: run 21,
-  2026-11-13 00:35 UTC. Queue exhausted, so step 2 only. Official main still eb82d3b, binary upper 10624 /
-  917441 (blob ids match exactly), no commit or issue after 2026-10-29; the only new PRs, #612 and #613, are a
-  closed 68.16 claim on the lower track (`SubmissionLower`), not binary upper. No branch head in this repo is
-  newer than run 20 except this ledger's. `final_check.py` and the r11, r13, r14, r15, r17 replays reproduce
-  their committed logs exactly (`r17_laneb_real.cpp` needs `g++ -O2 -march=native` for its CLMUL intrinsics
-  and the arguments `qrows.txt 4`). New ePrint hits (2026/2481 by abstract, 2133 and 2141 by title) are not
-  counterexamples; 2026/2175 was not readable. Disabling the task refused again. No notification (binary upper record unchanged).
+* 2026-11-07 (scheduled, runs 10+: post-FINAL rechecks, this line is updated in place). Run 10:
+  proximityprize.org read with the user's approval (no standings); six lane B binary branches, all negative.
+  Run 11: full official branch list, nothing after 2026-10-29; lane B slice searches covered by N2
+  (`r11_*`). From run 12 the search API only; lane B pivot note read. Runs 13-17: lane B Gold-form,
+  affine-complement, score/core-degree, reserved-XOR and affine-constant gates replayed (`r13_*` to `r17_*`,
+  in BF64 at the real size in `r17_laneb_real.cpp`): all neutral, N2 unchanged. Run 18: HackMD survey. Run 20:
+  claude.ai project searched read only for DKTZ notes (height 4 only, 116.81, worse). Run 21: new PRs #612 and
+  #613 (lower track, closed). Latest: run 22, 2026-11-13 12:35 UTC. Queue exhausted, so step 2 only. Record
+  unchanged: main eb82d3b, binary upper 10624 / 917441 (blob ids exact), no commit, issue or PR activity after
+  2026-11-12; no new lane B branch (215 heads). `final_check.py` and the r11, r13, r14, r15, r17 replays
+  reproduce their committed logs exactly (`r17_laneb_real.cpp` needs `g++ -O2 -march=native` for its CLMUL
+  intrinsics and the arguments `qrows.txt 4`). arXiv 2607.10572 set aside (MCA lane). Disabling the task
+  refused again. No notification (binary upper record unchanged).
