@@ -17,7 +17,7 @@ Profile: K = BF64, challenge field Ext3 (|F| = 2^192), domain = first 2^21 polyn
 words (an F_2-subspace), k = 2^20, budget B* = 2^192 / 2^128 = **2^64** bad slopes (strict: 2^64 + 1 winners needed).
 Exact score of the record: 106.2397. A score of 106.23 needs agreement >= 1179774, i.e. 63 more positions.
 
-## FINAL (run 9, 2026-11-07; refreshed at the close, run 25, 2026-11-18; rechecked to run 34, 2026-11-22): nothing beats 106.24
+## FINAL (run 9, 2026-11-07; refreshed at the close, run 25, 2026-11-18; rechecked to run 35, 2026-11-23): nothing beats 106.24
 
 **Result.** The time box (2026-11-17) is over and the job is finished. No construction beats BitWonka's
 record on paper, so no Lean candidate and no research/ branch were made. Best result: the record itself
@@ -26,7 +26,7 @@ analysed; 106.23 needs agreement 1179774 with more than 2^64 winners. Closest mi
 avoiding the core label (agreement 1179775, which would score 106.2297) has 2^62.430 members, short of 2^64
 by a factor of 2.969; the shortened quadric family has 2^60.415, short by 12; the K-line route at 19/32
 would score 96.27, but its winners lie in BF64, at most 2^64. Headline numbers rechecked with exact integers
-(`final_check.py`, `final_check.log`; written in run 9, reproduced exactly in runs 24 to 34).
+(`final_check.py`, `final_check.log`; written in run 9, reproduced exactly in runs 24 to 35).
 
 **What was tried** (details in Results and Theory):
 * Higher density (H1-H3, N9, N10): every class of mass 5N/8 stays below 2^64 members above 9N/16 at
@@ -53,22 +53,22 @@ cofactors (run 6) or signed classes with phi <= 2 (run 8) has more than 2^64 mem
 4. the K-line route needs kappa_S to hit BF64 up to a few thousand values, and a proof of it; kappa is a
    sum of three reciprocals over 17-dim subspaces, and Weil-type bounds need dimension about 49.
 
-**Official record at the close (runs 25-34, 2026-11-18 to 22).** SubmissionBinaryUpper on
+**Official record at the close (runs 25-35, 2026-11-18 to 23).** SubmissionBinaryUpper on
 proximity-prize/proximity-prize main is unchanged since PR #592: score.txt 10624, unsafe-index.txt 917441
 (BitWonka). Run 11 read all branch heads (9 of 584 submission branches touch that folder, the latest on
 2026-10-23, also 10624). From run 12 only the GitHub search API was used (add_repo was never offered, so the
-official repo was not cloned again); `recheck_official.py` does it (log `recheck_official.log`, run 34,
+official repo was not cloned again); `recheck_official.py` does it (log `recheck_official.log`, run 35,
 `--prs-since 2026-11-21`). After eb82d3b (2026-10-29) main has only lower-track bot validations
-(yukon-autoresearch): 23 merges from #615 to #656 (68.16 to 69.52; #623, #624, #635 and #638 by @BitWonka), newest
-commit 8d1d82a4df (#656, merged 2026-11-21 22:51 UTC), none since. The code index is post-merge
-(SubmissionLower/score.txt decodes to 6952, #656) and still gives blob ids 5c74e1d865 and 6be1d72bcc, exactly
-`git hash-object` of "10624\n" and "917441\n". 659 PRs (highest #667); every other PR after #611 is a lower-track
-claim, closed unmerged or open (#665-#667 at 69.53 to 69.54); 0 issues updated after 2026-10-29. #610 moved
-submissions to autoresearch.zksecurity.xyz (authenticated, not read); proximityprize.org (read with the user's
-approval in run 10) shows no standings and names better.codes, which the fetch tool blocks (not retried). The user
-checks better.codes before quoting 106.24.
+(yukon-autoresearch): 25 merges from #615 to #669 (68.16 to 69.54; #623, #624, #635 and #638 by @BitWonka), newest
+commit 1dfb448446 (#669, merged 2026-11-22 19:02 UTC), none since. The code index is post-merge
+(SubmissionLower/score.txt decodes to 6954, #669) and still gives blob ids 5c74e1d865 and 6be1d72bcc, exactly
+`git hash-object` of "10624\n" and "917441\n". 662 PRs (highest #670); every other PR after #611 is a lower-track
+claim closed unmerged (the only open PR is #569, a Lean 4.34 upgrade last updated 2026-09-26); 0 issues updated
+after 2026-10-29. #610 moved submissions to autoresearch.zksecurity.xyz (authenticated, not read); proximityprize.org
+(read with the user's approval in run 10) shows no standings and names better.codes, which the fetch tool blocks (not
+retried). The user checks better.codes before quoting 106.24.
 
-**Literature (web search, runs 10-34).** Nothing on binary upper newer than PR #592 (titled "claimed score:
+**Literature (web search, runs 10-35).** Nothing on binary upper newer than PR #592 (titled "claimed score:
 106.25", validated 10624). Two binary constructions, neither for this profile (both read only through the fetch
 tool's summary of the PDF; Recommendation (d)): arXiv 2610.15815 (run 28; M. Zhu, October 2026, the PDF credits an
 AI system with the proofs): full-field RS over F_(2^h), n = 2^h (or a dense puncturing), has 2^(h^2/8 - O(h))
@@ -93,14 +93,15 @@ ethresear.ch post by asanso (brute-force RS lists over F_13); news: koalaIRS12 o
 (KuCoin read in run 27: 63.99 / 116.13 only, no binary track; the "52.14-bit gap" headlines are the same figures;
 CryptoSlate not readable, run 33) and an Ethereum Foundation post "better codes challenge" (2026-08-20, title
 only). Not read (numbered or dated before the record): arXiv 2609.09838 (Gabidulin codes), 2609.08005, 2609.05870,
-2604.15218, 2603.03841, 2602.05462; ECCC TR26-164, TR26-074, TR26-057, TR25-166, TR25-169; ePrint 2026/782,
-2026/891, 2026/1894, 2026/2147, 2025/1712, 2025/2054, 2025/2055, and 2026/2175 and 2026/2032 (PDFs robots-blocked,
+2604.15218, 2603.03841, 2602.05462, 2512.08017, 2502.14358 (an FRS exposition); ECCC TR26-164, TR26-074, TR26-057,
+TR25-166, TR25-169; ePrint 2026/782, 2026/891, 2026/1894, 2026/2147, 2025/1712, 2025/2046, 2025/2054, 2025/2055,
+and 2026/2175 and 2026/2032 (PDFs robots-blocked,
 numbered before DKTZ 2026/2424); LIPIcs APPROX/RANDOM 2026.61; HackMD @zkpunk/CS25 and DG25; a "machine-checked
 mathematics, Lean 4, June 2026" page. Not readable: github.com/lalalune/ArkLib/pull/503 (rate limited, run 25).
 
 **ChatGPT lane B (read only).** All its binary upper branches (2026-11-03 to 2026-11-10 19:02 UTC) are
 negative or neutral gates consistent with this ledger, and no branch of any kind was pushed after two Koala
-scripts on 2026-11-11 (05:06 and 06:06 UTC), up to run 34 (215 branch heads). Branches of 2026-11-03..07
+scripts on 2026-11-11 (05:06 and 06:06 UTC), up to run 35 (215 branch heads). Branches of 2026-11-03..07
 (runs 9-11): coefficient injection, fixed Q, 420-row XOR, core extension, leading coefficient, affine offsets,
 a 2^15-class coefficient pigeonhole (too weak), 106.23 degree necessity, fibre trade (1179710, 64 short), fixed
 H-triple capacity (105 triples x 4 rows), score boundary, 64-point core (one degree over the code) and five
@@ -141,15 +142,15 @@ at n = 2^20). A version for sparse F_2-subspaces of a large field would bear on 
 scans).
 
 **Scheduler.** Run 9 sent the finishing notification and run 25 the closing one (the first run after the time
-box); neither is to be repeated. Disabling the task from inside a run was refused every time (runs 9-34; in runs
+box); neither is to be repeated. Disabling the task from inside a run was refused every time (runs 9-35; in runs
 25 to 28, 31 and 33 update_trigger said that changing a scheduled task during a scheduled run needs the user's
-approval in a turn that answers their own message, and in runs 29, 30, 32 and 34 the auto mode classifier denied
+approval in a turn that answers their own message, and in runs 29, 30, 32, 34 and 35 the auto mode classifier denied
 update_trigger (enabled=false) as a scheduled task delete; no workaround was tried), so the user has to switch off
-"Binary-upper benchmark research" (trig_01JA8ECs6Hg1pJfYLhYBdfr5, cron 34 */12 UTC, still enabled at run 34, next
-2026-11-23 00:34 UTC; it does not stop by itself) where they manage scheduled tasks. Until then each run only
-rechecks the official record (`recheck_official.py`) and new lane B binary branches, updates the runs 25-34 line of
+"Binary-upper benchmark research" (trig_01JA8ECs6Hg1pJfYLhYBdfr5, cron 34 */12 UTC, still enabled at run 35, next
+2026-11-23 12:34 UTC; it does not stop by itself) where they manage scheduled tasks. Until then each run only
+rechecks the official record (`recheck_official.py`) and new lane B binary branches, updates the runs 25-35 line of
 the run log in place, and notifies only if the binary upper record changes (other tracks, such as the lower-track
-merges #615-#656, do not count).
+merges #615-#669, do not count).
 
 ## Mechanism of the record (exact)
 
@@ -300,16 +301,17 @@ above 2^-30).
   read only for DKTZ notes (height 4 only, 116.81, worse). Run 21: PRs #612, #613 (lower track, closed). Run
   24 (2026-11-15 00:36 UTC): `recheck_official.py` added; main moved to fadb143 (#615, lower track). Binary
   upper 10624 / 917441 throughout; disabling the task refused in every run; no notifications.
-* 2026-11-18 to 22 (scheduled, runs 25-34; run 25 is the closing run, and the slots from 2026-11-15 12:34 to
+* 2026-11-18 to 23 (scheduled, runs 25-35; run 25 is the closing run, and the slots from 2026-11-15 12:34 to
   2026-11-17 12:34 UTC left no commit). Run 25 (2026-11-18 00:34 UTC): time box over, so step 2: FINAL refreshed
-  and condensed; main at 65690b3 (#616, #617, @0xAndoroid, lower track); closing notification sent. Runs 26-34
-  (2026-11-18 12:34 to 2026-11-22 12:34 UTC, recheck only): main moved through the lower-track merges listed in
-  FINAL to 8d1d82a4df (#656, @patternrecognition9-del, 69.52; no merge between runs 33 and 34, which saw #657-#664
-  closed unmerged and #665-#667 opened); 659 PRs, 0 issues. In each of runs 25-34: binary upper unchanged at
+  and condensed; main at 65690b3 (#616, #617, @0xAndoroid, lower track); closing notification sent. Runs 26-35
+  (2026-11-18 12:34 to 2026-11-23 00:34 UTC, recheck only): main moved through the lower-track merges listed in
+  FINAL to 1dfb448446 (#669, @patternrecognition9-del, 69.54; between runs 34 and 35 #665 and #669 merged and
+  #666-#668 and #670 were closed unmerged); 662 PRs, 0 issues. In each of runs 25-35: binary upper unchanged at
   10624 / 917441 (`recheck_official.py`, log replaced), no new lane B branch (215 heads), `final_check.py`
   reproduced exactly, new web hits set aside (listed in FINAL; run 28 found arXiv 2610.15815 and run 32 arXiv
   2611.07607, both full-field constructions, see Recommendation (d); run 31 ePrint 2026/2048, an upper bound; run 33
-  ePrint 2026/2245, multiplicative subgroups, at most 2^31.98 at this agreement; run 34 only titles), disabling the
-  task refused (needs the user's approval), and no notification after run 25. Run 34 also condensed FINAL's record
-  and literature paragraphs (PR lists and author details dropped, IDs kept). Later runs, while the task stays
-  enabled: recheck only, update this line in place, notify only on a binary upper change.
+  ePrint 2026/2245, multiplicative subgroups, at most 2^31.98 at this agreement; runs 34 and 35 only titles or items
+  dated before the record), disabling the task refused (needs the user's approval), and no notification after run
+  25. Run 34 also condensed FINAL's record and literature paragraphs (PR lists and author details dropped, IDs
+  kept). Later runs, while the task stays enabled: recheck only, update this line in place, notify only on a binary
+  upper change.
