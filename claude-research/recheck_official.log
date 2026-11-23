@@ -30,21 +30,12 @@ commits on the default branch after 2026-10-29: 25
   ProximityPrize/SubmissionUpper/score.txt  bc95c67e89  '11613\n'
   ProximityPrize/SubmissionBinaryUpper/unsafe-index.txt  6be1d72bcc  '917441\n'  [binary upper: unchanged]
   ProximityPrize/SubmissionUpper/unsafe-index.txt  7aa887aa8f  '122369\n'
-PRs in total: 662
-PRs updated after 2026-11-21: 14
-   #657 closed merged None 2026-11-22T01:01:31Z @kaankolcu (claimed score: 69.54): Validate submission 222a8fcc-bbc7-4dd5-aefb-ce5d4d56217c
-   #658 closed merged None 2026-11-22T03:33:44Z @patternrecognition9-del (claimed score: 69.53): Validate submission c8c0e966-928b-4e60-9c57-b9e72f3
-   #659 closed merged None 2026-11-22T02:39:00Z @GordoAR (claimed score: 69.53): Validate submission 0c8ce829-8fae-4807-8b2f-2ae4ff4ee103
-   #660 closed merged None 2026-11-22T01:46:01Z @pillze (claimed score: 69.53): Validate submission 04420079-0485-4bd6-ad6a-bd87eff83e08
-   #661 closed merged None 2026-11-22T07:31:58Z @GordoAR (claimed score: 69.54): Validate submission 8ea5cada-a9bb-4d1e-af8a-31eea652afce
-   #662 closed merged None 2026-11-22T08:00:29Z @valproate-acid (claimed score: 69.53): Validate submission 9aa2bdec-6894-4d9a-bccf-cd23b90c33c9
-   #663 closed merged None 2026-11-22T11:13:02Z @BitWonka (claimed score: 69.54): Validate submission 0dbd4839-7da2-4dbf-b589-49d2e2c3566a
-   #664 closed merged None 2026-11-22T11:39:16Z @GordoAR (claimed score: 69.54): Validate submission 5eff9a18-652f-43d9-b139-f2904dd7f4aa
-   #665 closed merged 2026-11-22T12:51:43Z 2026-11-22T12:51:43Z @patternrecognition9-del (claimed score: 69.53): Validate submission 0920a331-6444-4790-9334-d126630
-   #666 closed merged None 2026-11-22T15:19:55Z @valproate-acid (claimed score: 69.54): Validate submission 745238f9-ff2b-449e-9332-bbcce30af09a
-   #667 closed merged None 2026-11-22T15:48:35Z @GordoAR (claimed score: 69.54): Validate submission 4ac3b41b-92b9-4b78-bec2-8a5a62e63171
-   #668 closed merged None 2026-11-22T16:01:38Z @patternrecognition9-del (claimed score: 69.54): Validate submission 530388e1-c66a-45b8-88df-7b05a20
-   #669 closed merged 2026-11-22T19:02:32Z 2026-11-22T19:02:32Z @patternrecognition9-del (claimed score: 69.54): Validate submission 51ae3460-7335-4d6d-a02e-2e94e4d
-   #670 closed merged None 2026-11-22T19:02:41Z @GordoAR (claimed score: 69.54): Validate submission 2a604223-696b-46e1-bbef-bf9e81ae7a70
+  toolchain lean-toolchain  12359f928f  'leanprover/lean4:v4.34.0\n'
+PRs in total: 666
+PRs updated after 2026-11-22: 4
+   #671 closed merged None 2026-11-23T07:56:13Z @BitWonka (claimed score: 6960): Validate submission 256e6e89-0074-470e-a0b1-421c57d698ab
+   #672 open merged None 2026-11-23T08:13:43Z @BitWonka (claimed score: 69.6): Validate submission d0c5469c-cfd5-4cfd-a6f5-09b6d8a46712
+   #673 open merged None 2026-11-23T08:25:51Z @dadon (claimed score: 69.6): Validate submission bcb8fc6a-4e80-4e7e-8978-582acd6b3400
+   #674 open merged None 2026-11-23T11:53:58Z Move to Lean 4.36 with ported leaders
 issues updated after 2026-10-29: 0
 binary upper record unchanged: 10624 / 917441
