@@ -1,4 +1,4 @@
-commits on the default branch after 2026-10-29: 26
+commits on the default branch after 2026-10-29: 27
    65690b3bad 2026-11-15T15:04:52.000Z yukon-autoresearch[bot] parents ['e1dc051a11'] Validate submission aeff647b-c1cf-4989-a90a-a63204949fae
    fadb143d8c 2026-11-14T09:33:00.000Z yukon-autoresearch[bot] parents ['eb82d3bf04'] Validate submission 1f9eec96-6c07-460f-b50f-0959cf98989b
    e1dc051a11 2026-11-15T03:08:25.000Z yukon-autoresearch[bot] parents ['fadb143d8c'] Validate submission 210c0ed4-0736-4130-a33e-9ef3f4f7408e
@@ -25,26 +25,19 @@ commits on the default branch after 2026-10-29: 26
    4f3c52364b 2026-11-22T09:41:37.000Z yukon-autoresearch[bot] parents ['8d1d82a4df'] Validate submission 0920a331-6444-4790-9334-d1266308935e
    8d1d82a4df 2026-11-21T19:08:21.000Z yukon-autoresearch[bot] parents ['69a290f315'] Validate submission c56d49c4-a0c0-4f0e-9c57-64f9e328dac8
    60bd089574 2026-11-23T19:28:36.000Z yukon-autoresearch[bot] parents ['1dfb448446'] Validate submission 846e873f-d34a-45b0-9b75-efa825ad690b
+   8689991c50 2026-11-24T09:24:48.000-03:00 kobizk parents ['60bd089574'] Move to Lean 4.36 (v25 / v23 / binary-v6) (#674)
   ProximityPrize/SubmissionBinaryLower/score.txt  5919dcef3a  '6400\n'
   ProximityPrize/SubmissionBinaryUpper/score.txt  5c74e1d865  '10624\n'  [binary upper: unchanged]
   ProximityPrize/SubmissionLower/score.txt  517c128169  '6960\n'
   ProximityPrize/SubmissionUpper/score.txt  bc95c67e89  '11613\n'
   ProximityPrize/SubmissionBinaryUpper/unsafe-index.txt  6be1d72bcc  '917441\n'  [binary upper: unchanged]
   ProximityPrize/SubmissionUpper/unsafe-index.txt  7aa887aa8f  '122369\n'
-  toolchain lean-toolchain  12359f928f  'leanprover/lean4:v4.34.0\n'
-PRs in total: 673
-PRs updated after 2026-11-22: 12
-   #569 closed merged None 2026-11-23T20:54:08Z Upgrade Proximity to Lean 4.34.0 and ArkLib v4.34.0
-   #671 closed merged None 2026-11-23T07:56:13Z @BitWonka (claimed score: 6960): Validate submission 256e6e89-0074-470e-a0b1-421c57d698ab
-   #672 closed merged None 2026-11-23T12:48:31Z @BitWonka (claimed score: 69.6): Validate submission d0c5469c-cfd5-4cfd-a6f5-09b6d8a46712
-   #673 closed merged None 2026-11-23T13:32:27Z @dadon (claimed score: 69.6): Validate submission bcb8fc6a-4e80-4e7e-8978-582acd6b3400
-   #674 open merged None 2026-11-23T22:12:08Z Move to Lean 4.36 (v25 / v23 / binary-v6)
-   #675 closed merged None 2026-11-23T15:42:52Z @GordoAR (claimed score: 69.55): Validate submission 89acbf12-79ee-4f23-8b7f-aec1c923bfc3
-   #676 closed merged None 2026-11-23T15:42:58Z @dadon (claimed score: 69.6): Validate submission 2173b6f6-fb1c-4e25-bcff-60ec93d5e245
-   #677 closed merged None 2026-11-23T15:46:13Z @GordoAR (claimed score: 69.55): Validate submission 734ccb93-34b4-43ce-aaf3-06dd89e79137
-   #678 closed merged None 2026-11-23T21:38:43Z @dadon (claimed score: 69.6): Validate submission e57e5b7e-6b03-436d-82cc-41138771ba3b
-   #679 closed merged None 2026-11-23T21:54:08Z @GordoAR (claimed score: 69.55): Validate submission 568bc001-71c5-43ab-bb75-101673649480
-   #680 closed merged None 2026-11-23T19:28:03Z @BitWonka (claimed score: 69.6): Validate submission a7784701-8e0e-466d-b50c-fa840df9f984
-   #681 closed merged 2026-11-23T23:19:11Z 2026-11-23T23:19:12Z @BitWonka (claimed score: 69.6): Validate submission 846e873f-d34a-45b0-9b75-efa825ad690b
+  toolchain: no item returned (total_count 1; index not caught up?)
+  pin Arklib: no item returned (total_count 1; index not caught up?)
+  pin CompPoly: no item returned (total_count 1; index not caught up?)
+PRs in total: 674
+PRs updated after 2026-11-23: 2
+   #674 closed merged 2026-11-24T12:24:49Z 2026-11-24T12:24:50Z Move to Lean 4.36 (v25 / v23 / binary-v6)
+   #682 open merged None 2026-11-24T12:41:01Z @BitWonka (claimed score: 69.61): Validate submission e26ed738-dacd-4071-82ed-2e04311a29eb
 issues updated after 2026-10-29: 0
 binary upper record unchanged: 10624 / 917441

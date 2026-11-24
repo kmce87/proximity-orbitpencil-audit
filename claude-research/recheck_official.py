@@ -11,6 +11,11 @@ Run 36 added the toolchain line (lean-toolchain decoded the same way; v4.34.0 at
 the open PR #674 would move prod to Lean 4.36 with the leaders ported) and the missing-file check
 (a layout change could drop the two paths from the index without changing them).
 
+Run 38 added the pin lines: the ArkLib and CompPoly revs of lake-manifest.json, read from the
+search API's text-match fragments (34a834c / 411708c at the record). #674 merged on 2026-11-24
+12:24:49 UTC (8689991c50), so a toolchain line still at v4.34.0 or these old revs mean the code
+index has not caught up with that merge yet; the score lines are then pre-merge values.
+
 Usage: python3 recheck_official.py [--since 2026-10-29] [--prs-since 2026-11-12]
 Exit code 0 if SubmissionBinaryUpper is still 10624 / 917441, 1 if it changed, 2 on API errors,
 3 if either file is missing from the code index (moved, renamed or deleted: read the PRs).
@@ -18,6 +23,7 @@ Exit code 0 if SubmissionBinaryUpper is still 10624 / 917441, 1 if it changed, 2
 import argparse
 import hashlib
 import json
+import re
 import subprocess
 import sys
 import time
@@ -29,8 +35,10 @@ EXPECTED = {  # BitWonka, PR #592
 }
 
 
-def gh_search(kind, q, extra=()):
+def gh_search(kind, q, extra=(), text_match=False):
     cmd = ["gh", "api", "-X", "GET", f"search/{kind}", "-f", f"q={q}", "-f", "per_page=100"]
+    if text_match:
+        cmd += ["-H", "Accept: application/vnd.github.text-match+json"]
     for e in extra:
         cmd += ["-f", e]
     for attempt in range(4):
@@ -95,6 +103,19 @@ def main():
         body = next((s for v in versions for s in (f"leanprover/lean4:{v}\n", f"leanprover/lean4:{v}")
                      if blob_id(s) == it["sha"]), None)
         print(f"  toolchain {it['path']}  {it['sha'][:10]}  {repr(body) if body else 'not decoded'}")
+    if not r["items"]:  # seen in run 38 while the index was re-reading the files #674 changed
+        print(f"  toolchain: no item returned (total_count {r['total_count']}; index not caught up?)")
+
+    for name in ("Arklib", "CompPoly"):  # the "name" field as lake-manifest.json spells it
+        time.sleep(7)
+        r = gh_search("code", f"repo:{REPO} filename:lake-manifest.json {name}", text_match=True)
+        if not r["items"]:
+            print(f"  pin {name}: no item returned (total_count {r['total_count']}; index not caught up?)")
+        for it in sorted(r["items"], key=lambda x: x["path"]):
+            revs = [m.group(1) for tm in it.get("text_matches", [])
+                    for m in re.finditer(r'"rev":\s*"([0-9a-f]{7,40})",\s*"name":\s*"' + name + '"',
+                                         tm.get("fragment", ""), re.I)]
+            print(f"  pin {name} {it['path']}  {it['sha'][:10]}  rev {revs[0] if revs else 'not in fragments'}")
 
     p = gh_search("issues", f"repo:{REPO} is:pr")
     print(f"PRs in total: {p['total_count']}")
