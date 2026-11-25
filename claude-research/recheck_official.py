@@ -16,6 +16,10 @@ search API's text-match fragments (34a834c / 411708c at the record). #674 merged
 12:24:49 UTC (8689991c50), so a toolchain line still at v4.34.0 or these old revs mean the code
 index has not caught up with that merge yet; the score lines are then pre-merge values.
 
+Run 39 read the caught-up index (v4.36.0, ArkLib 151fd29, CompPoly cc71356; binary upper unchanged)
+and marks the toolchain and pin lines against those values ([as in run 39] or [CHANGED since run 39]).
+A pin move does not change the exit code: it matters only for a new Lean candidate.
+
 Usage: python3 recheck_official.py [--since 2026-10-29] [--prs-since 2026-11-12]
 Exit code 0 if SubmissionBinaryUpper is still 10624 / 917441, 1 if it changed, 2 on API errors,
 3 if either file is missing from the code index (moved, renamed or deleted: read the PRs).
@@ -32,6 +36,11 @@ REPO = "proximity-prize/proximity-prize"
 EXPECTED = {  # BitWonka, PR #592
     "ProximityPrize/SubmissionBinaryUpper/score.txt": "10624\n",
     "ProximityPrize/SubmissionBinaryUpper/unsafe-index.txt": "917441\n",
+}
+CURRENT = {  # prod toolchain and pins after PR #674, read from the index in run 39 (2026-11-25)
+    "toolchain": "leanprover/lean4:v4.36.0",
+    "Arklib": "151fd2944b7b7948d73e6d06cc738db5a5660aa0",
+    "CompPoly": "cc71356a04fc45cb3efedadf09dd4fcf27f8fdc1",
 }
 
 
@@ -102,7 +111,8 @@ def main():
     for it in sorted(r["items"], key=lambda x: x["path"]):
         body = next((s for v in versions for s in (f"leanprover/lean4:{v}\n", f"leanprover/lean4:{v}")
                      if blob_id(s) == it["sha"]), None)
-        print(f"  toolchain {it['path']}  {it['sha'][:10]}  {repr(body) if body else 'not decoded'}")
+        tag = "as in run 39" if body and body.strip() == CURRENT["toolchain"] else "CHANGED since run 39"
+        print(f"  toolchain {it['path']}  {it['sha'][:10]}  {repr(body) if body else 'not decoded'}  [{tag}]")
     if not r["items"]:  # seen in run 38 while the index was re-reading the files #674 changed
         print(f"  toolchain: no item returned (total_count {r['total_count']}; index not caught up?)")
 
@@ -115,7 +125,9 @@ def main():
             revs = [m.group(1) for tm in it.get("text_matches", [])
                     for m in re.finditer(r'"rev":\s*"([0-9a-f]{7,40})",\s*"name":\s*"' + name + '"',
                                          tm.get("fragment", ""), re.I)]
-            print(f"  pin {name} {it['path']}  {it['sha'][:10]}  rev {revs[0] if revs else 'not in fragments'}")
+            rev = revs[0] if revs else None
+            tag = "as in run 39" if rev == CURRENT[name] else ("CHANGED since run 39" if rev else "unknown")
+            print(f"  pin {name} {it['path']}  {it['sha'][:10]}  rev {rev or 'not in fragments'}  [{tag}]")
 
     p = gh_search("issues", f"repo:{REPO} is:pr")
     print(f"PRs in total: {p['total_count']}")
